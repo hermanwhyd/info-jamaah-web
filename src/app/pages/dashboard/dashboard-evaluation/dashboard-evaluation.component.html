@@ -1,0 +1,81 @@
+<vex-page-layout>
+  <vex-secondary-toolbar>
+    <div fxFlex="auto" class="subheading-2 w-full font-medium pr-3">Dashboard Evaluasi Diklat</div>
+      <div fxFlex="none">
+        <mat-form-field appearance="standard">
+          <mat-label>Tahun Evaluasi</mat-label>
+          <mat-select [ngModel]="year" (selectionChange)="yearChange($event)" #selectYear>
+            <mat-option *ngFor="let item of years" [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  </vex-secondary-toolbar>
+
+  <div class="float-right mt-4 mr-4">
+    <button mat-raised-button (click)="openAddDashboard(addDashboardTemplate, addDashboardOriginRef)" color="primary">
+      Tambah Dashboard
+      <ic-icon [icon]="icArrowDropDown" class="ltr:-mr-1 rtl:-ml-1" inline="true"></ic-icon>
+    </button>
+    <div #addDashboardOriginRef class="bg-hover" fxFlex="none">
+      <ng-template #addDashboardTemplate let-close="close">
+        <div [ngClass.gt-sm]="['mr-6']" class="card overflow-auto mt-3" fxLayout="row" fxLayout.lt-md="column">
+          <div class="bg-primary text-primary-contrast p-gutter" fxFlex="300px" fxFlex.lt-md="auto">
+            <h2 class="headline mb-4">TAMBAH DASHBOARD</h2>
+
+            <p class="caption">
+              Untuk menambahkan dashboard silakan ke menu <span class="font-medium bg-gray">Evaluasi Diklat</span>, pilih diklat yang akan diplubilkasi dan edit judul serta klik tombol <span class="font-medium bg-gray">Publish</span> di tab <span class="font-medium bg-gray">Present Result</span>.
+            </p>
+
+            <a [routerLink]="['/evaluasi-diklat']" class="border border-primary-contrast border-solid mt-4" mat-button type="button">Evaluasi Diklat</a>
+
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <vex-page-layout-content class="container">
+    <div *ngIf="isLoading" @scaleFadeIn class="flex-auto flex flex-col justify-center items-center p-20 mt-10">
+      <mat-progress-spinner mode="indeterminate" class="text-left"></mat-progress-spinner>
+    </div>
+
+    <div *ngIf="!isLoading">
+
+        <h1 class="block py-10 items-center text-center w-full">Evaluasi diklat di tahun <span class="text-primary cursor-pointer" (click)="selectYear.open()">{{year}}</span></h1>
+
+        <div *ngIf="dashboardSubject.value.length === 0" @scaleFadeIn
+        class="flex-auto flex flex-col justify-center items-center">
+        <img class="mx-12 mt-12 h-64" src="assets/img/illustrations/idea.svg" />
+        <h2 class="headline m-0 mb-12 text-center">
+          Tidak ada hasil evaluasi yang diplubilkasi di tahun yang dipilih!
+        </h2>
+      </div>
+
+      <div @fadeInUp *ngIf="dashboardSubject.value.length > 0" class="hidden sm:flex items-center bg-card overflow-hidden relative pl-5 h-12 w-full shadow-8 mb-4">
+        <ic-icon [icon]="icSearch" class="text-secondary flex-none" size="24px"></ic-icon>
+        <input [formControl]="searchCtrl"
+              class="border-0 h-12 outline-none pl-4 placeholder:text-secondary bg-card flex-auto"
+              placeholder="Cari evaluasi..."
+              type="text"/>
+      </div>
+
+      <div class="bg-card" @fadeInUp fxLayout="column">
+        <div @stagger class="p-4 border-b" *ngFor="let item of models" fxLayout="row" fxLayoutAlign="start center">
+          <div @fadeInRight fxFlex="auto">
+            <h4 class="body-2 m-0 leading-snug">{{ item.value }}</h4>
+            <h5 class="text-secondary m-0 caption leading-none">Lokasi: {{ item.diklat?.location }} | Jadwal: {{ item.diklat?.startDate | date:'dd/MMM/yy' }}-{{ item.diklat?.endDate | date:'dd/MMM/yy' }}</h5>
+          </div>
+          <div [routerLink]="['/evaluasi-diklat', item.diklat?.id, 'present-result']" matTooltip="Lihat analisa" matTooltipPosition="above" class="cursor-pointer flex flex-col items-center text-primary w-24">
+            <mat-icon [icIcon]="icView"></mat-icon>
+            <span>
+              View
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </vex-page-layout-content>
+
+</vex-page-layout>

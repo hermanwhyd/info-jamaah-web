@@ -1,0 +1,124 @@
+<div fxLayout="column" fxLayoutAlign="start center">
+  <div @fadeInUp class="card w-full overflow-auto">
+    <table [@stagger]="dataSource.filteredData"
+           [dataSource]="dataSource"
+           class="w-full"
+           mat-table
+           matSort>
+
+      <!-- Model Properties Column -->
+      <ng-container *ngFor="let column of columns">
+
+        <!-- Text Columns -->
+        <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.label }}</th>
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ jmespath.search(row, column.property) }}</td>
+        </ng-container>
+
+        <!-- Date Columns -->
+        <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.label }}</th>
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+            {{ jmespath.search(row, column.property) | date:'dd/MMM/yy HH:mm' }}
+          </td>
+        </ng-container>
+
+        <!-- Image Column -->
+        <ng-container *ngIf="column.type === 'image'" [matColumnDef]="column.property">
+          <th *matHeaderCellDef mat-header-cell></th>
+          <td *matCellDef="let row" class="w-8 min-w-8 pr-0" mat-cell>
+            <img [src]="jmespath.search(row, column.property)" class="avatar h-8 w-8 align-middle">
+          </td>
+        </ng-container>
+
+        <!-- Label columns -->
+        <ng-container *ngIf="column.type === 'label'" [matColumnDef]="column.property">
+          <ng-container *ngIf="column.property === 'permissions'">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.label }}</th>
+            <td *matCellDef="let row" mat-cell>
+              <div fxLayoutAlign="start center" fxLayoutGap="4px">
+                <div *ngFor="let label of jmespath.search(row, column.property)" [ngClass]="column.cssClasses"
+                  class="rounded px-2 py-1 text-xs text-purple bg-purple-light" fxFlex="none">
+                  {{ label }}
+                </div>
+              </div>
+            </td>
+          </ng-container>
+          <ng-container *ngIf="column.property === 'roles'">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.label }}</th>
+            <td *matCellDef="let row" mat-cell>
+              <div fxLayoutAlign="start center" fxLayoutGap="4px">
+                <div *ngFor="let label of jmespath.search(row, column.property)" [ngClass]="column.cssClasses"
+                  class="rounded px-2 py-1 text-xs text-cyan bg-cyan-light" fxFlex="none">
+                  {{ label }}
+                </div>
+              </div>
+            </td>
+          </ng-container>
+          <ng-container *ngIf="column.property === 'active'">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.label }}</th>
+            <td *matCellDef="let row" mat-cell>
+              <div fxLayoutAlign="start center" fxLayoutGap="4px">
+                <div *ngIf="jmespath.search(row, column.property) == 0" [ngClass]="column.cssClasses" class="rounded px-2 py-1 text-xs text-pink bg-pink-light" fxFlex="none">INAKTIF</div>
+                <div *ngIf="jmespath.search(row, column.property) == 1" [ngClass]="column.cssClasses" class="rounded px-2 py-1 text-xs text-teal bg-teal-light" fxFlex="none">AKTIF</div>
+              </div>
+            </td>
+          </ng-container>
+        </ng-container>
+
+        <!-- Button columns -->
+        <ng-container *ngIf="column.type === 'button'" [matColumnDef]="column.property">
+          <ng-container *ngIf="column.property === 'menu'">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.label }}</th>
+            <td *matCellDef="let row" [ngClass]="column.cssClasses" class="w-10" mat-cell>
+              <button (click)="$event.stopPropagation()"
+                      [matMenuTriggerData]="{ jamaah: row }"
+                      [matMenuTriggerFor]="actionsMenu"
+                      mat-icon-button
+                      type="button">
+                <mat-icon [icIcon]="icMoreVert"></mat-icon>
+              </button>
+            </td>
+          </ng-container>
+        </ng-container>
+
+      </ng-container>
+
+      <tr *matHeaderRowDef="visibleColumns; sticky: true" mat-header-row></tr>
+      <tr [routerLink]="['/jamaah', row.id]"
+          *matRowDef="let row; columns: visibleColumns;"
+          @fadeInUp
+          class="hover:bg-hover cursor-pointer"
+          mat-row></tr>
+    </table>
+
+    <div *ngIf="isLoading" @scaleFadeIn class="flex-auto flex flex-col justify-center items-center p-20">
+      <mat-progress-spinner mode="indeterminate" class="text-left"></mat-progress-spinner>
+    </div>
+
+    <div *ngIf="!isLoading && (dataSource.filteredData.length === 0)" @scaleFadeIn
+      class="flex-auto flex flex-col justify-center items-center">
+      <img class="mx-12 mt-12 h-64" src="assets/img/illustrations/idea.svg" />
+      <h2 class="headline m-0 mb-12 text-center">
+        Tidak ada data!
+      </h2>
+    </div>
+
+    <mat-paginator [fxHide]="dataSource.filteredData.length === 0" [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions" class="sticky left-0">
+    </mat-paginator>
+  </div>
+</div>
+
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+  <ng-template let-jamaah="jamaah" matMenuContent>
+    <button mat-menu-item (click)="openDetail.emit(jamaah)">
+      <mat-icon [icIcon]="icEdit"></mat-icon>
+      <span>Edit</span>
+    </button>
+    <button mat-menu-item (click)="deleteJamaah.emit(jamaah)">
+      <mat-icon [icIcon]="icDeleteForever"></mat-icon>
+      <span>Delete</span>
+    </button>
+  </ng-template>
+</mat-menu>

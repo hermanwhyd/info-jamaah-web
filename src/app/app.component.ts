@@ -1,0 +1,146 @@
+import { Component, Inject, LOCALE_ID, Renderer2 } from '@angular/core';
+import { ConfigService } from '../@vex/services/config.service';
+import { Settings } from 'luxon';
+import { DOCUMENT } from '@angular/common';
+import { Platform } from '@angular/cdk/platform';
+import { NavigationService } from '../@vex/services/navigation.service';
+import icLayers from '@iconify/icons-ic/twotone-layers';
+import icCalendar from '@iconify/icons-ic/twotone-calendar-today';
+import icSettings from '@iconify/icons-ic/twotone-settings';
+import icMonitoring from '@iconify/icons-ic/sharp-insert-chart-outlined';
+import { LayoutService } from '../@vex/services/layout.service';
+import { ActivatedRoute } from '@angular/router';
+import { SplashScreenService } from '../@vex/services/splash-screen.service';
+import { StyleService } from '../@vex/services/style.service';
+import icAccountCircle from '@iconify/icons-ic/baseline-people-outline';
+import icTraining from '@iconify/icons-ic/baseline-model-training';
+import icAccountBalance from '@iconify/icons-ic/account-balance';
+import icStyle from '@iconify/icons-ic/style';
+import icCheckedAssignment from '@iconify/icons-ic/assignment-turned-in';
+import { AuthService } from './auth/auth.service';
+
+@Component({
+  selector: 'vex-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+  title = 'BPSDM';
+
+  constructor(private configService: ConfigService,
+              private styleService: StyleService,
+              private renderer: Renderer2,
+              private platform: Platform,
+              @Inject(DOCUMENT) private document: Document,
+              @Inject(LOCALE_ID) private localeId: string,
+              private layoutService: LayoutService,
+              private route: ActivatedRoute,
+              private navigationService: NavigationService,
+              private splashScreenService: SplashScreenService,
+              private authSvc: AuthService) {
+    Settings.defaultLocale = this.localeId;
+
+    if (this.platform.BLINK) {
+      this.renderer.addClass(this.document.body, 'is-blink');
+    }
+
+    this.navigationService.items = [
+      {
+        type: 'dropdown',
+        label: 'Dashboard',
+        icon: icLayers,
+        children: [
+          {
+            type: 'link',
+            label: 'Navigasi',
+            route: '/dashboard'
+          },
+          {
+            type: 'link',
+            label: 'Analisa Diklat',
+            route: '/dashboard/analisa-diklat'
+          },
+          {
+            type: 'link',
+            label: 'Evaluasi Diklat',
+            route: '/dashboard/evaluasi-diklat'
+          }
+        ]
+      },
+      {
+        type: 'link',
+        label: 'Kalender Kegiatan',
+        icon: icCalendar,
+        route: 'event-calendar'
+      },
+      {
+        type: 'subheading',
+        label: 'Workspace',
+        hide: !authSvc.hasAccess(['ADMIN']),
+        children: [
+          {
+            type: 'link',
+            label: 'Jamaah',
+            icon: icTraining,
+            hide: !authSvc.hasAccess(['ADMIN']),
+            route: '/jamaah'
+          },
+          {
+            type: 'link',
+            label: 'Bank Diklat',
+            icon: icAccountBalance,
+            hide: !authSvc.hasAccess(['ADMIN']),
+            route: '/bank-diklat'
+          },
+          {
+            type: 'link',
+            label: 'Kuesioner',
+            icon: icCheckedAssignment,
+            hide: !authSvc.hasAccess(['ADMIN']),
+            route: '/kuesioner'
+          }
+        ]
+      },
+      {
+        type: 'subheading',
+        label: 'Settings',
+        hide: !authSvc.hasAccess(['ADMIN']),
+        children: [
+          {
+            type: 'link',
+            label: 'Users',
+            route: '/user',
+            icon: icAccountCircle,
+            hide: !authSvc.hasAccess(['ADMIN']),
+          },
+          // {
+          //   type: 'link',
+          //   label: 'Monitoring',
+          //   route: '/monitoring',
+          //   icon: icMonitoring,
+          //   hide: !authSvc.hasAccess(['ADMIN']),
+          // },
+          {
+            type: 'link',
+            label: 'Setups',
+            route: '/setup',
+            icon: icSettings,
+            hide: !authSvc.hasAccess(['ADMIN']),
+          }
+        ]
+      },
+      {
+        type: 'subheading',
+        label: 'Customize',
+        children: [
+          {
+            type: 'link',
+            label: 'Personalize',
+            route: () => this.layoutService.openConfigpanel(),
+            icon: icStyle
+          }
+        ]
+      }
+    ];
+  }
+}

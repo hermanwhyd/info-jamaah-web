@@ -1,0 +1,46 @@
+<vex-page-layout mode="simple">
+  <vex-page-layout-content fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="24px" vexContainer>
+    <div @stagger
+         [fxFlex]="menuWidth"
+         class="sticky top-6"
+         fxHide
+         fxLayout="column"
+         fxShow.gt-sm>
+
+        <mat-list class="navigation" fxFlex="grow">
+          <div *ngFor="let item of sidebarMenu">
+            <h5 *ngIf="item.type === 'subheader'" @fadeInRight matSubheader>{{ item.title }}</h5>
+            <a *ngIf="item.type === 'link'" (click)="scrollTo(item)"
+              @fadeInRight
+              [class.bg-hover]="item.active"
+              [class.text-primary]="item.active"
+              class="list-item mb-2 no-underline flex items-center"
+              matRipple>
+              <span>{{ item.title }}</span>
+            </a>
+          </div>
+        </mat-list>
+    </div>
+
+    <div @stagger class="max-w-full" fxLayout="column" fxLayoutGap="24px">
+      <vex-setup-iportal-info @fadeInUp></vex-setup-iportal-info>
+      <vex-setup-enum @fadeInUp
+                      SHAREDPROP_GROUP="EVALUASI_TARGET"
+                      SHAREDPROP_TITLE="SUBYEK KUESIONER"
+                      SHAREDPROP_DESC="Subyek kuesoner adalah target dari evaluasi yang dicanangkan. Seperti Penyelenggara, Pengisi Materi (Widyasuara), atau lainnya.
+                      Pilihan dari setup ini akan muncul saat tambah / edit kuesioner."
+                      ></vex-setup-enum>
+      <vex-setup-enum @fadeInUp
+                      SHAREDPROP_GROUP="DIKLAT_INITIATOR"
+                      SHAREDPROP_TITLE="INISIATOR DIKLAT"
+                      SHAREDPROP_DESC="Inisiator diklat menginformasikan inisiator dari bank diklat. Secara default setiap bank diklat yang dibuat oleh user mobile bertipe NTZ."
+                      ></vex-setup-enum>
+      <vex-setup-banner @fadeInUp></vex-setup-banner>
+      <vex-setup-tag @fadeInUp
+                     TAG_GROUP="DIKLAT_CATEGORY"
+                     TAG_TITLE="KATEGORI DIKLAT"
+                     TAG_DESC="Kategori diklat untuk penggolongan diklat berdasarkan kategori. List kategori akan dampil di mobile apps dan halaman filter Bank Diklat."
+                     ></vex-setup-tag>
+    </div>
+  </vex-page-layout-content>
+</vex-page-layout>

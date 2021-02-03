@@ -1,0 +1,47 @@
+<div class="text-center py-24 header">
+    <div class="container">
+      <h2 @fadeInUp class="display-2 mt-4 mb-8">{{ tagline }}</h2>
+
+      <div @stagger class="mt-24 -mb-16 mx-auto" fxLayout="row" fxLayout.xs="column" fxLayoutGap="24px" fxLayoutGap.xs="16px">
+        <a #rla="routerLinkActive"
+           *ngFor="let link of enabledLink; trackBy: trackByRoute"
+           @fadeInUp
+           [class.border-primary]="rla.isActive"
+           [routerLink]="link.route"
+           class="card block text-center p-6 hover:bg-app-bar trans-ease-out cursor-pointer relative no-underline text-dark border-2"
+           fxFlex
+           fxFlex.xs="auto"
+           fxLayout="column"
+           fxLayoutAlign="center center"
+           matRipple
+           routerLinkActive>
+          <ic-icon [class.text-primary]="rla.isActive" [icon]="link.icon" class="text-hint" size="42px"></ic-icon>
+          <h3 class="title mb-0 mt-4">{{ link.label }}</h3>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-card py-8 px-gutter footer">
+    <h3 class="subheading-2 text-hint text-center max-w-lg mx-auto m-0">
+      {{ description }}
+    </h3>
+
+    <div class="mt-8 max-w-3xl mx-auto" fxLayout="row" fxLayout.xs="column" fxLayoutGap="24px">
+      <a class="text-center p-6 border rounded"
+         fxFlex
+         routerLinkActive>
+        <ic-icon [icon]="icPhoneInTalk" class="text-hint" size="42px"></ic-icon>
+        <h3 class="title mb-0 mt-4">{{ contTelp }}</h3>
+        <h4 class="subheading-2 m-0 text-hint">{{ contTelpDesc }}</h4>
+      </a>
+
+      <a class="text-center p-6 border rounded"
+         fxFlex
+         routerLinkActive>
+        <ic-icon [icon]="icMail" class="text-hint" size="42px"></ic-icon>
+        <h3 class="title mb-0 mt-4">{{ contEmail }}</h3>
+        <h4 class="subheading-2 m-0 text-hint">{{ contEmailDesc }}</h4>
+      </a>
+    </div>
+  </div>
