@@ -16,7 +16,8 @@ export class JamaahService {
   constructor(private httpClient: HttpClient) { }
 
   public getJamaahList(): Observable<GenericRs<Jamaah[]>> {
-    return this.httpClient.get(this.URL) as Observable<GenericRs<Jamaah[]>>;
+    let params = new HttpParams().append('include', 'lvPembinaan');
+    return this.httpClient.get(this.URL, { params }) as Observable<GenericRs<Jamaah[]>>;
   }
 
   public getById(id: number | string, include?: string) {

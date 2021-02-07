@@ -1,3 +1,4 @@
+import { SharedProperty } from 'src/app/types/shared-property.interface';
 import { Contact } from './contact.interface';
 import { Family } from './Family.intereface';
 
@@ -9,7 +10,9 @@ export class Jamaah {
     public gender?: string,
     public birthDate?: Date,
     public pembinaEnum?: string,
-    public photo?: string,
+    public lvPembinaamEnum?: string,
+    public photos?: Photo,
+    public lvPembinaan?: SharedProperty,
     public contacts?: Contact[],
     public details?: JamaahDetail[],
     public family?: Family,
@@ -22,4 +25,9 @@ export interface JamaahDetail {
   typeEnum: string;
   label: string;
   value: string;
+}
+
+export interface Photo {
+  closeup: string;
+  thumb: string;
 }

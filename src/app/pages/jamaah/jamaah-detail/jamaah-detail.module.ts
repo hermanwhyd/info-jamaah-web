@@ -2,13 +2,24 @@ import { NgModule } from '@angular/core';
 import { JamaahDetailComponent } from './jamaah-detail.component';
 import { SharedModule } from 'src/app/common/shared.module';
 import { RouterModule, Routes } from '@angular/router';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { IconModule } from '@visurel/iconify-angular';
 import { PageLayoutModule } from 'src/@vex/components/page-layout/page-layout.module';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTabsModule } from '@angular/material/tabs';
 
 const routes: Routes = [
-  { path: '', component: JamaahDetailComponent }
+  {
+    path: '',
+    component: JamaahDetailComponent,
+    data: {
+      toolbarShadowEnabled: true,
+      containerEnabled: true
+    },
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./jamaah-profile/jamaah-profile.module').then(m => m.JamaahProfileModule)
+      }
+    ]
+  }
 ];
 
 @NgModule({
@@ -17,9 +28,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule,
     PageLayoutModule,
-    IconModule,
-    FlexLayoutModule,
-    MatTooltipModule
+    MatTabsModule
   ]
 })
 export class JamaahDetailModule { }

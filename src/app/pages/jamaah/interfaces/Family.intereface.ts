@@ -5,6 +5,7 @@ import { Residance } from './residance.model';
 export interface Family {
   id: number;
   kepalaKeluargaId: number;
+  label: string;
   residanceId: number;
   residance?: Residance;
   members?: Member[];

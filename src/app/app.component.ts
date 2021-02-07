@@ -7,7 +7,6 @@ import { NavigationService } from '../@vex/services/navigation.service';
 import icLayers from '@iconify/icons-ic/twotone-layers';
 import icCalendar from '@iconify/icons-ic/twotone-calendar-today';
 import icSettings from '@iconify/icons-ic/twotone-settings';
-import icMonitoring from '@iconify/icons-ic/sharp-insert-chart-outlined';
 import { LayoutService } from '../@vex/services/layout.service';
 import { ActivatedRoute } from '@angular/router';
 import { SplashScreenService } from '../@vex/services/splash-screen.service';
@@ -27,17 +26,19 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent {
   title = 'BPSDM';
 
-  constructor(private configService: ConfigService,
-              private styleService: StyleService,
-              private renderer: Renderer2,
-              private platform: Platform,
-              @Inject(DOCUMENT) private document: Document,
-              @Inject(LOCALE_ID) private localeId: string,
-              private layoutService: LayoutService,
-              private route: ActivatedRoute,
-              private navigationService: NavigationService,
-              private splashScreenService: SplashScreenService,
-              private authSvc: AuthService) {
+  constructor(
+    private configService: ConfigService,
+    private styleService: StyleService,
+    private renderer: Renderer2,
+    private platform: Platform,
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(LOCALE_ID) private localeId: string,
+    private layoutService: LayoutService,
+    private route: ActivatedRoute,
+    private navigationService: NavigationService,
+    private splashScreenService: SplashScreenService,
+    private authSvc: AuthService
+  ) {
     Settings.defaultLocale = this.localeId;
 
     if (this.platform.BLINK) {
@@ -87,10 +88,10 @@ export class AppComponent {
           },
           {
             type: 'link',
-            label: 'Bank Diklat',
+            label: 'Benda Sabil',
             icon: icAccountBalance,
             hide: !authSvc.hasAccess(['ADMIN']),
-            route: '/bank-diklat'
+            route: '/benda-sabil'
           },
           {
             type: 'link',
@@ -111,21 +112,14 @@ export class AppComponent {
             label: 'Users',
             route: '/user',
             icon: icAccountCircle,
-            hide: !authSvc.hasAccess(['ADMIN']),
+            hide: !authSvc.hasAccess(['ADMIN'])
           },
-          // {
-          //   type: 'link',
-          //   label: 'Monitoring',
-          //   route: '/monitoring',
-          //   icon: icMonitoring,
-          //   hide: !authSvc.hasAccess(['ADMIN']),
-          // },
           {
             type: 'link',
             label: 'Setups',
             route: '/setup',
             icon: icSettings,
-            hide: !authSvc.hasAccess(['ADMIN']),
+            hide: !authSvc.hasAccess(['ADMIN'])
           }
         ]
       },

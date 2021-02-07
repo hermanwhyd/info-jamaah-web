@@ -1,7 +1,7 @@
 <vex-page-layout mode="card">
-  <vex-page-layout-header class="h-0" fxLayout="row" fxLayoutAlign="space-between center">
-    <div class="flex items-center mt-16" vexContainer fxFlex="auto">
-      <h2 class="headline text-primary-contrast flex items-center w-full mr-6">
+  <vex-page-layout-header class="h-14 pt-4" fxLayout="column" fxLayoutAlign="center start">
+    <div class="flex items-center" vexContainer>
+      <h2 class="headline text-primary-contrast m-0 flex items-center w-full mr-6">
         <button @scaleIn mat-icon-button [routerLink]="['../']">
           <ic-icon [icon]="icArrowBack" height="24px" width="24px"></ic-icon>
         </button>
@@ -9,195 +9,16 @@
       </h2>
     </div>
   </vex-page-layout-header>
-  <vex-page-layout-content class="container mt-20">
-
-    <div class="mt-6 flex flex-col md:flex-row md:items-start">
-
-      <div class="max-w-unset md:max-w-xs mr-6 my-6 md:mt-0 w-full flex-none">
-
-        <div class="card">
-          <div class="px-gutter py-4 border-b">
-            <h2 class="title m-0">Informasi Pribadi</h2>
-          </div>
-
-          <div @stagger class="px-6 py-4 flex justify-center">
-            <img @scaleIn class="avatar h-48 w-48 flex-none align-start border-3 border-white" [src]="model?.photo">
-          </div>
-
-          <div class="px-gutter py-3">
-
-            <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
-              <div @scaleIn
-                class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
-                <ic-icon [icon]="icNumber" size="20px"></ic-icon>
-              </div>
-
-              <div @fadeInRight>
-                <p class="m-0 body-1">{{ model?.fullName }}</p>
-                <p class="m-0 caption text-hint">Nama Lengkap</p>
-              </div>
-            </div>
-
-            <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
-              <div @scaleIn
-                class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
-                <ic-icon [icon]="icNumber" size="20px"></ic-icon>
-              </div>
-
-              <div @fadeInRight>
-                <p class="m-0 body-1">{{ model?.nickname }}</p>
-                <p class="m-0 caption text-hint">Nama Panggilan</p>
-              </div>
-            </div>
-
-            <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
-              <div @scaleIn
-                class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
-                <ic-icon [icon]="faGender" size="20px"></ic-icon>
-              </div>
-
-              <div @fadeInRight>
-                <p class="m-0 body-1">{{ model?.gender }}</p>
-                <p class="m-0 caption text-hint">Gender</p>
-              </div>
-            </div>
-
-            <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
-              <div @scaleIn
-                class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
-                <ic-icon [icon]="icAccessTime" size="20px"></ic-icon>
-              </div>
-
-              <div @fadeInRight>
-                <p class="m-0 body-1">{{model?.birthDate | date:'dd MMM yyyy'}}</p>
-                <p class="m-0 caption text-hint">Tanggal Lahir</p>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="card mt-4" *ngFor="let family of model?.families">
-          <div class="px-gutter py-4 border-b">
-            <h2 class="title m-0">Anggota Keluarga</h2>
-          </div>
-          <div class="px-gutter py-3">
-            <div class="py-3" fxLayout="row" fxLayoutAlign="start center" *ngFor="let item of family?.members">
-              <div @scaleIn
-                class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
-                <ic-icon [icon]="icNumber" size="20px"></ic-icon>
-              </div>
-              <div @fadeInRight fxFlex="auto">
-                <a [routerLink]="['/jamaah', item.jamaahId]" class="m-0 body-1 text-primary underline">{{
-                  item.jamaah.fullName }}</a>
-                <p class="m-0 caption text-hint">{{ item.relationship.label }}</p>
-              </div>
-              <p @scaleIn class="px-2 py-1 rounded-sm font-bold bg-gray-light text-gray">{{ item.status }}</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="flex-auto">
-
-        <div class="card">
-          <div class="px-gutter py-4 border-b">
-            <h2 class="title m-0">Informasi Lainnya</h2>
-          </div>
-          <div class="px-gutter py-4" gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="16px">
-
-            <div class="py-3" fxLayout="row" fxLayoutAlign="start center" *ngFor="let item of model?.details">
-              <div @scaleIn
-                class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
-                <ic-icon [icon]="icWork" size="20px"></ic-icon>
-              </div>
-
-              <div @fadeInRight>
-                <p class="m-0 body-1">{{ item.value}}</p>
-                <p class="m-0 caption text-hint">{{ item.label }}</p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="card mt-4">
-          <div class="px-gutter py-4 border-b">
-            <h2 class="title m-0">Informasi Kontak</h2>
-          </div>
-          <div class="px-gutter py-4" gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="16px">
-
-            <div class="py-3" fxLayout="row" fxLayoutAlign="start center" *ngFor="let item of model?.contacts">
-              <div @scaleIn
-                class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
-                <ic-icon *ngIf="item.contactType === 'phone'" [icon]="icPhone" size="20px"></ic-icon>
-                <ic-icon *ngIf="item.contactType === 'email'" [icon]="icMail" size="20px"></ic-icon>
-              </div>
-
-              <div @fadeInRight>
-                <p class="m-0 body-1">{{ item.label }}</p>
-                <p class="m-0 caption text-hint">{{ item.value}} </p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="card mt-4">
-          <div class="px-gutter py-4 border-b">
-            <h2 class="title m-0">Informasi Tempat Tinggal</h2>
-          </div>
-          <div class="px-gutter py-4">
-
-            <div *ngFor="let item of model?.families">
-              <div class="py-3" fxLayout="row" fxLayoutAlign="start none" *ngIf="item.residance">
-                <div @scaleIn
-                  class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
-                  <ic-icon [icon]="icHome" size="20px"></ic-icon>
-                </div>
-                <div @fadeInRight fxFlex="auto">
-                  <div class="m-0 body-1">
-                    <h3 class="m-0">{{ item.residance?.type.label }}</h3>
-                    <div class="text-secondary">
-                      <p class="m-0">
-                        {{
-                        [
-                        item.residance.address.streetName,
-                        item.residance.address.houseNo,
-                        'RT/RW',
-                        [item.residance.address.rt, item.residance.address.rw].join('/'),
-                        item.residance.address.kelurahan,
-                        item.residance.address.kecamatan,
-                        item.residance.address.city,
-                        item.residance.address.postCode
-                        ].join(' ')
-                        }}
-                      </p>
-                    </div>
-                  </div>
-                  <p class="m-0 caption text-hint">{{item.residance.label}}</p>
-                </div>
-                <a *ngIf="item.residance.address.geo" target="blank"
-                  href="https://map.google.com?q={{ item.residance.address.geo }}" @scaleIn
-                  class="ml-3 w-10 h-10 rounded-full bg-green-light text-green flex items-center justify-center">
-                  <ic-icon [icon]="icMap" size="20px"></ic-icon>
-                </a>
-                <div *ngIf="!item.residance.address.geo" target="blank" href="#" @scaleIn
-                  class="ml-3 w-10 h-10 rounded-full bg-gray-light text-gray flex items-center justify-center">
-                  <ic-icon [icon]="icMap" size="20px"></ic-icon>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-
+  <vex-page-layout-content class="container">
+    <div class="z-10 relative bg-white mt-4 rounded-t-sm">
+      <nav class="vex-tabs vex-tabs-dense border-0" mat-tab-nav-bar>
+        <a #rla="routerLinkActive" *ngFor="let link of links" [active]="rla.isActive" [disabled]="link.disabled"
+          [routerLink]="link.route" mat-tab-link queryParamsHandling="preserve"
+          [routerLinkActiveOptions]="link.routerLinkActiveOptions || { exact: false }" routerLinkActive>
+          {{ link.label }}
+        </a>
+      </nav>
     </div>
-
+    <router-outlet></router-outlet>
   </vex-page-layout-content>
-
 </vex-page-layout>
