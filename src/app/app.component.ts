@@ -24,7 +24,7 @@ import { AuthService } from './auth/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'BPSDM';
+  title = 'INFO JM';
 
   constructor(
     private configService: ConfigService,

@@ -77,7 +77,7 @@
             <ic-icon [icon]="icNumber" size="20px"></ic-icon>
           </div>
           <div @fadeInRight fxFlex="auto">
-            <a [routerLink]="['/jamaah', item.jamaahId]" class="m-0 body-1 text-primary underline">{{
+            <a [routerLink]="['/jamaah', item.jamaahId]" class="m-0 body-1 text-primary hover:underline">{{
               item.jamaah.fullName }}</a>
             <p class="m-0 caption text-hint">{{ item.relationship.label }}</p>
           </div>

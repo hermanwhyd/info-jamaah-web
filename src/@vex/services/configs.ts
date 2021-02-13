@@ -9,8 +9,8 @@ const defaultConfig: Config = {
   layout: 'horizontal',
   boxed: false,
   sidenav: {
-    title: 'IPORTAL JAMAAH',
-    imageUrl: 'assets/img/bpsdm/bpsdm-logo-small.png',
+    title: 'IPORTAL JM',
+    imageUrl: 'assets/img/japos/logo-mu-trans.png',
     showCollapsePin: true,
     state: 'expanded'
   },

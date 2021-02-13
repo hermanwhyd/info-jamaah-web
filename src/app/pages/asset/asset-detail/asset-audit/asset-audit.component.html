@@ -1,0 +1,130 @@
+<div class="bg-card py-10 px-gutter">
+  <h2 @fadeInUp class="display-1 mt-0 mb-4 text-center">Audit (Pemeriksaan)</h2>
+  <h3 @fadeInUp class="subheading-2 text-hint max-w-3xl text-center mx-auto m-0">
+    Barang SB perlu dilakukan audit secara berkala untuk melihat apakah ada perubahan, perpindahan, dan melihat kondisi
+    dalam bentuk dokumentasi foto terbaru. <br />
+    Halaman ini digunakan untuk mencatata setiap ada audit yang dilakukan, untuk dilaporkan dan dijadwalkan perawatan
+    setiap
+    tahunnya.
+  </h3>
+</div>
+
+<div class="mt-4 card">
+  <div class="card overflow-auto">
+    <div class="bg-app-bar px-6 h-16 border-b sticky left-0" fxLayout="row" fxLayoutAlign="start center">
+      <h2 fxHide.xs class="title my-0 ltr:pr-4 rtl:pl-4 ltr:mr-4 rtl:ml-4 ltr:border-r rtl:border-l" fxFlex="none"
+        fxHide.xs>
+        Pemeriksaan
+      </h2>
+
+      <div class="bg-card rounded-full border px-4" fxFlex="400px" fxFlex.lt-md="auto" fxLayout="row"
+        fxLayoutAlign="start center">
+        <ic-icon [icIcon]="icSearch" size="20px"></ic-icon>
+        <input [formControl]="searchCtrl" class="px-4 py-3 border-0 outline-none w-full bg-transparent"
+          placeholder="Cari..." type="search">
+      </div>
+
+      <span fxFlex></span>
+
+      <button [routerLink]="'./create'" class="ml-4" color="primary" fxFlex="none" mat-mini-fab matTooltip="Tambah Baru"
+        type="button">
+        <mat-icon [icIcon]="icAdd"></mat-icon>
+      </button>
+      <button mat-mini-fab matTooltip="Refresh Data" color="primary" fxFlex="none" type="button"
+        (click)="fetchModels()">
+        <mat-icon [icIcon]="icReload"></mat-icon>
+      </button>
+      <button mat-mini-fab matTooltip="Filter Kolom" color="primary" fxFlex="none" type="button"
+        [matMenuTriggerFor]="columnFilterMenu">
+        <mat-icon [icIcon]="icColumn"></mat-icon>
+      </button>
+    </div>
+
+    <table @stagger [dataSource]="dataSource" class="w-full" mat-table matSort>
+
+      <!-- Model Properties Column -->
+      <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+        <!-- Text Columns -->
+        <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
+          <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+            {{ jmespath.search(row, column.property) }}
+          </td>
+        </ng-container>
+
+        <!-- Date Columns -->
+        <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>
+            {{ column.label }}
+          </th>
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+            {{ jmespath.search(row, column.property) | date:'d MMM yyyy HH:mm' }}
+          </td>
+        </ng-container>
+
+        <!-- Number Columns -->
+        <ng-container *ngIf="column.type === 'number'" [matColumnDef]="column.property">
+          <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+            {{ jmespath.search(row, column.property) | number }}
+          </td>
+        </ng-container>
+
+        <!-- Button columns -->
+        <ng-container *ngIf="column.type === 'button'" [matColumnDef]="column.property">
+          <ng-container *ngIf="column.property === 'menu'">
+            <th *matHeaderCellDef mat-header-cell></th>
+            <td *matCellDef="let row" [ngClass]="column.cssClasses" class="w-10" mat-cell>
+              <button (click)="$event.stopPropagation()" [matMenuTriggerData]="{ model: row }"
+                [matMenuTriggerFor]="actionsMenu" mat-icon-button type="button">
+                <mat-icon [icIcon]="icMoreVert"></mat-icon>
+              </button>
+            </td>
+          </ng-container>
+        </ng-container>
+
+      </ng-container>
+
+      <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: visibleColumns;" @fadeInUp class="hover:bg-hover trans-ease-out cursor-pointer"
+        mat-row>
+      </tr>
+    </table>
+
+    <div *ngIf="loadingSubject | async" @scaleFadeIn class="flex-auto flex flex-col justify-center items-center p-20">
+      <mat-progress-spinner mode="indeterminate" class="text-left"></mat-progress-spinner>
+    </div>
+
+    <div *ngIf="!(loadingSubject | async) && (dataSource.filteredData.length === 0)" @scaleFadeIn
+      class="flex-auto flex flex-col justify-center items-center">
+      <img class="mx-12 mt-12 h-64" src="assets/img/illustrations/idea.svg" />
+      <h2 class="headline m-0 mb-12 text-center">
+        Tidak ada data!
+      </h2>
+    </div>
+
+    <mat-paginator [fxHide]="dataSource.filteredData.length === 0" [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions" class="sticky left-0">
+    </mat-paginator>
+  </div>
+</div>
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+  <ng-template let-model="model" matMenuContent>
+    <button [routerLink]="['./edit'][model.id]" mat-menu-item>
+      <mat-icon [icIcon]="icEdit"></mat-icon>
+      <span>Modify</span>
+    </button>
+    <button (click)="onDeleteModel(model)" mat-menu-item>
+      <mat-icon [icIcon]="icDelete"></mat-icon>
+      <span>Delete</span>
+    </button>
+  </ng-template>
+</mat-menu>
+<mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
+  <button (click)="toggleColumnVisibility(column, $event)" *ngFor="let column of columns"
+    class="checkbox-item mat-menu-item">
+    <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="column.visible" color="primary">
+      {{ column.label }}
+    </mat-checkbox>
+  </button>
+</mat-menu>
