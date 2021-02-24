@@ -65,7 +65,8 @@
               "apexcharts",
               "lodash",
               "file-saver",
-              "jmespath"
+              "jmespath",
+              "qrcode"
             ]
           },
           "configurations": {
@@ -158,6 +159,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "vex"
 }
