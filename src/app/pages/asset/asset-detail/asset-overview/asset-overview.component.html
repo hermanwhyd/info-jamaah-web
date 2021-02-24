@@ -38,7 +38,7 @@
         <span class="rounded-sm px-2 py-1 bg-green-light text-green">{{model?.status.label}}</span>
       </div>
       <div class="flex-none justify-items-end">
-        <img class="rounded" src="/assets/img/default/default-img.png" height="100px" width="100px" />
+        <qrcode [qrdata]="model?.tagNo" [width]="100" [errorCorrectionLevel]="'M'" margin="0"></qrcode>
       </div>
     </div>
   </div>
