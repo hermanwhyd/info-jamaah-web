@@ -30,17 +30,24 @@
     </table>
   </div>
 
-  <div class="p-4 max-w-unset md:max-w-md flex-none">
-    <img class="rounded" src="/assets/img/default/default-img.png" height="400px" width="400px" />
+  <div class="p-4 max-w-unset md:max-w-md w-full flex-none">
     <div class="py-4 flex flex-row">
       <div class="flex-auto">
         <h3>Status Terakhir</h3>
         <span class="rounded-sm px-2 py-1 bg-green-light text-green">{{model?.status.label}}</span>
       </div>
       <div class="flex-none justify-items-end">
-        <qrcode [qrdata]="model?.tagNo" [width]="100" [errorCorrectionLevel]="'M'" margin="0"></qrcode>
+        <img *ngIf="!model?.tagNo" class="rounded" src="/assets/img/default/default-img.png" height="150px"
+          width="150px" />
+        <qrcode *ngIf="model?.tagNo" [qrdata]="model?.tagNo" [width]="150" [errorCorrectionLevel]="'M'" margin="0">
+        </qrcode>
       </div>
     </div>
   </div>
+</div>
 
+<div class="mt-4 card p-gutter">
+  <img *ngIf="!imageObject" class="rounded" src="/assets/img/default/default-img-hori.png" height="200" width="auto" />
+  <ng-image-slider *ngIf="imageObject" #nav [images]="imageObject" [infinite]="false" [autoSlide]="1"
+    [imageSize]="{height: 200}" slideImage="2" [animationSpeed]="0.5"></ng-image-slider>
 </div>

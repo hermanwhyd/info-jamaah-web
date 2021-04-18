@@ -4,6 +4,8 @@ import { SharedModule } from 'src/app/common/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { PageLayoutModule } from 'src/@vex/components/page-layout/page-layout.module';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FilePickerModule } from 'ngx-awesome-uploader';
 
 const routes: Routes = [
   {
@@ -40,7 +42,9 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule,
     PageLayoutModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDialogModule,
+    FilePickerModule
   ]
 })
 export class AssetDetailModule { }

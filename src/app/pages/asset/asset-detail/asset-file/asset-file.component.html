@@ -41,11 +41,12 @@
           </td>
         </ng-container>
 
-        <!-- Icon Columns -->
-        <ng-container *ngIf="column.type === 'icon'" [matColumnDef]="column.property">
-          <th *matHeaderCellDef class="uppercase" mat-header-cell> {{ column.label }}</th>
-          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
-            ICON
+        <!-- Image Column -->
+        <ng-container *ngIf="column.type === 'image'" [matColumnDef]="column.property">
+          <th *matHeaderCellDef mat-header-cell></th>
+          <td *matCellDef="let row" class="w-8 min-w-8 pr-0" mat-cell>
+            <img *ngIf="jmespath.search(row, column.property)" [src]="jmespath.search(row, column.property)"
+              class="avatar h-8 w-8 align-middle">
           </td>
         </ng-container>
 
@@ -107,7 +108,7 @@
 </div>
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
   <ng-template let-model="model" matMenuContent>
-    <button mat-menu-item>
+    <button (click)="onDownloadModel(model)" mat-menu-item>
       <mat-icon [icIcon]="icDownload"></mat-icon>
       <span>Download</span>
     </button>

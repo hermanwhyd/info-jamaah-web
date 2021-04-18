@@ -1,0 +1,63 @@
+<form (ngSubmit)="submit()" [formGroup]="form">
+  <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+    <h2 class="headline m-0" fxFlex="auto">{{ form.get('title').value || 'Perawatan baru' }}</h2>
+
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon [icIcon]="icClose"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+
+  <mat-dialog-content fxLayout="column">
+    <mat-form-field appearance="outline">
+      <mat-label>Judul</mat-label>
+      <input cdkFocusInitial formControlName="title" matInput>
+      <mat-error *ngIf="(formControl.title.touched || submitted) && formControl.title.errors?.required">
+        Judul harus diisi
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Catatan</mat-label>
+      <input cdkFocusInitial #notes formControlName="notes" matInput autocomplete="off" maxlength="150">
+      <mat-hint align="end">{{notes.value.length}} / 150</mat-hint>
+      <mat-error *ngIf="(formControl.notes.touched || submitted) && formControl.notes.errors?.required">
+        Catatan harus diisi
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tgl Mulai</mat-label>
+      <input cdkFocusInitial formControlName="startDate" matInput>
+      <mat-error *ngIf="(formControl.startDate.touched || submitted) && formControl.startDate.errors?.required">
+        Tgl Mulai harus diisi
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tgl Selesai</mat-label>
+      <input cdkFocusInitial formControlName="endDate" matInput>
+      <mat-error *ngIf="(formControl.endDate.touched || submitted) && formControl.endDate.errors?.required">
+        Tgl Selesai harus diisi
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Penyedia Jasa</mat-label>
+      <mat-select formControlName="supplierId">
+        <option [ngValue]="null" disabled>Pilih penyedia jasa</option>
+        <mat-option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.title }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="(formControl.supplierId.touched || submitted) && formControl.supplierId.errors?.required">
+        Penyedia Jasa harus dipilih
+      </mat-error>
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">CANCEL</button>
+    <button color="primary" mat-button type="submit" [disabled]="!submitable">SIMPAN</button>
+  </mat-dialog-actions>
+</form>

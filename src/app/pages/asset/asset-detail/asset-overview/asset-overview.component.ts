@@ -34,7 +34,7 @@ import { AssetService } from '../../service/asset.service';
     fadeInRight400ms,
     scaleIn400ms,
     stagger40ms
-  ]
+  ],
 })
 export class AssetOverviewComponent implements OnInit {
 
@@ -55,6 +55,8 @@ export class AssetOverviewComponent implements OnInit {
 
   model: Asset;
 
+  imageObject: any[];
+
   constructor(private route: ActivatedRoute, private assetSvc: AssetService) { }
 
   ngOnInit(): void {
@@ -66,8 +68,16 @@ export class AssetOverviewComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(params => {
         const id = params.get('id');
-        this.assetSvc.getById(id, 'owner,location,status,details').subscribe(g => {
+        this.assetSvc.getById(id, 'owner,location,status,details,photos').subscribe(g => {
           this.model = g.data;
+          this.imageObject = [];
+          this.model.photos.forEach(p => {
+            this.imageObject.push({
+              image: p.file?.url,
+              thumbImage: p.file?.thumb,
+              title: p.properties?.notes
+            });
+          });
         });
       });
   }

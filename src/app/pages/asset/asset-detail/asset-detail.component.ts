@@ -10,6 +10,8 @@ import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AssetService } from '../service/asset.service';
 import { Asset } from '../interfaces/asset.model';
+import { MatDialog } from '@angular/material/dialog';
+import { AssetUploadComponent } from '../asset-upload/asset-upload.component';
 
 @UntilDestroy()
 @Component({
@@ -47,7 +49,10 @@ export class AssetDetailComponent implements OnInit {
     }
   ];
 
-  constructor(private route: ActivatedRoute, private assetSvc: AssetService) { }
+  constructor(private route: ActivatedRoute,
+    private assetSvc: AssetService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.initModel();
@@ -63,4 +68,15 @@ export class AssetDetailComponent implements OnInit {
         });
       });
   }
+
+  uploadFile() {
+    this.dialog.open(AssetUploadComponent, {
+      data: { model: this.model },
+      width: '500px',
+    })
+      .afterClosed().subscribe((isSuccess: boolean) => {
+        console.log(isSuccess);
+      });
+  }
+
 }

@@ -54,7 +54,7 @@ export class AssetComponent implements OnInit {
   assets: Asset[] = [];
 
   tableColumns: TableColumn<Asset>[] = [
-    { label: 'IMAGE', property: 'photos.thumb', type: 'image' },
+    { label: 'IMAGE', property: 'avatar', type: 'image' },
     { label: 'NAMA ASET', property: 'title', type: 'text', cssClasses: ['text-secondary'] },
     { label: 'TAG ASET', property: 'tagNo', type: 'text', cssClasses: ['text-secondary'] },
     { label: 'KATEGORI', property: 'category.label', type: 'text', cssClasses: ['text-secondary'] },

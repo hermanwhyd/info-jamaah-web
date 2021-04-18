@@ -9,6 +9,7 @@ export interface Asset {
   statusEnum: string;
   locationId: number;
   ownerEnum: string;
+  avatar: string;
   category?: SharedProperty;
   status?: SharedProperty;
   owner?: Owner;
@@ -16,7 +17,8 @@ export interface Asset {
   details?: Detail[];
   maintenances?: AssetMaintenance[];
   audits?: AssetAudit[];
-  medias?: AssetMedia[];
+  media?: AssetMedia[];
+  photos?: AssetMedia[];
 }
 
 export interface Detail {
@@ -43,6 +45,7 @@ export interface Owner {
 export interface AssetMaintenance {
   id: number;
   assetId: number;
+  supplierId: number;
   title: string;
   typeEnum: string;
   notes: string;
@@ -71,4 +74,21 @@ export interface AssetAudit {
 
 export interface AssetMedia {
   id: number;
+  uuid: string;
+  name: string;
+  collection: SharedProperty;
+  mimeType: string;
+  size: number;
+  disk: string;
+  file: FileUrl;
+  properties: any;
+  createdAt: Date;
 }
+
+export interface FileUrl {
+  thumb: string;
+  url: string;
+  download: string;
+}
+
+

@@ -32,6 +32,8 @@ import { scaleFadeIn400ms } from 'src/@vex/animations/scale-fade-in.animation';
 import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
 import { stagger40ms } from 'src/@vex/animations/stagger.animation';
 import jmespath from 'jmespath';
+import { AssetMaintenanceEditComponent } from './asset-maintenance-edit/asset-maintenance-edit.component';
+import { GenericRs } from 'src/app/types/generic-rs.model';
 
 @UntilDestroy()
 @Component({
@@ -165,6 +167,41 @@ export class AssetMaintenanceComponent implements OnInit, AfterViewInit {
     this.menuOpen = true;
   }
 
+  createOrUpdateModel(model?: AssetMaintenance) {
+    this.dialog.open(AssetMaintenanceEditComponent, {
+      data: {
+        model: model || {} as AssetMaintenance,
+        suppliers: [{ id: 1, title: 'Aslamba Qania' }, { id: 2, title: 'ISS' }]
+      },
+      width: '500px',
+      disableClose: true
+    })
+      .afterClosed().subscribe((newModel: AssetMaintenance) => {
+        if (!newModel) { return; }
+
+        // creation or update existing
+        this.assetSvc.saveOrUpdateMaintenance(newModel)
+          .subscribe({
+            next: rs => {
+              const asset = this.assetSubject.getValue();
+              // Update or create
+              if (model) {
+                const index = _.findIndex(asset.maintenances, model);
+                asset.maintenances[index] = rs.data;
+              } else {
+                asset.maintenances.unshift(rs.data);
+              }
+
+              this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: 'Data berhasil disimpan', type: 'success' } });
+            },
+            error: (err: GenericRs<AssetMaintenance>) => {
+              this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: err.message, type: 'danger' } });
+              this.createOrUpdateModel(newModel);
+            }
+          });
+      });
+  }
+
   onDeleteModel(model: AssetMaintenance) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
@@ -182,15 +219,14 @@ export class AssetMaintenanceComponent implements OnInit, AfterViewInit {
           .subscribe(() => {
             const asset = this.assetSubject.getValue();
             _.remove(asset.maintenances, { id: model.id });
+            this.assetSubject.next(asset);
+            this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: 'Berhasil menghapus data!', type: 'success' } });
           }, err => {
-            this.snackBar.openFromComponent(
-              SnackbarNotifComponent,
-              {
-                data: {
-                  message: err.message || 'Gagal menghapus data!',
-                  type: 'danger'
-                }
-              });
+            this.snackBar.openFromComponent(SnackbarNotifComponent, {
+              data: {
+                message: err.message || 'Gagal menghapus data!', type: 'danger'
+              }
+            });
           });
       }
     });

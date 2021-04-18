@@ -24,6 +24,7 @@ import { ConfirmationDialogComponent } from 'src/app/utilities/confirmation-dial
 import { MatDialog } from '@angular/material/dialog';
 
 import _ from 'lodash';
+import fileSaver from 'file-saver';
 
 import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackbar-notif.component';
 import { fadeInRight400ms } from 'src/@vex/animations/fade-in-right.animation';
@@ -32,6 +33,7 @@ import { scaleFadeIn400ms } from 'src/@vex/animations/scale-fade-in.animation';
 import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
 import { stagger40ms } from 'src/@vex/animations/stagger.animation';
 import jmespath from 'jmespath';
+import { MediaService } from 'src/app/services/media.service';
 
 @UntilDestroy()
 @Component({
@@ -76,11 +78,12 @@ export class AssetFileComponent implements OnInit, AfterViewInit {
   menuOpen = false;
 
   columns: TableColumn<AssetMedia>[] = [
-    { label: 'ICON', property: 'icon', type: 'icon', visible: true, cssClasses: ['font-medium'] },
-    { label: 'FILE', property: 'filename', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'NOTES', property: 'notes', type: 'text', visible: true, cssClasses: ['text-secondary'] },
-    { label: 'GAMBAR', property: 'mediaUrl', type: 'text', visible: true, cssClasses: ['text-secondary'] },
-    { label: 'TGL DIBUAT', property: 'createdAt', type: 'date', visible: true, cssClasses: ['text-secondary'] },
+    { label: 'NAMA FILE', property: 'name', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'JENIS MIME', property: 'mimeType', type: 'text', visible: true, cssClasses: ['text-secondary'] },
+    { label: 'GAMBAR', property: 'file.thumb', type: 'image', visible: true, cssClasses: ['text-secondary'] },
+    { label: 'CATATAN', property: 'properties.notes', type: 'text', visible: true, cssClasses: ['text-secondary'] },
+    { label: 'TGL UPLOAD', property: 'createdAt', type: 'date', visible: true, cssClasses: ['text-secondary'] },
+    { label: 'Ukuran (KB)', property: 'size', type: 'number', visible: true, cssClasses: ['text-secondary'] },
     { label: 'ACTION', property: 'menu', type: 'button', visible: true, cssClasses: ['text-secondary', 'w-10'] }
   ];
 
@@ -88,6 +91,7 @@ export class AssetFileComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(
     private assetSvc: AssetService,
+    private mediaSvc: MediaService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
@@ -111,7 +115,7 @@ export class AssetFileComponent implements OnInit, AfterViewInit {
 
   fetchModels() {
     this.loadingSubject.next(true);
-    this.assetSvc.getById(this.assetId, 'medias')
+    this.assetSvc.getById(this.assetId, 'media')
       .pipe(finalize(() => this.loadingSubject.next(false)))
       .subscribe(rs => {
         this.assetSubject.next(rs.data);
@@ -128,7 +132,7 @@ export class AssetFileComponent implements OnInit, AfterViewInit {
     this.asset$.pipe(
       filter<Asset>(Boolean)
     ).subscribe(a => {
-      this.dataSource.data = a.medias;
+      this.dataSource.data = a.media;
     });
   }
 
@@ -167,7 +171,7 @@ export class AssetFileComponent implements OnInit, AfterViewInit {
   onDeleteModel(model: AssetMedia) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        message: `Apakah Anda ingin menghapus file <strong>${model.id}</strong>?`,
+        message: `Apakah Anda ingin menghapus file <strong>${model.name}</strong>?`,
         buttonText: {
           ok: 'Ya',
           cancel: 'Batal'
@@ -193,5 +197,13 @@ export class AssetFileComponent implements OnInit, AfterViewInit {
           });
       }
     });
+  }
+
+  onDownloadModel(model: AssetMedia) {
+    this.mediaSvc.downloadSigle(model.uuid)
+      .subscribe(rs => {
+        const blob: any = new Blob([rs], { type: model.mimeType });
+        fileSaver.saveAs(blob, model.name);
+      });
   }
 }

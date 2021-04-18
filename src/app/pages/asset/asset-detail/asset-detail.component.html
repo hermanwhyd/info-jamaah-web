@@ -10,7 +10,7 @@
     </div>
   </vex-page-layout-header>
   <vex-page-layout-content class="container">
-    <div fxLayout="row" fxLayoutAlign="start center" class="z-10 relative bg-white mt-4 rounded-t-sm">
+    <div fxLayout="row" fxLayoutAlign="start center" class="relative bg-white mt-4 rounded-t-sm">
       <nav class="vex-tabs vex-tabs-dense border-0" fxFlex="auto" mat-tab-nav-bar>
         <a #rla="routerLinkActive" *ngFor="let link of links" [active]="rla.isActive" [disabled]="link.disabled"
           [routerLink]="link.route" mat-tab-link queryParamsHandling="preserve"
@@ -18,7 +18,7 @@
           {{ link.label }}
         </a>
       </nav>
-      <button class="text-secondary uppercase font-medium sm:mr-4" mat-button type="button">
+      <button (click)="uploadFile()" class="text-secondary uppercase font-medium sm:mr-4" mat-button type="button">
         <ic-icon [icon]="icAttachFile" [inline]="true" class="sm:-ml-1 sm:mr-2" size="20px"></ic-icon>
         <span class="text-xs hidden sm:inline-block">Gambar/Dokumen</span>
       </button>
