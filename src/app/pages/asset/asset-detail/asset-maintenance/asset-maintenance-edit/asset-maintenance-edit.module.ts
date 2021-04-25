@@ -23,13 +23,13 @@ import { AssetMaintenanceEditComponent } from './asset-maintenance-edit.componen
     FlexLayoutModule,
     MatInputModule,
     MatDividerModule,
-    MatDatepickerModule,
     IconModule,
     ReactiveFormsModule,
     MatMenuModule,
     MatButtonModule,
-    MatNativeDateModule,
-    MatSelectModule
-  ]
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
 })
 export class AssetMaintenanceEditModule { }

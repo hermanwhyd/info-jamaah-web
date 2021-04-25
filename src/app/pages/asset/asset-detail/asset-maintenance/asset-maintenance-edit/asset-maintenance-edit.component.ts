@@ -6,12 +6,18 @@ import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 import icClose from '@iconify/icons-ic/twotone-close';
 import icDelete from '@iconify/icons-ic/twotone-delete';
 import { AssetMaintenance, Supplier } from '../../../interfaces/asset.model';
-import { compareObjectId } from 'src/app/utilities/function/comparator';
+import { SharedProperty } from 'src/app/types/shared-property.interface';
+import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/helpers/format-datepicker';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 
 @Component({
   selector: 'vex-asset-maintenance-edit',
   templateUrl: './asset-maintenance-edit.component.html',
-  styleUrls: ['./asset-maintenance-edit.component.scss']
+  styleUrls: ['./asset-maintenance-edit.component.scss'],
+  providers: [
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+  ],
 })
 export class AssetMaintenanceEditComponent implements OnInit {
 
@@ -19,13 +25,12 @@ export class AssetMaintenanceEditComponent implements OnInit {
   icClose = icClose;
   icDelete = icDelete;
 
-  compareObjectId = compareObjectId;
-
   isNew = true;
   submitted = false;
 
   model: AssetMaintenance;
   suppliers: Supplier[];
+  types: SharedProperty[];
 
   form = this.fb.group({
     id: null,
@@ -45,11 +50,10 @@ export class AssetMaintenanceEditComponent implements OnInit {
   ngOnInit(): void {
     this.model = this.data.model;
     this.suppliers = this.data.suppliers;
+    this.types = this.data.types;
 
-    if (this.model.id) {
-      this.isNew = true;
-      this.form.patchValue(this.model);
-    }
+    this.isNew = this.model.id == null;
+    this.form.patchValue(this.model);
   }
 
   get submitable(): boolean {

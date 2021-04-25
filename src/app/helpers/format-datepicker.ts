@@ -1,11 +1,12 @@
+import { Injectable } from '@angular/core';
 import { MatDateFormats, NativeDateAdapter } from '@angular/material/core';
 import { DateTime } from 'luxon';
-
+@Injectable()
 export class AppDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: any): string {
     if (displayFormat === 'input') {
       const dt = DateTime.fromJSDate(date);
-      return dt.toFormat('dd/MMM/yyyy');
+      return dt.toFormat('dd/MM/yyyy');
     }
     return date.toDateString();
   }

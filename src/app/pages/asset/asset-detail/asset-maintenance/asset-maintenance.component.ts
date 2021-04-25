@@ -170,8 +170,9 @@ export class AssetMaintenanceComponent implements OnInit, AfterViewInit {
   createOrUpdateModel(model?: AssetMaintenance) {
     this.dialog.open(AssetMaintenanceEditComponent, {
       data: {
-        model: model || {} as AssetMaintenance,
-        suppliers: [{ id: 1, title: 'Aslamba Qania' }, { id: 2, title: 'ISS' }]
+        model: model || { assetId: this.assetId } as AssetMaintenance,
+        suppliers: [{ id: 1, title: 'Aslamba Qania' }, { id: 2, title: 'ISS' }],
+        types: [{ code: 'RPR', label: 'Perbaikan' }, { code: 'MNT', label: 'Perawatan rutin' }]
       },
       width: '500px',
       disableClose: true

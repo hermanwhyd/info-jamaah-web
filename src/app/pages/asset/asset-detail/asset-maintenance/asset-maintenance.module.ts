@@ -9,6 +9,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { SnackbarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
 import { ConfirmationDialogModule } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.module';
 import { MatTableFamilyModule } from 'src/app/common/mat-table-family.module';
+import { AssetMaintenanceEditModule } from './asset-maintenance-edit/asset-maintenance-edit.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
     SnackbarNotifModule,
     ConfirmationDialogModule,
     MatProgressSpinnerModule,
+    AssetMaintenanceEditModule,
     MatCheckboxModule
   ]
 })

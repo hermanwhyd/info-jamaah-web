@@ -5,9 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VexModule } from '../@vex/vex.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CustomLayoutModule } from './custom-layout/custom-layout.module';
 import { AuthModule } from './auth/auth.module';
+import { JsonDateInterceptor } from './config/json-date.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,13 @@ import { AuthModule } from './auth/auth.module';
     VexModule,
     CustomLayoutModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JsonDateInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
