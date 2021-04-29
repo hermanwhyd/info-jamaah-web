@@ -26,8 +26,8 @@
 
       <span fxFlex></span>
 
-      <button [routerLink]="'./create'" class="ml-4" color="primary" fxFlex="none" mat-mini-fab matTooltip="Tambah Baru"
-        type="button">
+      <button (click)="createOrUpdateModel()" class="ml-4" color="primary" fxFlex="none" mat-mini-fab
+        matTooltip="Tambah Baru" type="button">
         <mat-icon [icIcon]="icAdd"></mat-icon>
       </button>
       <button mat-mini-fab matTooltip="Refresh Data" color="primary" fxFlex="none" type="button"
@@ -58,7 +58,7 @@
             {{ column.label }}
           </th>
           <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
-            {{ jmespath.search(row, column.property) | date:'d MMM yyyy HH:mm' }}
+            {{ jmespath.search(row, column.property) | date:'d MMM yyyy' }}
           </td>
         </ng-container>
 
@@ -86,8 +86,8 @@
       </ng-container>
 
       <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
-      <tr *matRowDef="let row; columns: visibleColumns;" @fadeInUp class="hover:bg-hover trans-ease-out cursor-pointer"
-        mat-row>
+      <tr *matRowDef="let row; columns: visibleColumns;" (click)="createOrUpdateModel(row)" @fadeInUp
+        class="hover:bg-hover trans-ease-out cursor-pointer" mat-row>
       </tr>
     </table>
 
@@ -110,7 +110,7 @@
 </div>
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
   <ng-template let-model="model" matMenuContent>
-    <button [routerLink]="['./edit'][model.id]" mat-menu-item>
+    <button (click)="createOrUpdateModel(model)" mat-menu-item>
       <mat-icon [icIcon]="icEdit"></mat-icon>
       <span>Modify</span>
     </button>

@@ -192,7 +192,7 @@ export class AssetMaintenanceComponent implements OnInit, AfterViewInit {
               } else {
                 asset.maintenances.unshift(rs.data);
               }
-
+              this.assetSubject.next(asset);
               this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: 'Data berhasil disimpan', type: 'success' } });
             },
             error: (err: GenericRs<AssetMaintenance>) => {
@@ -217,17 +217,20 @@ export class AssetMaintenanceComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         this.assetSvc.deleteMaintenance(model.id)
-          .subscribe(() => {
-            const asset = this.assetSubject.getValue();
-            _.remove(asset.maintenances, { id: model.id });
-            this.assetSubject.next(asset);
-            this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: 'Berhasil menghapus data!', type: 'success' } });
-          }, err => {
-            this.snackBar.openFromComponent(SnackbarNotifComponent, {
-              data: {
-                message: err.message || 'Gagal menghapus data!', type: 'danger'
-              }
-            });
+          .subscribe({
+            next: () => {
+              const asset = this.assetSubject.getValue();
+              _.remove(asset.maintenances, { id: model.id });
+              this.assetSubject.next(asset);
+              this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: 'Berhasil menghapus data!', type: 'success' } });
+            },
+            error: err => {
+              this.snackBar.openFromComponent(SnackbarNotifComponent, {
+                data: {
+                  message: err.message || 'Gagal menghapus data!', type: 'danger'
+                }
+              });
+            }
           });
       }
     });

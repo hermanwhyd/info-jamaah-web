@@ -32,6 +32,8 @@ import { scaleFadeIn400ms } from 'src/@vex/animations/scale-fade-in.animation';
 import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
 import { stagger40ms } from 'src/@vex/animations/stagger.animation';
 import jmespath from 'jmespath';
+import { AssetAuditEditComponent } from './asset-audit-edit/asset-audit-edit.component';
+import { GenericRs } from 'src/app/types/generic-rs.model';
 
 @UntilDestroy()
 @Component({
@@ -163,6 +165,42 @@ export class AssetAuditComponent implements OnInit, AfterViewInit {
     this.menuOpen = true;
   }
 
+  createOrUpdateModel(model?: AssetAudit) {
+    this.dialog.open(AssetAuditEditComponent, {
+      data: {
+        model: model || { assetId: this.assetId } as AssetAudit,
+        locations: [{ id: 1, title: 'Manba\'ul \'Ulum' }, { id: 2, title: 'Gria Aslamba' }],
+        statuses: [{ code: 'GOOD', label: 'Baik' }, { code: 'BRKN', label: 'Rusak' }, { code: 'LOST', label: 'Hilang' }]
+      },
+      width: '500px',
+      disableClose: true
+    })
+      .afterClosed().subscribe((newModel: AssetAudit) => {
+        if (!newModel) { return; }
+
+        // creation or update existing
+        this.assetSvc.saveOrUpdateAudit(newModel)
+          .subscribe({
+            next: rs => {
+              const asset = this.assetSubject.getValue();
+              // Update or create
+              if (model) {
+                const index = _.findIndex(asset.audits, model);
+                asset.audits[index] = rs.data;
+              } else {
+                asset.audits.unshift(rs.data);
+              }
+              this.assetSubject.next(asset);
+              this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: 'Data berhasil disimpan', type: 'success' } });
+            },
+            error: (err: GenericRs<AssetAudit>) => {
+              this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: err.message, type: 'danger' } });
+              this.createOrUpdateModel(newModel);
+            }
+          });
+      });
+  }
+
   onDeleteModel(model: AssetAudit) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
@@ -176,19 +214,25 @@ export class AssetAuditComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.assetSvc.deleteMaintenance(model.id)
-          .subscribe(() => {
-            const asset = this.assetSubject.getValue();
-            _.remove(asset.maintenances, { id: model.id });
-          }, err => {
-            this.snackBar.openFromComponent(
-              SnackbarNotifComponent,
-              {
-                data: {
-                  message: err.message || 'Gagal menghapus data!',
-                  type: 'danger'
+        this.assetSvc.deleteAudit(model.id)
+          .subscribe({
+            next: () => {
+              const asset = this.assetSubject.getValue();
+              _.remove(asset.audits, { id: model.id });
+              this.assetSubject.next(asset);
+              this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: 'Berhasil menghapus data!', type: 'success' } });
+            },
+            error: err => {
+              this.snackBar.openFromComponent(
+                SnackbarNotifComponent,
+                {
+                  data: {
+                    message: err.message || 'Gagal menghapus data!',
+                    type: 'danger'
+                  }
                 }
-              });
+              );
+            }
           });
       }
     });

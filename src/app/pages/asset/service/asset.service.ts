@@ -4,7 +4,7 @@ import { ApiConfig } from 'src/app/common/api.config';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { GenericRs } from 'src/app/types/generic-rs.model';
-import { Asset, AssetMaintenance } from '../interfaces/asset.model';
+import { Asset, AssetAudit, AssetMaintenance } from '../interfaces/asset.model';
 import { UploadStatus, FilePreviewModel } from 'ngx-awesome-uploader';
 @Injectable({
   providedIn: 'root'
@@ -75,8 +75,15 @@ export class AssetService {
     return this.httpClient.delete(`${this.URL}/audit/${id}`) as Observable<GenericRs<void>>;
   }
 
-  // Asset Maintenance
+  saveOrUpdateAudit(model: AssetAudit) {
+    if (model.id) {
+      return this.httpClient.put([`${this.URL}/audit`, model.id].join('/'), model) as Observable<GenericRs<AssetAudit>>;
+    } else {
+      return this.httpClient.post(`${this.URL}/audit`, model) as Observable<GenericRs<AssetAudit>>;
+    }
+  }
 
+  // Asset Maintenance
   saveOrUpdateMaintenance(model: AssetMaintenance) {
     if (model.id) {
       return this.httpClient.put([`${this.URL}/maintenance`, model.id].join('/'), model) as Observable<GenericRs<AssetMaintenance>>;
