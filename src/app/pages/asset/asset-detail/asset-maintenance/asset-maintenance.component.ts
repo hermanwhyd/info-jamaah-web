@@ -174,7 +174,8 @@ export class AssetMaintenanceComponent implements OnInit, AfterViewInit {
         suppliers: [{ id: 1, title: 'Aslamba Qania' }, { id: 2, title: 'ISS' }],
         types: [{ code: 'RPR', label: 'Perbaikan' }, { code: 'MNT', label: 'Perawatan rutin' }]
       },
-      width: '500px',
+      width: '100%',
+      maxWidth: 600,
       disableClose: true
     })
       .afterClosed().subscribe((newModel: AssetMaintenance) => {

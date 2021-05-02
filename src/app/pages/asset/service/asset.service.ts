@@ -29,10 +29,6 @@ export class AssetService {
     return this.httpClient.delete(`${this.URL}/${id}`) as Observable<GenericRs<Asset>>;
   }
 
-  public deleteMedia(id: number | string) {
-    return this.httpClient.delete(`${this.URL}/media/${id}`) as Observable<GenericRs<void>>;
-  }
-
   public saveOrUpdate(asset: Asset) {
     if (asset.id) {
       return this.httpClient.put([this.URL, asset.id].join('/'), asset) as Observable<GenericRs<Asset>>;

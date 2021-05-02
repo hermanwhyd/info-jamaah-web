@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 
 import icReload from '@iconify/icons-ic/twotone-refresh';
 import icColumn from '@iconify/icons-ic/twotone-filter-list';
@@ -34,6 +34,8 @@ import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
 import { stagger40ms } from 'src/@vex/animations/stagger.animation';
 import jmespath from 'jmespath';
 import { MediaService } from 'src/app/services/media.service';
+import { AssetFileEditComponent } from './asset-file-edit/asset-file-edit.component';
+import { GenericRs } from 'src/app/types/generic-rs.model';
 
 @UntilDestroy()
 @Component({
@@ -82,10 +84,13 @@ export class AssetFileComponent implements OnInit, AfterViewInit {
     { label: 'JENIS MIME', property: 'mimeType', type: 'text', visible: true, cssClasses: ['text-secondary'] },
     { label: 'GAMBAR', property: 'file.thumb', type: 'image', visible: true, cssClasses: ['text-secondary'] },
     { label: 'CATATAN', property: 'properties.notes', type: 'text', visible: true, cssClasses: ['text-secondary'] },
-    { label: 'TGL UPLOAD', property: 'createdAt', type: 'date', visible: true, cssClasses: ['text-secondary'] },
     { label: 'Ukuran (KB)', property: 'size', type: 'number', visible: true, cssClasses: ['text-secondary'] },
+    { label: 'TGL UPLOAD', property: 'createdAt', type: 'date', visible: false, cssClasses: ['text-secondary'] },
+    { label: 'TGL UPDATE', property: 'updatedAt', type: 'date', visible: true, cssClasses: ['text-secondary'] },
     { label: 'ACTION', property: 'menu', type: 'button', visible: true, cssClasses: ['text-secondary', 'w-10'] }
   ];
+
+  @Output() fireUploadFileDialog: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -111,6 +116,10 @@ export class AssetFileComponent implements OnInit, AfterViewInit {
       .subscribe(params => {
         this.assetId = +params.get('id');
       });
+  }
+
+  reloadTable() {
+    this.fetchModels();
   }
 
   fetchModels() {
@@ -168,6 +177,50 @@ export class AssetFileComponent implements OnInit, AfterViewInit {
     this.menuOpen = true;
   }
 
+  openUploadDialog() {
+    this.fireUploadFileDialog.emit(this.assetId);
+  }
+
+  createOrUpdateModel(model?: AssetMedia) {
+    this.dialog.open(AssetFileEditComponent, {
+      data: {
+        model: model || {} as AssetMedia,
+        collectionTypes: [{ code: 'DOCS', label: 'Dokumen Pendukung' }, { code: 'PHOTO', label: 'Foto Aset' }]
+      },
+      width: '100%',
+      maxWidth: 600,
+      disableClose: true
+    })
+      .afterClosed().subscribe((o: any) => {
+        if (!o.model) { return; }
+        if (o.action === 'download') { this.onDownloadModel(o.model); }
+        if (o.action === 'save') { this.onSaveOrUpdate(model, o.model); }
+      });
+  }
+
+  private onSaveOrUpdate(model: AssetMedia, newModel?: AssetMedia) {
+    // creation or update existing
+    this.mediaSvc.saveOrUpdate(newModel)
+      .subscribe({
+        next: rs => {
+          const asset = this.assetSubject.getValue();
+          // Update or create
+          if (model) {
+            const index = _.findIndex(asset.media, model);
+            asset.media[index] = rs.data;
+          } else {
+            asset.media.unshift(rs.data);
+          }
+          this.assetSubject.next(asset);
+          this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: 'Data berhasil disimpan', type: 'success' } });
+        },
+        error: (err: GenericRs<AssetMedia>) => {
+          this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: err.message, type: 'danger' } });
+          this.createOrUpdateModel(newModel);
+        }
+      });
+  }
+
   onDeleteModel(model: AssetMedia) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
@@ -181,10 +234,11 @@ export class AssetFileComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.assetSvc.deleteMedia(model.id)
+        this.mediaSvc.delete(model.uuid)
           .subscribe(() => {
             const asset = this.assetSubject.getValue();
-            _.remove(asset.maintenances, { id: model.id });
+            _.remove(asset.media, { id: model.id });
+            this.assetSubject.next(asset);
           }, err => {
             this.snackBar.openFromComponent(
               SnackbarNotifComponent,

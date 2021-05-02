@@ -31,7 +31,8 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Catatan</mat-label>
-      <input #notes formControlName="notes" matInput autocomplete="off" maxlength="150">
+      <textarea #notes formControlName="notes" matInput cdkAutosizeMinRows="2" matTextareaAutosize
+        maxlength="150"></textarea>
       <mat-hint align="end">{{notes.value.length}} / 150</mat-hint>
       <mat-error *ngIf="(formControl.notes.touched || submitted) && formControl.notes.errors?.required">
         Catatan harus diisi

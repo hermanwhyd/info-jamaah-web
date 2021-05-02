@@ -29,6 +29,8 @@ export class AssetDetailComponent implements OnInit {
   icArrowBack = icArrowBack;
   icAttachFile = icAttachFile;
 
+  componentReference: any;
+
   links: Link[] = [
     {
       label: 'Details',
@@ -71,12 +73,17 @@ export class AssetDetailComponent implements OnInit {
 
   uploadFile() {
     this.dialog.open(AssetUploadComponent, {
-      data: { model: this.model },
+      data: { model: this.model, cf: this.componentReference },
       width: '500px',
-    })
-      .afterClosed().subscribe((isSuccess: boolean) => {
-        console.log(isSuccess);
-      });
+    });
   }
 
+  onActivate(componentReference: any) {
+    this.componentReference = componentReference;
+
+    // Below will subscribe to the searchItem emitter
+    componentReference.fireUploadFileDialog?.subscribe((data: any) => {
+      this.uploadFile();
+    });
+  }
 }

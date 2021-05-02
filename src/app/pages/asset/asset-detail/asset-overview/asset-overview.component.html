@@ -1,53 +1,65 @@
-<div class="mt-4 flex flex-col md:flex-row md:items-start card">
-  <div class="flex-auto p-4">
-    <table class="text-left w-full table-collapse">
-      <tbody>
-        <tr class="border-b">
-          <th class="p-2 w-1/3">ID</th>
-          <td class="p-2">{{model?.id}}</td>
-        </tr>
-        <tr class="border-b">
-          <th class="p-2 w-1/3">Nama Aset</th>
-          <td class="p-2">{{model?.title}}</td>
-        </tr>
-        <tr class="border-b">
-          <th class="p-2 w-1/3">Tag Aset</th>
-          <td class="p-2">{{model?.tagNo}}</td>
-        </tr>
-        <tr class="border-b">
-          <th class="p-2 w-1/3">Pemilik</th>
-          <td class="p-2">{{model?.owner.lvPembina}} {{model?.owner.label}}</td>
-        </tr>
-        <tr class="border-b">
-          <th class="p-2 w-1/3">Lokasi default</th>
-          <td class="p-2">{{model?.location.label}}</td>
-        </tr>
-        <tr class="border-b" *ngFor="let item of model?.details">
-          <th class="p-2 w-1/3">{{item.type.label}}</th>
-          <td class="p-2">{{item.value}}</td>
-        </tr>
-      </tbody>
-    </table>
+<div class="mt-4 card">
+  <div class="px-gutter py-4 border-b">
+    <h2 class="title m-0">Overview</h2>
   </div>
 
-  <div class="p-4 max-w-unset md:max-w-md w-full flex-none">
-    <div class="py-4 flex flex-row">
-      <div class="flex-auto">
-        <h3>Status Terakhir</h3>
-        <span class="rounded-sm px-2 py-1 bg-green-light text-green">{{model?.status.label}}</span>
-      </div>
-      <div class="flex-none justify-items-end">
-        <img *ngIf="!model?.tagNo" class="rounded" src="/assets/img/default/default-img.png" height="150px"
-          width="150px" />
-        <qrcode *ngIf="model?.tagNo" [qrdata]="model?.tagNo" [width]="150" [errorCorrectionLevel]="'M'" margin="0">
-        </qrcode>
+  <div class="py-4 flex flex-col md:flex-row md:items-start">
+    <div class="px-gutter flex-auto">
+      <table class="text-left w-full table-collapse">
+        <tbody>
+          <tr class="border-b">
+            <th class="p-2 w-1/3">ID</th>
+            <td class="p-2">{{model?.id}}</td>
+          </tr>
+          <tr class="border-b">
+            <th class="p-2 w-1/3">Nama Aset</th>
+            <td class="p-2">{{model?.title}}</td>
+          </tr>
+          <tr class="border-b">
+            <th class="p-2 w-1/3">Tag Aset</th>
+            <td class="p-2">{{model?.tagNo}}</td>
+          </tr>
+          <tr class="border-b">
+            <th class="p-2 w-1/3">Pemilik</th>
+            <td class="p-2">{{model?.owner.lvPembina}} {{model?.owner.label}}</td>
+          </tr>
+          <tr class="border-b">
+            <th class="p-2 w-1/3">Lokasi default</th>
+            <td class="p-2">{{model?.location.label}}</td>
+          </tr>
+          <tr class="border-b" *ngFor="let item of model?.details">
+            <th class="p-2 w-1/3">{{item.type.label}}</th>
+            <td class="p-2">{{item.value}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="px-gutter max-w-unset md:max-w-md w-full flex-none">
+      <div class="flex flex-row">
+        <div class="flex-auto">
+          <h3>Status Terakhir</h3>
+          <span class="rounded-sm px-2 py-1 bg-green-light text-green">{{model?.status.label}}</span>
+        </div>
+        <div class="flex-none justify-items-end">
+          <img *ngIf="!model?.tagNo" class="rounded" src="/assets/img/default/default-img.png" height="150px"
+            width="150px" />
+          <qrcode *ngIf="model?.tagNo" [qrdata]="model?.tagNo" [width]="150" [errorCorrectionLevel]="'M'" margin="0">
+          </qrcode>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="mt-4 card p-gutter">
-  <img *ngIf="!imageObject" class="rounded" src="/assets/img/default/default-img-hori.png" height="200" width="auto" />
-  <ng-image-slider *ngIf="imageObject" #nav [images]="imageObject" [infinite]="false" [autoSlide]="1"
-    [imageSize]="{height: 200}" slideImage="2" [animationSpeed]="0.5"></ng-image-slider>
+<div class="card mt-4">
+  <div class="px-gutter py-4 border-b">
+    <h2 class="title m-0">Foto-foto</h2>
+  </div>
+  <div class="px-gutter py-4">
+    <img *ngIf="!imageObject" class="rounded" src="/assets/img/default/default-img-hori.png" height="200"
+      width="auto" />
+    <ng-image-slider *ngIf="imageObject" #nav [images]="imageObject" [infinite]="false" [autoSlide]="1"
+      [imageSize]="{height: 200}" slideImage="2" [animationSpeed]="0.5"></ng-image-slider>
+  </div>
 </div>

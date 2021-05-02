@@ -2,9 +2,11 @@ import { Observable } from 'rxjs';
 import { FilePickerAdapter, UploadResponse, FilePreviewModel } from 'ngx-awesome-uploader';
 import { Asset } from '../interfaces/asset.model';
 import { AssetService } from './asset.service';
+import { MediaService } from 'src/app/services/media.service';
 
 export class AssetFilePickerAdapter extends FilePickerAdapter {
-  constructor(private model: Asset, private assetSvc: AssetService) {
+
+  constructor(private model: Asset, private assetSvc: AssetService, private mediaSvc: MediaService) {
     super();
   }
 
@@ -13,7 +15,7 @@ export class AssetFilePickerAdapter extends FilePickerAdapter {
   }
 
   public removeFile(fileItem: FilePreviewModel): Observable<any> {
-    return this.assetSvc.deleteMedia(fileItem.uploadResponse.id);
+    return this.mediaSvc.delete(fileItem.uploadResponse.uuid);
   }
 
 }

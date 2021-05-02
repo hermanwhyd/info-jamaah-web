@@ -172,7 +172,8 @@ export class AssetAuditComponent implements OnInit, AfterViewInit {
         locations: [{ id: 1, title: 'Manba\'ul \'Ulum' }, { id: 2, title: 'Gria Aslamba' }],
         statuses: [{ code: 'GOOD', label: 'Baik' }, { code: 'BRKN', label: 'Rusak' }, { code: 'LOST', label: 'Hilang' }]
       },
-      width: '500px',
+      width: '100%',
+      maxWidth: 600,
       disableClose: true
     })
       .afterClosed().subscribe((newModel: AssetAudit) => {

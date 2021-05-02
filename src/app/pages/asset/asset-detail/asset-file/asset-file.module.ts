@@ -11,6 +11,7 @@ import { MatTableFamilyModule } from 'src/app/common/mat-table-family.module';
 import { SharedModule } from 'src/app/common/shared.module';
 import { ConfirmationDialogModule } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.module';
 import { SnackbarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
+import { AssetFileEditModule } from './asset-file-edit/asset-file-edit.module';
 
 const routes: Routes = [
   { path: '', component: AssetFileComponent }
@@ -28,7 +29,8 @@ const routes: Routes = [
     SnackbarNotifModule,
     ConfirmationDialogModule,
     MatProgressSpinnerModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    AssetFileEditModule
   ]
 })
 export class AssetFileModule { }

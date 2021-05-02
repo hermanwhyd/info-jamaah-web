@@ -1,0 +1,56 @@
+<form (ngSubmit)="submit()" [formGroup]="form">
+  <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+    <h2 class="headline m-0" fxFlex="auto">{{ form.get('name').value }}</h2>
+
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon [icIcon]="icClose"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="-mx-6 mb-4 text-border"></mat-divider>
+
+  <mat-dialog-content fxLayout="column">
+    <div class="pb-4 mx-auto">
+      <img class="rounded h-32 w-32" [src]="model.file?.url || 'assets/img/illustrations/document.png'">
+      <button class="mt-2" mat-button color="primary" type="button" (click)="download()">
+        <mat-icon (click)="download()" [icIcon]="icDownload"></mat-icon>
+        <span class="ml-2">Download</span>
+      </button>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nama File</mat-label>
+      <input formControlName="name" matInput>
+      <mat-error *ngIf="(formControl.name.touched || submitted) && formControl.name.errors?.required">
+        Judul harus diisi
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Album Koleksi</mat-label>
+      <mat-select formControlName="collectionName">
+        <option [ngValue]="null" disabled>Pilih album koleksi</option>
+        <mat-option *ngFor="let item of collectionTypes" [value]="item.code">{{ item.label }}</mat-option>
+      </mat-select>
+      <mat-error
+        *ngIf="(formControl.collectionName.touched || submitted) && formControl.collectionName.errors?.required">
+        Album Koleksi harus dipilih
+      </mat-error>
+    </mat-form-field>
+
+    <form [formGroup]="properties">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Catatan</mat-label>
+        <textarea cdkFocusInitial #notes formControlName="notes" matInput cdkAutosizeMinRows="2" matTextareaAutosize
+          maxlength="150"></textarea>
+        <mat-hint align="end">{{notes.value.length}} / 150</mat-hint>
+      </mat-form-field>
+    </form>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">CANCEL</button>
+    <button color="primary" mat-button type="submit" [disabled]="!submitable">SIMPAN</button>
+  </mat-dialog-actions>
+</form>

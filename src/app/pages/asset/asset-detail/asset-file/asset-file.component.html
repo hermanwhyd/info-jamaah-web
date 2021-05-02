@@ -15,8 +15,8 @@
 
       <span fxFlex></span>
 
-      <button [routerLink]="'./create'" class="ml-4" color="primary" fxFlex="none" mat-mini-fab matTooltip="Tambah Baru"
-        type="button">
+      <button (click)="openUploadDialog()" class="ml-4" color="primary" fxFlex="none" mat-mini-fab
+        matTooltip="Tambah Baru" type="button">
         <mat-icon [icIcon]="icAdd"></mat-icon>
       </button>
       <button mat-mini-fab matTooltip="Refresh Data" color="primary" fxFlex="none" type="button"
@@ -84,8 +84,8 @@
       </ng-container>
 
       <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
-      <tr *matRowDef="let row; columns: visibleColumns;" @fadeInUp class="hover:bg-hover trans-ease-out cursor-pointer"
-        mat-row>
+      <tr *matRowDef="let row; columns: visibleColumns;" (click)="createOrUpdateModel(row)" @fadeInUp
+        class="hover:bg-hover trans-ease-out cursor-pointer" mat-row>
       </tr>
     </table>
 
@@ -109,7 +109,7 @@
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
   <ng-template let-model="model" matMenuContent>
     <button (click)="onDownloadModel(model)" mat-menu-item>
-      <mat-icon [icIcon]="icDownload"></mat-icon>
+      <mat-icon (click)="createOrUpdateModel(model)" [icIcon]="icDownload"></mat-icon>
       <span>Download</span>
     </button>
     <button (click)="onDeleteModel(model)" mat-menu-item>

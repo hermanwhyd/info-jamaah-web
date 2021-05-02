@@ -12,6 +12,7 @@ import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackba
 import { AssetFilePickerAdapter } from '../service/asset-file-pircker.adapter';
 import { Asset } from '../interfaces/asset.model';
 import { AssetService } from '../service/asset.service';
+import { MediaService } from 'src/app/services/media.service';
 
 @Component({
   selector: 'vex-asset-upload',
@@ -26,6 +27,8 @@ export class AssetUploadComponent implements OnInit {
   icPdf = icPdf;
   icWord = icWord;
   icExcel = icExcel;
+
+  childReference: any;
 
   model: Asset;
 
@@ -53,11 +56,13 @@ export class AssetUploadComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) private data: any
     , private dialogRef: MatDialogRef<AssetUploadComponent>
     , private snackBar: MatSnackBar
-    , private assetSvc: AssetService) { }
+    , private assetSvc: AssetService
+    , private mediaSvc: MediaService) { }
 
   ngOnInit(): void {
     this.model = this.data.model;
-    this.adapter = new AssetFilePickerAdapter(this.model, this.assetSvc);
+    this.childReference = this.data.cf;
+    this.adapter = new AssetFilePickerAdapter(this.model, this.assetSvc, this.mediaSvc);
   }
 
   public onValidationError(error: ValidationError): void {
@@ -74,12 +79,15 @@ export class AssetUploadComponent implements OnInit {
   }
 
   public onUploadSuccess(e: FilePreviewModel): void {
-    console.log(e);
-    console.log(this.myFiles);
+    if (this.childReference.reloadTable !== undefined) {
+      this.childReference.reloadTable();
+    }
   }
 
   public onRemoveSuccess(e: FilePreviewModel) {
-    console.log(e);
+    if (this.childReference.reloadTable !== undefined) {
+      this.childReference.reloadTable();
+    }
   }
 
   public onFileAdded(file: FilePreviewModel) {

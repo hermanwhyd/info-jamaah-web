@@ -5,6 +5,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 import icClose from '@iconify/icons-ic/twotone-close';
 import icDelete from '@iconify/icons-ic/twotone-delete';
+import icAttachFile from '@iconify/icons-ic/twotone-attach-file';
+
 import { AssetMaintenance, Supplier } from '../../../interfaces/asset.model';
 import { SharedProperty } from 'src/app/types/shared-property.interface';
 import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/helpers/format-datepicker';
@@ -24,6 +26,7 @@ export class AssetMaintenanceEditComponent implements OnInit {
   icMoreVert = icMoreVert;
   icClose = icClose;
   icDelete = icDelete;
+  icAttachFile = icAttachFile;
 
   isNew = true;
   submitted = false;

@@ -23,6 +23,6 @@
         <span class="text-xs hidden sm:inline-block">Gambar/Dokumen</span>
       </button>
     </div>
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
   </vex-page-layout-content>
 </vex-page-layout>
