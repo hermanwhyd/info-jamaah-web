@@ -23,6 +23,8 @@ import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Asset } from '../../interfaces/asset.model';
 import { AssetService } from '../../service/asset.service';
+import { finalize } from 'rxjs/operators';
+import { scaleFadeIn400ms } from 'src/@vex/animations/scale-fade-in.animation';
 
 @UntilDestroy()
 @Component({
@@ -33,7 +35,8 @@ import { AssetService } from '../../service/asset.service';
     fadeInUp400ms,
     fadeInRight400ms,
     scaleIn400ms,
-    stagger40ms
+    stagger40ms,
+    scaleFadeIn400ms
   ],
 })
 export class AssetOverviewComponent implements OnInit {
@@ -57,6 +60,8 @@ export class AssetOverviewComponent implements OnInit {
 
   imageObject: any[];
 
+  isLoading: boolean;
+
   constructor(private route: ActivatedRoute, private assetSvc: AssetService) { }
 
   ngOnInit(): void {
@@ -68,15 +73,22 @@ export class AssetOverviewComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(params => {
         const id = params.get('id');
-        this.assetSvc.getById(id, 'owner,location,status,details,photos').subscribe(g => {
-          this.model = g.data;
-          this.imageObject = [];
-          this.model.photos.forEach(p => {
-            this.imageObject.push({
-              image: p.file?.url,
-              thumbImage: p.file?.thumb,
-              title: p.properties?.notes
-            });
+        this.fetchData(id);
+      });
+  }
+
+  private fetchData(id: string) {
+    this.isLoading = true;
+    this.assetSvc.getById(id, 'owner,location,status,details,photos')
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe(g => {
+        this.model = g.data;
+        this.imageObject = [];
+        this.model.photos.forEach(p => {
+          this.imageObject.push({
+            image: p.file?.url,
+            thumbImage: p.file?.thumb,
+            title: p.properties?.notes
           });
         });
       });

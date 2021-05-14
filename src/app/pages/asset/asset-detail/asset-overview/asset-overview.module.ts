@@ -5,6 +5,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedModule } from 'src/app/common/shared.module';
 import { QRCodeModule } from 'angularx-qrcode';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const routes: Routes = [
   { path: '', component: AssetOverviewComponent }
@@ -17,7 +18,8 @@ const routes: Routes = [
     SharedModule,
     MatTooltipModule,
     QRCodeModule,
-    NgImageSliderModule
+    NgImageSliderModule,
+    MatProgressSpinnerModule
   ]
 })
 export class AssetOverviewModule { }
