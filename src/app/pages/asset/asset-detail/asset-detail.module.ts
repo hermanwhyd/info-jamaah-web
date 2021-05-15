@@ -6,6 +6,9 @@ import { PageLayoutModule } from 'src/@vex/components/page-layout/page-layout.mo
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FilePickerModule } from 'ngx-awesome-uploader';
+import { MatMenuModule } from '@angular/material/menu';
+import { SnackbarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
+import { ConfirmationDialogModule } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.module';
 
 const routes: Routes = [
   {
@@ -44,7 +47,10 @@ const routes: Routes = [
     PageLayoutModule,
     MatTabsModule,
     MatDialogModule,
-    FilePickerModule
+    FilePickerModule,
+    MatMenuModule,
+    SnackbarNotifModule,
+    ConfirmationDialogModule,
   ]
 })
 export class AssetDetailModule { }

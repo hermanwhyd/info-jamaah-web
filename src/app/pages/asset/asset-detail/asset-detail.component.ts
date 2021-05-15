@@ -5,13 +5,21 @@ import { fadeInRight400ms } from '../../../../@vex/animations/fade-in-right.anim
 
 import icAttachFile from '@iconify/icons-ic/twotone-attach-file';
 import icArrowBack from '@iconify/icons-ic/arrow-back';
+import icEdit from '@iconify/icons-ic/baseline-edit';
+import icDelete from '@iconify/icons-ic/baseline-delete';
+import icRefresh from '@iconify/icons-ic/baseline-refresh';
+import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 
-import { ActivatedRoute } from '@angular/router';
+
+import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AssetService } from '../service/asset.service';
 import { Asset } from '../interfaces/asset.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AssetUploadComponent } from '../asset-upload/asset-upload.component';
+import { ConfirmationDialogComponent } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.component';
+import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackbar-notif.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @UntilDestroy()
 @Component({
@@ -28,6 +36,10 @@ export class AssetDetailComponent implements OnInit {
   model: Asset;
   icArrowBack = icArrowBack;
   icAttachFile = icAttachFile;
+  icDelete = icDelete;
+  icEdit = icEdit;
+  icRefresh = icRefresh;
+  icMoreVert = icMoreVert;
 
   componentReference: any;
 
@@ -53,7 +65,9 @@ export class AssetDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private assetSvc: AssetService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -84,6 +98,41 @@ export class AssetDetailComponent implements OnInit {
     // Below will subscribe to the searchItem emitter
     componentReference.fireUploadFileDialog?.subscribe((data: any) => {
       this.uploadFile();
+    });
+  }
+
+  reloadPage() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+  }
+
+  onDeleteModel() {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        message: `Apakah Anda ingin menghapus aset <strong>${this.model.title}</strong>?`,
+        buttonText: {
+          ok: 'Ya',
+          cancel: 'Batal'
+        }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.assetSvc.delete(this.model.id)
+          .subscribe({
+            next: () => this.router.navigateByUrl('/benda-sabil'),
+            error: err => {
+              this.snackBar.openFromComponent(SnackbarNotifComponent, {
+                data: {
+                  message: err.message || 'Gagal menghapus data!', type: 'danger'
+                }
+              });
+            }
+          });
+      }
     });
   }
 }
