@@ -53,10 +53,12 @@ export class SetupEnumComponent implements OnInit {
   }
 
   fetchModels() {
+    this.isLoading = true;
     this.sharedPropSvc.findByGroup(this.SHAREDPROP_GROUP)
-    .subscribe((rs) => {
-      this.sharedPropsSubject$.next(rs.data);
-    });
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe((rs) => {
+        this.sharedPropsSubject$.next(rs.data);
+      });
   }
 
   swapPosition(idx: number, direction: string) {
@@ -85,29 +87,29 @@ export class SetupEnumComponent implements OnInit {
       width: '500px',
       disableClose: true
     })
-    .afterClosed().subscribe((newModel: SharedProperty) => {
-      if (!newModel) { return; }
+      .afterClosed().subscribe((newModel: SharedProperty) => {
+        if (!newModel) { return; }
 
-      // creation or update existing
-      this.isLoading = true;
-      this.sharedPropSvc.saveOrUpdate(newModel)
-        .pipe(finalize(() => this.isLoading = false))
-        .subscribe(rs => {
-          const models = this.sharedPropsSubject$.getValue();
-          // Update or create
-          if (model) {
-            const index = _.findIndex(models, model);
-            models[index] = rs.data;
-          } else {
-            models.push(rs.data);
-          }
+        // creation or update existing
+        this.isLoading = true;
+        this.sharedPropSvc.saveOrUpdate(newModel)
+          .pipe(finalize(() => this.isLoading = false))
+          .subscribe(rs => {
+            const models = this.sharedPropsSubject$.getValue();
+            // Update or create
+            if (model) {
+              const index = _.findIndex(models, model);
+              models[index] = rs.data;
+            } else {
+              models.push(rs.data);
+            }
 
-          this.snackBar.openFromComponent(SnackbarNotifComponent, {data: {message: rs.message, type: 'success'}});
-        }, (err: GenericRs<any>) => {
-          this.snackBar.openFromComponent(SnackbarNotifComponent, {data: {message: err.message, type: 'danger'}});
-          this.createOrUpdateModel(newModel);
-        });
-    });
+            this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: rs.message, type: 'success' } });
+          }, (err: GenericRs<any>) => {
+            this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: err.message, type: 'danger' } });
+            this.createOrUpdateModel(newModel);
+          });
+      });
   }
 
   removeModel(model: SharedProperty) {
@@ -130,7 +132,7 @@ export class SetupEnumComponent implements OnInit {
           .pipe(finalize(() => this.isLoading = false))
           .subscribe(rs => {
             const models = this.sharedPropsSubject$.getValue();
-            _.remove(models, {id: model.id});
+            _.remove(models, { id: model.id });
           });
       }
     });
