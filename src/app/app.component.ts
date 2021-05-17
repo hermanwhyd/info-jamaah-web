@@ -92,13 +92,6 @@ export class AppComponent {
             icon: icAccountBalance,
             hide: !authSvc.hasAccess(['ADMIN']),
             route: '/benda-sabil'
-          },
-          {
-            type: 'link',
-            label: 'Kuesioner',
-            icon: icCheckedAssignment,
-            hide: !authSvc.hasAccess(['ADMIN']),
-            route: '/kuesioner'
           }
         ]
       },

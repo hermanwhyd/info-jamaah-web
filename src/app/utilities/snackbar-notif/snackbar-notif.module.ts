@@ -13,9 +13,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
     MatSnackBarModule
   ],
-  exports: [ SnackbarNotifComponent ],
+  exports: [SnackbarNotifComponent],
   providers: [
-    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}}
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000 } }
   ],
 })
-export class SnackbarNotifModule {}
+export class SnackBarNotifModule { }

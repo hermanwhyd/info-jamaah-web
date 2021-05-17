@@ -43,8 +43,8 @@ export class DataTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
   @Input() searchStr: string;
 
   @Output() openDetail = new EventEmitter<T>();
-  @Output() delete = new EventEmitter<string>();
-  @Output() clone = new EventEmitter<string>();
+  @Output() delete = new EventEmitter<T>();
+  @Output() clone = new EventEmitter<T>();
 
   visibleColumns: Array<keyof T | string>;
   dataSource = new MatTableDataSource<T>();

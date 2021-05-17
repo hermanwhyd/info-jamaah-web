@@ -13,7 +13,7 @@
         <ic-icon [icon]="icRefresh" [inline]="true" class="sm:-ml-1 sm:mr-2" size="20px"></ic-icon>
         <span class="text-xs hidden sm:inline-block">REFRESH</span>
       </button>
-      <button mat-stroked-button [routerLink]="['edit']">
+      <button mat-stroked-button [routerLink]="['../', 'form', model?.id]">
         <ic-icon [icon]="icEdit" [inline]="true" class="sm:-ml-1 sm:mr-2" size="20px"></ic-icon>
         <span class="text-xs hidden sm:inline-block">EDIT</span>
       </button>
@@ -51,7 +51,7 @@
       <mat-icon [icIcon]="icRefresh"></mat-icon>
       <span class="text-xs">REFRESH</span>
     </button>
-    <button mat-menu-item [routerLink]="['edit']">
+    <button mat-menu-item [routerLink]="['../', 'form', model?.id]">
       <mat-icon [icIcon]="icEdit"></mat-icon>
       <span class="text-xs">EDIT</span>
     </button>

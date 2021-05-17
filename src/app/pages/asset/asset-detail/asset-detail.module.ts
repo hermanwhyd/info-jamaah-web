@@ -7,7 +7,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FilePickerModule } from 'ngx-awesome-uploader';
 import { MatMenuModule } from '@angular/material/menu';
-import { SnackbarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
+import { SnackBarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
 import { ConfirmationDialogModule } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.module';
 
 const routes: Routes = [
@@ -49,7 +49,7 @@ const routes: Routes = [
     MatDialogModule,
     FilePickerModule,
     MatMenuModule,
-    SnackbarNotifModule,
+    SnackBarNotifModule,
     ConfirmationDialogModule,
   ]
 })

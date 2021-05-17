@@ -52,12 +52,6 @@ export class DashboardComponent implements OnInit {
       route: '/bank-diklat',
       icon: icNote2,
       disabled: !this.authService.hasAccess(['ADMIN'])
-    },
-    {
-      label: 'Kuesioner',
-      route: '/kuesioner',
-      icon: icPolicy,
-      disabled: !this.authService.hasAccess(['ADMIN'])
     }
   ];
 
@@ -71,10 +65,10 @@ export class DashboardComponent implements OnInit {
     this.sharedProps = this.sharedPropService.getSharedPropCache();
 
     this.sharedPropService.findByGroup('IPORTAL_INFO')
-    .subscribe(rs => {
-      this.sharedPropService.storeSharePropCache(rs.data);
-      this.sharedProps = rs.data;
-    });
+      .subscribe(rs => {
+        this.sharedPropService.storeSharePropCache(rs.data);
+        this.sharedProps = rs.data;
+      });
   }
 
   sharedPropText(code: string): string {
@@ -107,7 +101,7 @@ export class DashboardComponent implements OnInit {
   }
 
   get enabledLink() {
-    return _.filter(this.links, {disabled: false});
+    return _.filter(this.links, { disabled: false });
   }
 
 }

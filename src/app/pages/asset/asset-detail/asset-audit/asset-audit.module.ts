@@ -9,7 +9,7 @@ import { MatButtonFamilyModule } from 'src/app/common/mat-button-family.module';
 import { MatTableFamilyModule } from 'src/app/common/mat-table-family.module';
 import { SharedModule } from 'src/app/common/shared.module';
 import { ConfirmationDialogModule } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.module';
-import { SnackbarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
+import { SnackBarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
 import { AssetAuditEditModule } from './asset-audit-edit/asset-audit-edit.module';
 
 const routes: Routes = [
@@ -25,7 +25,7 @@ const routes: Routes = [
     MatTableFamilyModule,
     MatButtonFamilyModule,
     MatMenuModule,
-    SnackbarNotifModule,
+    SnackBarNotifModule,
     ConfirmationDialogModule,
     MatProgressSpinnerModule,
     MatCheckboxModule,

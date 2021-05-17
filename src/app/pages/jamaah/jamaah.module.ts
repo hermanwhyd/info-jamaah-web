@@ -19,7 +19,7 @@ import { ContainerModule } from '../../../@vex/directives/container/container.mo
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
-import { SnackbarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
+import { SnackBarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
 import { DataTableComponent } from './data-table/data-table.component';
 import { TableMenuComponent } from './table-menu/table-menu.component';
 import { JamaahEditModule } from './jamaah-edit/jamaah-edit.module';
@@ -61,7 +61,7 @@ const routes: Routes = [
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatDividerModule,
-    SnackbarNotifModule
+    SnackBarNotifModule
   ]
 })
 export class JamaahModule { }

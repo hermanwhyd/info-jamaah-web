@@ -1,0 +1,88 @@
+<vex-secondary-toolbar current="Formulir Aset">
+  <span fxFlex="auto">{{ form.get('title').value || 'Formulir Aset Baru' }}</span>
+
+  <button class="border-none" color="primary" mat-stroked-button type="button" vexBackButton="benda-sabil">
+    <mat-icon [icIcon]="icBack"></mat-icon>
+    <span class="pr-2 py-2">Back</span>
+  </button>
+</vex-secondary-toolbar>
+
+<div [@stagger]="true" class="p-gutter" vexContainer>
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+
+    <div @fadeInUp class="card" fxFlex="auto">
+      <div class="px-6 py-4 border-b" fxLayout="row" fxLayoutAlign="start center">
+        <h2 class="title m-0">Informasi Dasar</h2>
+      </div>
+
+      <form (ngSubmit)="submit()" [formGroup]="form">
+
+        <div class="px-6 py-4" fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Judul</mat-label>
+            <input cdkFocusInitial formControlName="title" matInput required>
+            <mat-error *ngIf="(formControl.title.touched || submitted) && formControl.title.errors?.required">
+              Judul harus diisi
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Tag No.</mat-label>
+            <input formControlName="tagNo" matInput>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Kategori</mat-label>
+            <mat-select formControlName="categoryEnum" required>
+              <option [ngValue]="null" disabled>Pilih kategori</option>
+              <mat-option *ngFor="let item of categories" [value]="item.code">{{ item.label }}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="(formControl.categoryEnum.touched || submitted) && formControl.categoryEnum.errors?.required">
+              Kategori harus dipilih
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="statusEnum" required>
+              <option [ngValue]="null" disabled>Pilih status</option>
+              <mat-option *ngFor="let item of statuses" [value]="item.code">{{ item.label }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="(formControl.statusEnum.touched || submitted) && formControl.statusEnum.errors?.required">
+              Status harus dipilih
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Lokasi</mat-label>
+            <mat-select formControlName="locationId" required>
+              <option [ngValue]="null" disabled>Pilih lokasi</option>
+              <mat-option *ngFor="let item of locations" [value]="item.code">{{ item.label }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="(formControl.locationId.touched || submitted) && formControl.locationId.errors?.required">
+              Lokasi harus dipilih
+            </mat-error>
+          </mat-form-field>
+
+          <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+            <button mat-button type="button">RESET</button>
+            <button color="primary" mat-button type="submit" [disabled]="!submitable">SIMPAN</button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+
+    <div @fadeInUp class="card overflow-hidden" fxFlex="auto">
+      <div class="px-6 py-4 border-b" fxLayout="row" fxLayoutAlign="start center">
+        <h2 class="title m-0">Informasi Tambahan</h2>
+      </div>
+
+      <div class="px-6 py-4" fxLayout="column">
+      </div>
+    </div>
+
+  </div>
+</div>

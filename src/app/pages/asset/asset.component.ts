@@ -20,9 +20,9 @@ import { TableMenu } from './interfaces/table-menu.inteface';
 import { ConfirmationDialogComponent } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.component';
 
 import { BehaviorSubject } from 'rxjs';
-import { GenericRs } from 'src/app/types/generic-rs.model';
 import { AssetService } from './service/asset.service';
 import _ from 'lodash';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'vex-asset',
@@ -68,7 +68,13 @@ export class AssetComponent implements OnInit {
     { id: 'all', icon: icViewHeadline, label: 'Semua Benda SB' }
   ];
 
-  constructor(private assetService: AssetService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
+  constructor(
+    private assetService: AssetService
+    , private dialog: MatDialog
+    , private snackBar: MatSnackBar
+    , private router: Router
+    , private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -92,34 +98,9 @@ export class AssetComponent implements OnInit {
       });
   }
 
-  createOrUpdateModel(asset?: Asset) {
-    this.dialog.open(null, {
-      data: asset || {} as Asset,
-      width: '500px',
-      disableClose: true
-    })
-      .afterClosed().subscribe((newAsset: Asset) => {
-        if (!newAsset) { return; }
-
-        // creation or update existing
-        this.assetService.saveOrUpdate(newAsset)
-          .subscribe(rs => {
-            const assets = this.assetsSubject$.getValue();
-            // Update or create
-            if (asset) {
-              const index = _.findIndex(assets, asset);
-              assets[index] = rs.data;
-            } else {
-              assets.unshift(rs.data);
-            }
-
-            this.refreshData();
-            this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: 'Benda-SB berhasil disimpan', type: 'success' } });
-          }, (err: GenericRs<any>) => {
-            this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: err.message, type: 'danger' } });
-            this.createOrUpdateModel(newAsset);
-          });
-      });
+  createOrUpdateModel(model?: Asset) {
+    const commands = model ? ['form', model.id] : ['form'];
+    this.router.navigate(commands, { relativeTo: this.activatedRoute });
   }
 
   deleteModel(model: Asset) {

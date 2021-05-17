@@ -6,7 +6,7 @@ import { MatButtonFamilyModule } from 'src/app/common/mat-button-family.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
-import { SnackbarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
+import { SnackBarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
 import { ConfirmationDialogModule } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.module';
 import { MatTableFamilyModule } from 'src/app/common/mat-table-family.module';
 import { AssetMaintenanceEditModule } from './asset-maintenance-edit/asset-maintenance-edit.module';
@@ -25,7 +25,7 @@ const routes: Routes = [
     MatTableFamilyModule,
     MatButtonFamilyModule,
     MatMenuModule,
-    SnackbarNotifModule,
+    SnackBarNotifModule,
     ConfirmationDialogModule,
     MatProgressSpinnerModule,
     AssetMaintenanceEditModule,

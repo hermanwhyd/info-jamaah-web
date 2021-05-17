@@ -15,7 +15,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { ScrollbarModule } from 'src/@vex/components/scrollbar/scrollbar.module';
 import { ContainerModule } from 'src/@vex/directives/container/container.module';
-import { SnackbarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
+import { SnackBarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
 import { DataTableComponent } from '../asset/data-table/data-table.component';
 import { TableMenuComponent } from '../asset/table-menu/table-menu.component';
 
@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: '',
     component: AssetComponent,
+  },
+  {
+    path: 'form',
+    loadChildren: () => import('./asset-edit/asset-edit.module').then(m => m.AssetEditModule)
   },
   {
     path: ':id',
@@ -48,7 +52,7 @@ const routes: Routes = [
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatDividerModule,
-    SnackbarNotifModule,
+    SnackBarNotifModule,
   ]
 })
 export class AssetModule { }

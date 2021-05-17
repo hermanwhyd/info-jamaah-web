@@ -25,7 +25,7 @@ import { UserEditModule } from './user-edit/user-edit.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
-import { SnackbarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
+import { SnackBarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
 
 @NgModule({
   declarations: [UserComponent, UserTableMenuComponent, UserDataTableComponent],
@@ -51,7 +51,7 @@ import { SnackbarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-n
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatDividerModule,
-    SnackbarNotifModule
+    SnackBarNotifModule
   ]
 })
 export class UserModule { }
