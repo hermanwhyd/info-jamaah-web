@@ -29,15 +29,17 @@ export class SetupComponent implements OnInit {
     { type: 'link', element: 'assetDetail', title: 'Detail Aset', active: false },
     { type: 'link', element: 'assetStatus', title: 'Status Aset', active: false },
     { type: 'link', element: 'maintenanceType', title: 'Tipe Perawatan Aset', active: false },
-    { type: 'subheader', title: 'OTHER', element: '', active: false },
-    { type: 'link', element: 'customField', title: 'Custom Field', active: false },
+    { type: 'subheader', title: 'CUSTOM FIELD', element: '', active: false },
+    { type: 'link', element: 'assetCustomField', title: 'Asset Model', active: false },
+    { type: 'link', element: 'jamaahCustomField', title: 'Jamaah Model', active: false },
   ];
 
   @ViewChild(SetupEnumComponent, { read: ElementRef, static: true }) private assetCategory: ElementRef;
   @ViewChild(SetupEnumComponent, { read: ElementRef, static: true }) private assetDetail: ElementRef;
   @ViewChild(SetupEnumComponent, { read: ElementRef, static: true }) private assetStatus: ElementRef;
   @ViewChild(SetupEnumComponent, { read: ElementRef, static: true }) private maintenanceType: ElementRef;
-  @ViewChild(SetupCustomFieldComponent, { read: ElementRef, static: true }) private customField: ElementRef;
+  @ViewChild(SetupCustomFieldComponent, { read: ElementRef, static: true }) private assetCustomField: ElementRef;
+  @ViewChild(SetupCustomFieldComponent, { read: ElementRef, static: true }) private jamaahCustomField: ElementRef;
   constructor(
     private layoutService: LayoutService,
     private scrollDispatcher: ScrollDispatcher,

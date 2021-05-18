@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import icEdit from '@iconify/icons-ic/edit';
 import icAdd from '@iconify/icons-ic/add-circle';
 import icUp from '@iconify/icons-ic/baseline-arrow-circle-up';
 import icDown from '@iconify/icons-ic/baseline-arrow-circle-down';
 import icTrash from '@iconify/icons-ic/delete';
+import icPlus from '@iconify/icons-ic/add';
 
 import { fadeInRight400ms } from 'src/@vex/animations/fade-in-right.animation';
 import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
@@ -20,6 +21,9 @@ import { SharedProperty } from 'src/app/types/shared-property.interface';
 import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackbar-notif.component';
 import { SetupEnumEditComponent } from '../setup-enum-edit/setup-enum-edit.component';
 import { BehaviorSubject } from 'rxjs';
+import { CustomField } from 'src/app/types/custom-field.model';
+import { SetupCustomFieldEditComponent } from './setup-custom-field-edit/setup-custom-field-edit.component';
+import { CustomFieldService } from 'src/app/services/custom-field.service';
 
 @Component({
   selector: 'vex-setup-custom-field',
@@ -39,8 +43,12 @@ export class SetupCustomFieldComponent implements OnInit {
   icEdit = icEdit;
   icAdd = icAdd;
   icTrash = icTrash;
+  icPlus = icPlus;
 
-  SHAREDPROP_GROUP = 'CUSTOM_FIELD_ASSET';
+  @Input() CUSTOMFIELD_GROUP: string;
+  @Input() CUSTOMFIELD_DESC: string;
+  @Input() CUSTOMFIELD_TITLE: string;
+
   groupEnumSubject = new BehaviorSubject<SharedProperty[]>([]);
 
   isLoading = false;
@@ -48,6 +56,7 @@ export class SetupCustomFieldComponent implements OnInit {
   @ViewChild(MatAccordion, { static: true }) accordion: MatAccordion;
   constructor(
     private sharedPropSvc: SharedPropertyService,
+    private customFieldSvc: CustomFieldService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar) { }
 
@@ -57,7 +66,7 @@ export class SetupCustomFieldComponent implements OnInit {
 
   fetchGroupEnum() {
     this.isLoading = true;
-    this.sharedPropSvc.findFullByGroup(this.SHAREDPROP_GROUP, 'customFields')
+    this.sharedPropSvc.findFullByGroup(this.CUSTOMFIELD_GROUP, 'customFields')
       .pipe(finalize(() => this.isLoading = false))
       .subscribe((rs) => {
         this.groupEnumSubject.next(rs.data);
@@ -84,7 +93,7 @@ export class SetupCustomFieldComponent implements OnInit {
     this.dialog.open(SetupEnumEditComponent, {
       data: {
         model: model || {} as SharedProperty,
-        group: this.SHAREDPROP_GROUP,
+        group: this.CUSTOMFIELD_GROUP,
         errors
       },
       width: '500px',
@@ -102,9 +111,9 @@ export class SetupCustomFieldComponent implements OnInit {
             // Update or create
             if (model) {
               const index = _.findIndex(models, model);
-              models[index] = rs.data;
+              models[index] = { ...rs.data, customFields: model.customFields };
             } else {
-              models.push(rs.data);
+              models.push({ ...rs.data, customFields: [] });
             }
 
             this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: rs.message, type: 'success' } });
@@ -140,4 +149,78 @@ export class SetupCustomFieldComponent implements OnInit {
       }
     });
   }
+
+  createOrUpdateCF(groupEnum: SharedProperty, model?: CustomField, errors?: string[]) {
+    this.dialog.open(SetupCustomFieldEditComponent, {
+      data: {
+        model: model || { groupEnumId: groupEnum.id } as CustomField,
+        errors
+      },
+      width: '500px',
+      disableClose: true
+    })
+      .afterClosed().subscribe((newModel: CustomField) => {
+        if (!newModel) { return; }
+
+        // creation or update existing
+        this.isLoading = true;
+        this.customFieldSvc.saveOrUpdate(newModel)
+          .pipe(finalize(() => this.isLoading = false))
+          .subscribe(rs => {
+            // Update or create
+            if (model) {
+              const index = _.findIndex(groupEnum.customFields, model);
+              groupEnum.customFields[index] = rs.data;
+            } else {
+              groupEnum.customFields.push(rs.data);
+            }
+
+            this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: rs.message, type: 'success' } });
+          }, (err: GenericRs<any>) => {
+            this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: err.message, type: 'danger' } });
+            this.createOrUpdateCF(groupEnum, newModel);
+          });
+      });
+  }
+
+  swapPositionCF(groupEnum: SharedProperty, idx: number, direction: string) {
+    const models = groupEnum.customFields;
+    const idxOppst = direction === 'up' ? idx - 1 : idx + 1;
+    const oppModel = models[idxOppst];
+    const model = models[idx];
+    [oppModel.position, model.position] = [model.position, oppModel.position];
+
+    this.isLoading = true;
+    this.customFieldSvc.update([model, oppModel])
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe(rs => {
+        // Swap Local
+        [models[idx], models[idxOppst]] = [oppModel, model];
+      });
+  }
+
+  removeCF(groupEnum: SharedProperty, model: CustomField) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        message: `Apakah Anda ingin menghapus custom field <strong>${model.fieldName}</strong>?`,
+        buttonText: {
+          ok: 'Ya',
+          cancel: 'Cancel'
+        }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.isLoading = true;
+        this.customFieldSvc.delete(model.id)
+          .pipe(finalize(() => this.isLoading = false))
+          .subscribe(rs => {
+            const models = groupEnum.customFields;
+            _.remove(models, { id: model.id });
+          });
+      }
+    });
+  }
+
 }

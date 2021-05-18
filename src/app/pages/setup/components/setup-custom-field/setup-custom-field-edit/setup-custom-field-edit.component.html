@@ -1,0 +1,56 @@
+<form (ngSubmit)="submit()" [formGroup]="form" autocomplete="off">
+  <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+    <h2 class="headline m-0" fxFlex="auto">Formulir Custom Field</h2>
+
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon [icIcon]="icClose"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+
+  <mat-dialog-content fxLayout="column">
+    <mat-form-field class="mt-3">
+      <mat-label>Field Name</mat-label>
+      <input formControlName="fieldName" cdkFocusInitial matInput required>
+      <mat-error *ngIf="(formControl.fieldName.touched || submitted) && formControl.fieldName.errors?.required">
+        Field Name harus diisi
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Field Type</mat-label>
+      <mat-select formControlName="fieldType" required>
+        <option [ngValue]="null" disabled>Pilih tipe perawatan</option>
+        <mat-option *ngFor="let item of fieldTypes" [value]="item">{{ item }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="(formControl.fieldType.touched || submitted) && formControl.fieldType.errors?.required">
+        Field Type harus diisi
+      </mat-error>
+    </mat-form-field>
+
+    <div [ngSwitch]="formControl.fieldType.value">
+      <mat-form-field class="mt-3 w-full" *ngSwitchCase="'enum'">
+        <mat-label>Field Reference</mat-label>
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let item of references" selectable="true" removable="true" (removed)="removeRefChip(item)">
+            {{ item }}
+            <mat-icon matChipRemove [icIcon]="icCancel"></mat-icon>
+          </mat-chip>
+          <input placeholder="Reference / possible values" [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addRefChip($event)">
+        </mat-chip-list>
+      </mat-form-field>
+      <mat-form-field class="mt-3 w-full" *ngSwitchCase="'shared-property'">
+        <mat-label>Field Reference</mat-label>
+        <input formControlName="fieldReference" matInput>
+      </mat-form-field>
+    </div>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">CANCEL</button>
+    <button color="primary" mat-button type="submit" [disabled]="!submitable">SIMPAN</button>
+  </mat-dialog-actions>
+</form>

@@ -14,7 +14,7 @@
       </mat-list>
     </div>
 
-    <div @stagger class="max-w-4xl w-full" fxLayout="column" fxLayoutGap="24px">
+    <div @stagger class="max-w-6xl w-full" fxLayout="column" fxLayoutGap="24px">
       <vex-setup-enum @fadeInUp SHAREDPROP_GROUP="ASSET_CATEGORY" SHAREDPROP_TITLE="KATEGORI ASET" SHAREDPROP_DESC="?">
       </vex-setup-enum>
 
@@ -28,7 +28,13 @@
         SHAREDPROP_DESC="?">
       </vex-setup-enum>
 
-      <vex-setup-custom-field></vex-setup-custom-field>
+      <vex-setup-custom-field @fadeInUp CUSTOMFIELD_TITLE="ASSET MODEL" CUSTOMFIELD_GROUP="CUSTOM_FIELD_ASSET"
+        CUSTOMFIELD_DESC="Data-data tambahan untuk model Asset. Data dikelompokan berdasarkan kategori tertentu.">
+      </vex-setup-custom-field>
+
+      <vex-setup-custom-field @fadeInUp CUSTOMFIELD_TITLE="JAMAAH MODEL" CUSTOMFIELD_GROUP="CUSTOM_FIELD_JAMAAH"
+        CUSTOMFIELD_DESC="Data-data tambahan untuk model Jamaah. Data dikelompokan berdasarkan kategori tertentu.">
+      </vex-setup-custom-field>
 
     </div>
   </vex-page-layout-content>

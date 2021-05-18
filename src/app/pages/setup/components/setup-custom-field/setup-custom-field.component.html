@@ -2,7 +2,7 @@
 
   <div class="p-6" fxFlex="80">
     <div class="mt-0 mb-4" fxLayout="row" fxLayoutAlign="start center">
-      <h2 class="title" fxFlex="auto">CUSTOM FIELD ASSET</h2>
+      <h2 class="title" fxFlex="auto">{{ CUSTOMFIELD_TITLE }}</h2>
       <button matTooltip="Tambah Group" matTooltipPosition="above" class="cursor-pointer text-primary" mat-icon-button
         type="button" [loading]="isLoading" (click)="createOrUpdateGroupEnum()">
         <mat-icon [icIcon]="icAdd"></mat-icon>
@@ -32,6 +32,11 @@
                   class="cursor-pointer text-primary" mat-icon-button type="button">
                   <mat-icon size="20px" [icIcon]="icDown"></mat-icon>
                 </button>
+                <button (click)="$event.stopPropagation();createOrUpdateCF(item)" matTooltip="Tambah Custom Field"
+                  matTooltipPosition="above" class="cursor-pointer text-primary" mat-icon-button type="button"
+                  [loading]="isLoading">
+                  <mat-icon [icIcon]="icPlus"></mat-icon>
+                </button>
                 <button (click)="$event.stopPropagation();createOrUpdateGroupEnum(item)" matTooltip="Edit Group"
                   matTooltipPosition="above" class="cursor-pointer text-primary" mat-icon-button type="button">
                   <mat-icon size="20px" [icIcon]="icEdit"></mat-icon>
@@ -47,26 +52,30 @@
         </mat-expansion-panel-header>
         <div @stagger [ngClass]="{'border-b': !last}"
           *ngFor="let cp of item.customFields; let idx = index; let first = first ;let last = last;" fxLayout="row"
-          fxLayoutAlign="start center">
+          fxLayout.xs="column" fxLayoutAlign="start center">
           <div @fadeInRight fxFlex="auto">
-            <span class="body-2 m-0 leading-snug mr-4 pr-4 border-r">{{ cp.id }}</span>
-            <span class="text-secondary m-0 caption leading-none">{{ cp.fieldName }}</span>
+            <span class="body-2 m-0 leading-snug mr-4 pr-4 border-r">{{ idx + 1 }}</span>
+            <span class="text-secondary m-0 caption leading-none mr-4 pr-4 border-r">{{ cp.fieldName }}</span>
+            <span class="body-2 m-0 caption leading-none mr-4 pr-4 border-r">{{ cp.fieldType }}</span>
+            <span class="text-secondary m-0 caption leading-none" title="{{ cp.fieldReference }}">
+              {{ (cp.fieldReference | slice:0:35) || '-not set-' }}{{ cp.fieldReference?.length > 35 ? '...' : '' }}
+            </span>
           </div>
           <div class="flex flex-row justify-center">
-            <button matTooltip="Pindah keatas" matTooltipPosition="above" [disabled]="first"
-              class="cursor-pointer text-teal" mat-icon-button type="button">
+            <button (click)="swapPositionCF(item, idx, 'up')" matTooltip="Pindah keatas" matTooltipPosition="above"
+              [disabled]="first" class="cursor-pointer text-teal" mat-icon-button type="button">
               <mat-icon size="20px" [icIcon]="icUp"></mat-icon>
             </button>
-            <button matTooltip="Pindah kebawah" matTooltipPosition="above" [disabled]="last"
-              class="cursor-pointer text-teal" mat-icon-button type="button">
+            <button (click)="swapPositionCF(item, idx, 'down')" matTooltip="Pindah kebawah" matTooltipPosition="above"
+              [disabled]="last" class="cursor-pointer text-teal" mat-icon-button type="button">
               <mat-icon size="20px" [icIcon]="icDown"></mat-icon>
             </button>
-            <button matTooltip="Edit Custom Field" matTooltipPosition="above" class="cursor-pointer text-teal"
-              mat-icon-button type="button">
+            <button (click)="createOrUpdateCF(item, cp)" matTooltip="Edit Custom Field" matTooltipPosition="above"
+              class="cursor-pointer text-teal" mat-icon-button type="button">
               <mat-icon size="20px" [icIcon]="icEdit"></mat-icon>
             </button>
-            <button matTooltip="Hapus Custom Field" matTooltipPosition="above" class="cursor-pointer text-teal"
-              mat-icon-button type="button">
+            <button (click)="removeCF(item, cp)" matTooltip="Hapus Custom Field" matTooltipPosition="above"
+              class="cursor-pointer text-teal" mat-icon-button type="button">
               <mat-icon size="20px" [icIcon]="icTrash"></mat-icon>
             </button>
           </div>
@@ -79,7 +88,7 @@
     <div class="p-6">
       <h2 class="title mt-0 mb-4">DESKRIPSI</h2>
       <p class="text-secondary">
-        Data-data tambahan untuk model Asset. Data dikelompokan berdasarkan kategori tertentu.
+        {{ CUSTOMFIELD_DESC }}
       </p>
     </div>
   </div>
