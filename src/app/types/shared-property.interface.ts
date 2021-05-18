@@ -1,3 +1,4 @@
+import { CustomField } from './custom-field.model';
 import { Variable } from './variable.model';
 
 export interface SharedProperty {
@@ -8,5 +9,5 @@ export interface SharedProperty {
   position?: number;
   removable?: boolean;
   variables?: Variable[];
-  banner?: string;
+  customFields?: CustomField[];
 }

@@ -8,6 +8,7 @@ import { stagger80ms } from '../../../@vex/animations/stagger.animation';
 import { SidebarMenu } from './interfaces/sidebar-menu.interface';
 import { SetupEnumComponent } from './components/setup-enum/setup-enum.component';
 import { SetupTagComponent } from './components/setup-tag/setup-tag.component';
+import { SetupCustomFieldComponent } from './components/setup-custom-field/setup-custom-field.component';
 
 @Component({
   selector: 'vex-setup',
@@ -28,13 +29,17 @@ export class SetupComponent implements OnInit {
     { type: 'link', element: 'assetDetail', title: 'Detail Aset', active: false },
     { type: 'link', element: 'assetStatus', title: 'Status Aset', active: false },
     { type: 'link', element: 'maintenanceType', title: 'Tipe Perawatan Aset', active: false },
+    { type: 'subheader', title: 'OTHER', element: '', active: false },
+    { type: 'link', element: 'customField', title: 'Custom Field', active: false },
   ];
 
   @ViewChild(SetupEnumComponent, { read: ElementRef, static: true }) private assetCategory: ElementRef;
   @ViewChild(SetupEnumComponent, { read: ElementRef, static: true }) private assetDetail: ElementRef;
   @ViewChild(SetupEnumComponent, { read: ElementRef, static: true }) private assetStatus: ElementRef;
   @ViewChild(SetupEnumComponent, { read: ElementRef, static: true }) private maintenanceType: ElementRef;
-  constructor(private layoutService: LayoutService,
+  @ViewChild(SetupCustomFieldComponent, { read: ElementRef, static: true }) private customField: ElementRef;
+  constructor(
+    private layoutService: LayoutService,
     private scrollDispatcher: ScrollDispatcher,
     private elem: ElementRef) { }
 

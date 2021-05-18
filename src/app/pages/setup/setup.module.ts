@@ -10,6 +10,7 @@ import { PageLayoutModule } from 'src/@vex/components/page-layout/page-layout.mo
 import { MatListModule } from '@angular/material/list';
 import { SetupEnumModule } from './components/setup-enum/setup-enum.module';
 import { SetupTagModule } from './components/setup-tag/setup-tag.module';
+import { SetupCustomFieldModule } from './components/setup-custom-field/setup-custom-field.module';
 
 @NgModule({
   declarations: [SetupComponent],
@@ -24,6 +25,7 @@ import { SetupTagModule } from './components/setup-tag/setup-tag.module';
 
     SetupEnumModule,
     SetupTagModule,
+    SetupCustomFieldModule
   ]
 })
 export class SetupModule { }

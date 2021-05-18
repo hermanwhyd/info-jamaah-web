@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { EMPTY, Observable } from 'rxjs';
@@ -28,20 +28,26 @@ export class SharedPropertyService {
     return this._storage.get(this.STORAGE_KEY) || [] as SharedProperty[];
   }
 
+  public findFullByGroup(group: string, include?: string) {
+    let params = new HttpParams().append('full-data', 'true');
+    if (include !== undefined) { params = params.append('include', include); }
+    return this.httpClient.get([this.URL, 'group', group].join('/'), { params }) as Observable<GenericRs<SharedProperty[]>>;
+  }
+
   public findByGroup(group: string, include?: string) {
-    const params = include ? {include} : null;
+    const params = include ? { include } : null;
 
     if (!this.cache[group]) {
-      this.cache[group] = this.httpClient.get([this.URL, 'group', group].join('/'), {params})
-      .pipe(
-        map(data => data),
-        publishReplay(1),
-        refCount(),
-        catchError(err => {
-          this.deleteCacheItem(group);
-          return EMPTY;
-        })
-      );
+      this.cache[group] = this.httpClient.get([this.URL, 'group', group].join('/'), { params })
+        .pipe(
+          map(data => data),
+          publishReplay(1),
+          refCount(),
+          catchError(err => {
+            this.deleteCacheItem(group);
+            return EMPTY;
+          })
+        );
     }
 
     return this.cache[group] as Observable<GenericRs<SharedProperty[]>>;
@@ -50,11 +56,11 @@ export class SharedPropertyService {
   public findByModel(model: string) {
     if (!this.cache[model]) {
       this.cache[model] = this.httpClient.get([this.URL, 'options', model].join('/'))
-      .pipe(
-        map(data => data),
-        publishReplay(1),
-        refCount()
-      );
+        .pipe(
+          map(data => data),
+          publishReplay(1),
+          refCount()
+        );
     }
 
     return this.cache[model] as Observable<GenericRs<SharedProperty[]>>;
