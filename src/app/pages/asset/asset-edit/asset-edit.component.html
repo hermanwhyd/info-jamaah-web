@@ -1,86 +1,119 @@
 <vex-secondary-toolbar current="Formulir Aset">
   <span fxFlex="auto">{{ form.get('title').value || 'Formulir Aset Baru' }}</span>
 
-  <button class="border-none" color="primary" mat-stroked-button type="button" vexBackButton="benda-sabil">
+  <button class="border-none" color="primary" mat-button type="button" vexBackButton="benda-sabil">
     <mat-icon [icIcon]="icBack"></mat-icon>
     <span class="pr-2 py-2">Back</span>
   </button>
 </vex-secondary-toolbar>
 
 <div [@stagger]="true" class="p-gutter" vexContainer>
-  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+  <div class="flex flex-col md:flex-row">
 
-    <div @fadeInUp class="card" fxFlex="auto">
-      <div class="px-6 py-4 border-b" fxLayout="row" fxLayoutAlign="start center">
-        <h2 class="title m-0">Informasi Dasar</h2>
-      </div>
-
-      <form (ngSubmit)="submit()" [formGroup]="form">
-
-        <div class="px-6 py-4" fxLayout="column">
-
-          <mat-form-field>
-            <mat-label>Judul</mat-label>
-            <input cdkFocusInitial formControlName="title" matInput required>
-            <mat-error *ngIf="(formControl.title.touched || submitted) && formControl.title.errors?.required">
-              Judul harus diisi
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Tag No.</mat-label>
-            <input formControlName="tagNo" matInput>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Kategori</mat-label>
-            <mat-select formControlName="categoryEnum" required>
-              <option [ngValue]="null" disabled>Pilih kategori</option>
-              <mat-option *ngFor="let item of categories" [value]="item.code">{{ item.label }}</mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="(formControl.categoryEnum.touched || submitted) && formControl.categoryEnum.errors?.required">
-              Kategori harus dipilih
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Status</mat-label>
-            <mat-select formControlName="statusEnum" required>
-              <option [ngValue]="null" disabled>Pilih status</option>
-              <mat-option *ngFor="let item of statuses" [value]="item.code">{{ item.label }}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="(formControl.statusEnum.touched || submitted) && formControl.statusEnum.errors?.required">
-              Status harus dipilih
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Lokasi</mat-label>
-            <mat-select formControlName="locationId" required>
-              <option [ngValue]="null" disabled>Pilih lokasi</option>
-              <mat-option *ngFor="let item of locations" [value]="item.code">{{ item.label }}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="(formControl.locationId.touched || submitted) && formControl.locationId.errors?.required">
-              Lokasi harus dipilih
-            </mat-error>
-          </mat-form-field>
-
-          <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-            <button mat-button type="button">RESET</button>
-            <button color="primary" mat-button type="submit" [disabled]="!submitable">SIMPAN</button>
-          </div>
-
+    <div @fadeInUp class="flex-1  md:mr-2">
+      <div class="card">
+        <div class="px-6 py-4 border-b" fxLayout="row" fxLayoutAlign="start center">
+          <h2 class="title m-0">Informasi Dasar</h2>
         </div>
-      </form>
+
+        <form (ngSubmit)="submit()" [formGroup]="form">
+
+          <div class="px-6 py-4" fxLayout="column">
+
+            <mat-form-field>
+              <mat-label>Judul</mat-label>
+              <input cdkFocusInitial formControlName="title" matInput required>
+              <mat-error *ngIf="(formControl.title.touched || submitted) && formControl.title.errors?.required">
+                Judul harus diisi
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Tag No.</mat-label>
+              <input formControlName="tagNo" matInput>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Kategori</mat-label>
+              <mat-select formControlName="categoryEnum" required>
+                <option [ngValue]="null" disabled>Pilih kategori</option>
+                <mat-option *ngFor="let item of categories" [value]="item.code">{{ item.label }}</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="(formControl.categoryEnum.touched || submitted) && formControl.categoryEnum.errors?.required">
+                Kategori harus dipilih
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Status</mat-label>
+              <mat-select formControlName="statusEnum" required>
+                <option [ngValue]="null" disabled>Pilih status</option>
+                <mat-option *ngFor="let item of statuses" [value]="item.code">{{ item.label }}</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="(formControl.statusEnum.touched || submitted) && formControl.statusEnum.errors?.required">
+                Status harus dipilih
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Lokasi</mat-label>
+              <mat-select formControlName="locationId" required>
+                <option [ngValue]="null" disabled>Pilih lokasi</option>
+                <mat-option *ngFor="let item of locations" [value]="item.code">{{ item.label }}</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="(formControl.locationId.touched || submitted) && formControl.locationId.errors?.required">
+                Lokasi harus dipilih
+              </mat-error>
+            </mat-form-field>
+
+            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+              <button mat-button type="button">RESET</button>
+              <button color="primary" mat-button type="submit" [disabled]="!submitable">SIMPAN</button>
+            </div>
+
+          </div>
+        </form>
+      </div>
     </div>
 
-    <div @fadeInUp class="card overflow-hidden" fxFlex="auto">
-      <div class="px-6 py-4 border-b" fxLayout="row" fxLayoutAlign="start center">
-        <h2 class="title m-0">Informasi Tambahan</h2>
-      </div>
+    <div @fadeInUp class="flex-1 md:ml-2 mt-4 md:mt-0">
+      <div class="card">
+        <div class="px-6 py-4 border-b" fxLayout="row" fxLayoutAlign="space-between center">
+          <h2 class="title m-0" fxFlex="auto">Informasi Tambahan</h2>
+          <div class="labels" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="4px">
+            <span
+              class="label bg-gray-light text-contrast-white font-bold mx-1 border-b-2 border-gray rounded cursor-pointer"
+              (click)="accordion.openAll()">
+              <p class="text-xxs text-secondary">Expand All</p>
+            </span>
+            <span
+              class="label bg-gray-light text-contrast-white font-bold mx-1 border-b-2 border-gray rounded cursor-pointer"
+              (click)="accordion.closeAll()">
+              <p class="text-xxs text-secondary px-2">Collapse All</p>
+            </span>
+          </div>
+        </div>
 
-      <div class="px-6 py-4" fxLayout="column">
+        <div fxLayout="column">
+          <mat-accordion class="example-headers-align" multi>
+            <mat-expansion-panel *ngFor="let item of assetDetail">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ item.label }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <mat-form-field>
+                <mat-label>First name</mat-label>
+                <input matInput>
+              </mat-form-field>
+
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
       </div>
     </div>
 

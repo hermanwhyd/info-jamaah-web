@@ -1,0 +1,21 @@
+.mat-expansion-indicator::after {
+  border-color: #523f69ab;
+}
+
+
+.labels {
+  .label {
+    border-radius: var(--border-radius);
+    height: 22px;
+    line-height: 22px;
+    margin-top: var(--padding-4);
+    min-width: 40px;
+    padding-left: var(--padding-8);
+    padding-right: var(--padding-8);
+    user-select: none;
+
+    &:last-of-type {
+      padding: 0;
+    }
+  }
+}

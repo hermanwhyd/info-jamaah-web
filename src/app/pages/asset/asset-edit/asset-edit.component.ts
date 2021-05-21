@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
@@ -11,12 +11,15 @@ import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackba
 import { Asset, Location } from '../interfaces/asset.model';
 import { AssetService } from '../service/asset.service';
 import icBack from '@iconify/icons-ic/chevron-left';
+import { MatAccordion } from '@angular/material/expansion';
+import { forkJoin } from 'rxjs';
 
 @UntilDestroy()
 @Component({
   selector: 'vex-asset-edit',
   templateUrl: './asset-edit.component.html',
   styleUrls: ['./asset-edit.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: [
     stagger60ms,
     fadeInUp400ms
@@ -27,6 +30,7 @@ export class AssetEditComponent implements OnInit {
   icBack = icBack;
 
   model: Asset;
+  assetDetail: SharedProperty[];
   locations: Location[];
   categories: SharedProperty[];
   statuses: SharedProperty[];
@@ -44,6 +48,8 @@ export class AssetEditComponent implements OnInit {
     ownerEnum: ['', Validators.required],
   });
 
+  @ViewChild(MatAccordion) accordion: MatAccordion;
+
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
@@ -60,13 +66,17 @@ export class AssetEditComponent implements OnInit {
       .subscribe(params => {
         const id = params.get('id');
         if (id) {
-          this.assetSvc.getById(id)
-            .pipe(tap((gr) => {
-              this.isNew = true;
-              this.form.patchValue(gr.data);
-            })).subscribe(gr => {
-              this.model = gr.data;
-            });
+          const callAsset = this.assetSvc.getById(id).pipe(tap((gr) => {
+            this.isNew = true;
+            this.form.patchValue(gr.data);
+          }));
+          const callAssetDetail = this.assetSvc.getDetail(id);
+
+          const multiCall = forkJoin([callAsset, callAssetDetail]);
+          multiCall.subscribe(res => {
+            this.model = res[0].data;
+            this.assetDetail = res[1].data;
+          });
         }
       });
   }

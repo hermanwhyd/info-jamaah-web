@@ -29,7 +29,7 @@ export class SharedPropertyService {
   }
 
   public findFullByGroup(group: string, include?: string) {
-    let params = new HttpParams().append('full-data', 'true');
+    let params = new HttpParams().append('mode', 'edit');
     if (include !== undefined) { params = params.append('include', include); }
     return this.httpClient.get([this.URL, 'group', group].join('/'), { params }) as Observable<GenericRs<SharedProperty[]>>;
   }

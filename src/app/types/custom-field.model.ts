@@ -1,3 +1,4 @@
+import { AdditionalField } from './additional-field.interface';
 import { SharedProperty } from './shared-property.interface';
 
 export class CustomField {
@@ -9,5 +10,6 @@ export class CustomField {
     public position?: number,
     public fieldReference?: string,
     public group?: SharedProperty,
+    public additionalField?: AdditionalField,
   ) { }
 }

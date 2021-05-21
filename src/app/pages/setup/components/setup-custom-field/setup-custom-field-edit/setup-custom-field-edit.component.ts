@@ -25,7 +25,7 @@ export class SetupCustomFieldEditComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
   model: CustomField;
-  fieldTypes = ['text', 'enum', 'date', 'shared-property'];
+  fieldTypes = ['text', 'dropdown', 'date', 'shared-property'];
   references: string[];
 
   form = this.fb.group({

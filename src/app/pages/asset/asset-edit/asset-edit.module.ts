@@ -16,6 +16,7 @@ import { ContainerModule } from 'src/@vex/directives/container/container.module'
 import { SecondaryToolbarModule } from 'src/@vex/components/secondary-toolbar/secondary-toolbar.module';
 import { IconModule } from '@visurel/iconify-angular';
 import { BackButtonModule } from 'src/app/directives/back-button/back-button.module';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const routes: Routes = [
   { path: '', component: AssetEditComponent },
@@ -42,7 +43,8 @@ const routes: Routes = [
     SnackBarNotifModule,
     ContainerModule,
     SecondaryToolbarModule,
-    BackButtonModule
+    BackButtonModule,
+    MatExpansionModule,
   ]
 })
 export class AssetEditModule { }

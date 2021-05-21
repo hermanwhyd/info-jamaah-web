@@ -25,6 +25,8 @@ import { Asset } from '../../interfaces/asset.model';
 import { AssetService } from '../../service/asset.service';
 import { finalize } from 'rxjs/operators';
 import { scaleFadeIn400ms } from 'src/@vex/animations/scale-fade-in.animation';
+import _ from 'lodash';
+import { AdditionalField } from 'src/app/types/additional-field.interface';
 
 @UntilDestroy()
 @Component({
@@ -59,8 +61,8 @@ export class AssetOverviewComponent implements OnInit {
   model: Asset;
 
   imageObject: any[];
-
   isLoading: boolean;
+  additionalFields: any = []; // = new Map<string, AdditionalField>();
 
   constructor(private route: ActivatedRoute, private assetSvc: AssetService) { }
 
@@ -79,7 +81,7 @@ export class AssetOverviewComponent implements OnInit {
 
   private fetchData(id: string) {
     this.isLoading = true;
-    this.assetSvc.getById(id, 'owner,location,status,details,photos')
+    this.assetSvc.getById(id, 'owner,location,status,additionalFields.customField.group,photos')
       .pipe(finalize(() => this.isLoading = false))
       .subscribe(g => {
         this.model = g.data;
@@ -91,6 +93,11 @@ export class AssetOverviewComponent implements OnInit {
             title: p.properties?.notes
           });
         });
+        if (this.model.additionalFields) {
+          this.additionalFields = _.groupBy(this.model.additionalFields, function (af) {
+            return af.customField?.group?.label;
+          });
+        }
       });
   }
 }

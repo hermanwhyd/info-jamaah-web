@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { GenericRs } from 'src/app/types/generic-rs.model';
 import { Asset, AssetAudit, AssetMaintenance } from '../interfaces/asset.model';
 import { UploadStatus, FilePreviewModel } from 'ngx-awesome-uploader';
+import { SharedProperty } from 'src/app/types/shared-property.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -23,6 +24,10 @@ export class AssetService {
     let params = new HttpParams();
     if (include !== undefined) { params = params.append('include', include); }
     return this.httpClient.get([this.URL, id].join('/'), { params }) as Observable<GenericRs<Asset>>;
+  }
+
+  public getDetail(id: number | string) {
+    return this.httpClient.get([this.URL, id, 'detail'].join('/')) as Observable<GenericRs<SharedProperty[]>>;
   }
 
   public delete(id: number | string) {

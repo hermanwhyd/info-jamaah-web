@@ -9,15 +9,15 @@
       </h2>
     </div>
     <div fxHide.xs>
-      <button mat-stroked-button (click)="reloadPage()">
+      <button mat-button (click)="reloadPage()">
         <ic-icon [icon]="icRefresh" [inline]="true" class="sm:-ml-1 sm:mr-2" size="20px"></ic-icon>
         <span class="text-xs hidden sm:inline-block">REFRESH</span>
       </button>
-      <button mat-stroked-button [routerLink]="['../', 'form', model?.id]">
+      <button mat-button [routerLink]="['../', 'form', model?.id]">
         <ic-icon [icon]="icEdit" [inline]="true" class="sm:-ml-1 sm:mr-2" size="20px"></ic-icon>
         <span class="text-xs hidden sm:inline-block">EDIT</span>
       </button>
-      <button mat-stroked-button (click)="onDeleteModel()">
+      <button mat-button (click)="onDeleteModel()">
         <ic-icon [icon]="icDelete" [inline]="true" class="sm:-ml-1 sm:mr-2" size="20px"></ic-icon>
         <span class="text-xs hidden sm:inline-block">DELETE</span>
       </button>

@@ -1,3 +1,4 @@
+import { AdditionalField } from 'src/app/types/additional-field.interface';
 import { SharedProperty } from 'src/app/types/shared-property.interface';
 import { User } from '../../user/interfaces/user.interface';
 
@@ -14,19 +15,11 @@ export interface Asset {
   status?: SharedProperty;
   owner?: Owner;
   location?: Location;
-  details?: Detail[];
+  additionalFields: AdditionalField[];
   maintenances?: AssetMaintenance[];
   audits?: AssetAudit[];
   media?: AssetMedia[];
   photos?: AssetMedia[];
-}
-
-export interface Detail {
-  id: number;
-  assetId: number;
-  typeEnum: string;
-  value: string;
-  type?: SharedProperty;
 }
 
 export interface Location {
