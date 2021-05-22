@@ -25,4 +25,4 @@ import { ConfirmationDialogComponent } from './confirmation-dialog.component';
   ],
   exports: [ConfirmationDialogComponent]
 })
-export class ConfirmationDialogModule {}
+export class ConfirmationDialogModule { }

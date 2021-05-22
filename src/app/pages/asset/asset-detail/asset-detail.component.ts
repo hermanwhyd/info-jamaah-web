@@ -10,7 +10,6 @@ import icDelete from '@iconify/icons-ic/baseline-delete';
 import icRefresh from '@iconify/icons-ic/baseline-refresh';
 import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 
-
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AssetService } from '../service/asset.service';
@@ -63,10 +62,11 @@ export class AssetDetailComponent implements OnInit {
     }
   ];
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private assetSvc: AssetService,
-    private dialog: MatDialog,
     private router: Router,
+    private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) { }
 

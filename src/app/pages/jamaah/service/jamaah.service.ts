@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Jamaah } from '../interfaces/jamaah.model';
 import * as _ from 'lodash';
 import { GenericRs } from 'src/app/types/generic-rs.model';
+import { AdditionalField } from 'src/app/types/additional-field.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class JamaahService {
   constructor(private httpClient: HttpClient) { }
 
   public getJamaahList(): Observable<GenericRs<Jamaah[]>> {
-    let params = new HttpParams().append('include', 'lvPembinaan');
+    const params = new HttpParams().append('include', 'lvPembinaan');
     return this.httpClient.get(this.URL, { params }) as Observable<GenericRs<Jamaah[]>>;
   }
 
@@ -36,6 +37,10 @@ export class JamaahService {
     } else {
       return this.httpClient.post(this.URL, jamaah) as Observable<GenericRs<Jamaah>>;
     }
+  }
+
+  public createDetail(id: number, value: AdditionalField) {
+    return this.httpClient.post([this.URL, id, 'detail'].join('/'), value) as Observable<GenericRs<AdditionalField>>;
   }
 
 }

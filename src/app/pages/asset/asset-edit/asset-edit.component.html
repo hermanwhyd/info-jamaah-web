@@ -99,18 +99,15 @@
 
         <div fxLayout="column">
           <mat-accordion class="example-headers-align" multi>
-            <mat-expansion-panel *ngFor="let item of assetDetail">
+            <mat-expansion-panel *ngFor="let item of assetDetail;let first = first" [expanded]="first">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   {{ item.label }}
                 </mat-panel-title>
               </mat-expansion-panel-header>
-
-              <mat-form-field>
-                <mat-label>First name</mat-label>
-                <input matInput>
-              </mat-form-field>
-
+              <vex-custom-field-editor *ngFor="let cf of item.customFields" [model]="cf"
+                (save)="onSaveDetail($event, cf)">
+              </vex-custom-field-editor>
             </mat-expansion-panel>
           </mat-accordion>
         </div>

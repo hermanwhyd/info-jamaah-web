@@ -17,6 +17,7 @@ import { SecondaryToolbarModule } from 'src/@vex/components/secondary-toolbar/se
 import { IconModule } from '@visurel/iconify-angular';
 import { BackButtonModule } from 'src/app/directives/back-button/back-button.module';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { CustomFieldEditorModule } from '../../shared/custom-fields/custom-field-editor/custom-field-editor.module';
 
 const routes: Routes = [
   { path: '', component: AssetEditComponent },
@@ -45,6 +46,7 @@ const routes: Routes = [
     SecondaryToolbarModule,
     BackButtonModule,
     MatExpansionModule,
+    CustomFieldEditorModule
   ]
 })
 export class AssetEditModule { }

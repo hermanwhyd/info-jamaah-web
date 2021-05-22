@@ -14,6 +14,10 @@ export class CustomFieldService {
 
   constructor(private httpClient: HttpClient) { }
 
+  findById(id: number) {
+    return this.httpClient.get([this.URL, id].join('/')) as Observable<GenericRs<CustomField>>;
+  }
+
   public findByGroupId(groupId: number, include?: string) {
     let params = new HttpParams();
     if (include !== undefined) { params = params.append('include', include); }

@@ -11,5 +11,6 @@ export class CustomField {
     public fieldReference?: string,
     public group?: SharedProperty,
     public additionalField?: AdditionalField,
+    public value?: AdditionalField
   ) { }
 }

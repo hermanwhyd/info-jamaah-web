@@ -7,6 +7,7 @@ import { GenericRs } from 'src/app/types/generic-rs.model';
 import { Asset, AssetAudit, AssetMaintenance } from '../interfaces/asset.model';
 import { UploadStatus, FilePreviewModel } from 'ngx-awesome-uploader';
 import { SharedProperty } from 'src/app/types/shared-property.interface';
+import { AdditionalField } from 'src/app/types/additional-field.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -40,6 +41,10 @@ export class AssetService {
     } else {
       return this.httpClient.post(this.URL, asset) as Observable<GenericRs<Asset>>;
     }
+  }
+
+  public createDetail(id: number, value: AdditionalField) {
+    return this.httpClient.post([this.URL, id, 'detail'].join('/'), value) as Observable<GenericRs<AdditionalField>>;
   }
 
   public uploadFile(id: string | number, fileItem: FilePreviewModel) {

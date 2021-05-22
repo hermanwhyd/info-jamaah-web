@@ -13,6 +13,8 @@ import { AssetService } from '../service/asset.service';
 import icBack from '@iconify/icons-ic/chevron-left';
 import { MatAccordion } from '@angular/material/expansion';
 import { forkJoin } from 'rxjs';
+import { AdditionalField } from 'src/app/types/additional-field.interface';
+import { CustomField } from 'src/app/types/custom-field.model';
 
 @UntilDestroy()
 @Component({
@@ -102,6 +104,20 @@ export class AssetEditComponent implements OnInit {
         next: data => {
           this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: 'Berhasil menyimpan data!', type: 'success' } });
         },
+        error: err => {
+          this.snackBar.openFromComponent(SnackbarNotifComponent, {
+            data: {
+              message: err.message || 'Gagal menyimpan data!', type: 'danger'
+            }
+          });
+        }
+      });
+  }
+
+  onSaveDetail(detail: AdditionalField, cf: CustomField) {
+    this.assetSvc.createDetail(this.model.id, detail)
+      .subscribe({
+        next: gr => cf.value = gr.data,
         error: err => {
           this.snackBar.openFromComponent(SnackbarNotifComponent, {
             data: {
