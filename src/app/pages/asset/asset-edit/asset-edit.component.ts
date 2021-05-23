@@ -15,6 +15,8 @@ import { MatAccordion } from '@angular/material/expansion';
 import { forkJoin } from 'rxjs';
 import { AdditionalField } from 'src/app/types/additional-field.interface';
 import { CustomField } from 'src/app/types/custom-field.model';
+import { SharedPropertyService } from 'src/app/services/shared-property.service';
+import _ from 'lodash';
 
 @UntilDestroy()
 @Component({
@@ -33,7 +35,8 @@ export class AssetEditComponent implements OnInit {
 
   model: Asset;
   assetDetail: SharedProperty[];
-  locations: Location[];
+  locations: any;
+  pembinas: SharedProperty[];
   categories: SharedProperty[];
   statuses: SharedProperty[];
 
@@ -47,7 +50,7 @@ export class AssetEditComponent implements OnInit {
     categoryEnum: ['', Validators.required],
     statusEnum: ['', Validators.required],
     locationId: ['', Validators.required],
-    ownerEnum: ['', Validators.required],
+    pembinaEnum: ['', Validators.required],
   });
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
@@ -56,6 +59,7 @@ export class AssetEditComponent implements OnInit {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
+    private enumSvc: SharedPropertyService,
     private assetSvc: AssetService) { }
 
   ngOnInit(): void {
@@ -73,11 +77,19 @@ export class AssetEditComponent implements OnInit {
             this.form.patchValue(gr.data);
           }));
           const callAssetDetail = this.assetSvc.getDetail(id);
+          const callCategories = this.enumSvc.findByGroup('ASSET_CATEGORY');
+          const callStatuses = this.enumSvc.findByGroup('ASSET_STATUS');
+          const callLocations = this.enumSvc.getSelectOptions('location', 'type');
+          const callPembinas = this.enumSvc.getSelectOptions('pembina');
 
-          const multiCall = forkJoin([callAsset, callAssetDetail]);
+          const multiCall = forkJoin([callAsset, callAssetDetail, callCategories, callStatuses, callLocations, callPembinas]);
           multiCall.subscribe(res => {
             this.model = res[0].data;
             this.assetDetail = res[1].data;
+            this.categories = res[2].data;
+            this.statuses = res[3].data;
+            this.locations = _.groupBy(res[4].data, 'type.label');
+            this.pembinas = res[5].data;
           });
         }
       });
@@ -87,8 +99,18 @@ export class AssetEditComponent implements OnInit {
     return !this.form.pristine && this.form.valid;
   }
 
+  get resetable(): boolean {
+    return this.form.dirty;
+  }
+
   get formControl() {
     return this.form.controls;
+  }
+
+  reset() {
+    this.form.reset(this.model);
+    this.form.markAsPristine();
+    this.form.markAsUntouched();
   }
 
   submit() {

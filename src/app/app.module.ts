@@ -9,9 +9,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CustomLayoutModule } from './custom-layout/custom-layout.module';
 import { AuthModule } from './auth/auth.module';
 import { JsonDateInterceptor } from './config/json-date.interceptor';
+import { CustomfieldPipe } from './pipes/customfield.pipe';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, CustomfieldPipe],
   imports: [
     BrowserModule,
     AppRoutingModule,

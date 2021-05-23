@@ -9,11 +9,11 @@ export interface Asset {
   categoryEnum: string;
   statusEnum: string;
   locationId: number;
-  ownerEnum: string;
+  pembinaEnum: string;
   avatar: string;
   category?: SharedProperty;
   status?: SharedProperty;
-  owner?: Owner;
+  pembina?: SharedProperty;
   location?: Location;
   additionalFields: AdditionalField[];
   maintenances?: AssetMaintenance[];
@@ -27,12 +27,6 @@ export interface Location {
   label: string;
   typeEnum: string;
   type?: SharedProperty;
-}
-
-export interface Owner {
-  lvPembina: string;
-  initial: string;
-  label: string;
 }
 
 export interface AssetMaintenance {

@@ -81,7 +81,7 @@ export class AssetOverviewComponent implements OnInit {
 
   private fetchData(id: string) {
     this.isLoading = true;
-    this.assetSvc.getById(id, 'owner,location,status,additionalFields.customField.group,photos')
+    this.assetSvc.getById(id, 'pembina,location,status,additionalFields.customField.group,photos')
       .pipe(finalize(() => this.isLoading = false))
       .subscribe(g => {
         this.model = g.data;

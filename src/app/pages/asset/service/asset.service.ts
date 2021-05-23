@@ -17,7 +17,7 @@ export class AssetService {
   constructor(private httpClient: HttpClient) { }
 
   public getAllList() {
-    const params = new HttpParams().append('include', 'owner,status,category,location.type');
+    const params = new HttpParams().append('include', 'pembina,status,category,location.type');
     return this.httpClient.get(this.URL, { params }) as Observable<GenericRs<Asset[]>>;
   }
 

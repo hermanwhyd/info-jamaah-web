@@ -60,7 +60,7 @@ export class AssetComponent implements OnInit {
     { label: 'KATEGORI', property: 'category.label', type: 'text', cssClasses: ['text-secondary'] },
     { label: 'LOKASI', property: 'location.label', type: 'text', cssClasses: ['text-secondary'] },
     { label: 'STATUS', property: 'status.label', type: 'text', cssClasses: ['text-secondary'] },
-    { label: 'PEMILIK', property: 'owner.label', type: 'text', cssClasses: ['text-secondary'] },
+    { label: 'PEMILIK', property: 'pembina.label', type: 'text', cssClasses: ['text-secondary'] },
     { label: '', property: 'menu', type: 'button', cssClasses: ['text-secondary', 'w-10'] },
   ];
 
@@ -69,11 +69,11 @@ export class AssetComponent implements OnInit {
   ];
 
   constructor(
-    private assetService: AssetService
-    , private dialog: MatDialog
-    , private snackBar: MatSnackBar
-    , private router: Router
-    , private activatedRoute: ActivatedRoute
+    private assetService: AssetService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {

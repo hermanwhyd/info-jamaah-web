@@ -89,4 +89,10 @@ export class SharedPropertyService {
   public delete(id: number) {
     return this.httpClient.delete([this.URL, id].join('/')) as Observable<GenericRs<void>>;
   }
+
+  public getSelectOptions(selector: string, include?: string) {
+    let params = new HttpParams();
+    if (include !== undefined) { params = params.append('include', include); }
+    return this.httpClient.get([this.URL, 'options', selector].join('/'), { params }) as Observable<GenericRs<any>>;
+  }
 }

@@ -16,11 +16,11 @@
           <h2 class="title m-0">Informasi Dasar</h2>
         </div>
 
-        <form (ngSubmit)="submit()" [formGroup]="form">
+        <form (ngSubmit)="submit()" [formGroup]="form" autocomplete="off">
 
           <div class="px-6 py-4" fxLayout="column">
 
-            <mat-form-field>
+            <mat-form-field appearance="outline">
               <mat-label>Judul</mat-label>
               <input cdkFocusInitial formControlName="title" matInput required>
               <mat-error *ngIf="(formControl.title.touched || submitted) && formControl.title.errors?.required">
@@ -28,15 +28,15 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field appearance="outline">
               <mat-label>Tag No.</mat-label>
               <input formControlName="tagNo" matInput>
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field appearance="outline">
               <mat-label>Kategori</mat-label>
               <mat-select formControlName="categoryEnum" required>
-                <option [ngValue]="null" disabled>Pilih kategori</option>
+                <mat-option disabled>Pilih kategori</mat-option>
                 <mat-option *ngFor="let item of categories" [value]="item.code">{{ item.label }}</mat-option>
               </mat-select>
               <mat-error
@@ -45,10 +45,10 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field appearance="outline">
               <mat-label>Status</mat-label>
               <mat-select formControlName="statusEnum" required>
-                <option [ngValue]="null" disabled>Pilih status</option>
+                <mat-option disabled>Pilih status</mat-option>
                 <mat-option *ngFor="let item of statuses" [value]="item.code">{{ item.label }}</mat-option>
               </mat-select>
               <mat-error
@@ -57,11 +57,25 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Pembina</mat-label>
+              <mat-select formControlName="pembinaEnum" required>
+                <mat-option disabled>Pilih pembina</mat-option>
+                <mat-option *ngFor="let item of pembinas" [value]="item.code">{{ item.label }}</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="(formControl.pembinaEnum.touched || submitted) && formControl.pembinaEnum.errors?.required">
+                Pembina harus dipilih
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
               <mat-label>Lokasi</mat-label>
               <mat-select formControlName="locationId" required>
-                <option [ngValue]="null" disabled>Pilih lokasi</option>
-                <mat-option *ngFor="let item of locations" [value]="item.code">{{ item.label }}</mat-option>
+                <mat-option disabled>Pilih lokasi</mat-option>
+                <mat-optgroup *ngFor="let g of locations | keyvalue" [label]="g.key">
+                  <mat-option *ngFor="let l of g.value" [value]="l.id">{{ l.label }}</mat-option>
+                </mat-optgroup>
               </mat-select>
               <mat-error
                 *ngIf="(formControl.locationId.touched || submitted) && formControl.locationId.errors?.required">
@@ -70,7 +84,7 @@
             </mat-form-field>
 
             <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-              <button mat-button type="button">RESET</button>
+              <button mat-button type="button" [disabled]="!resetable" (click)="reset()">RESET</button>
               <button color="primary" mat-button type="submit" [disabled]="!submitable">SIMPAN</button>
             </div>
 
