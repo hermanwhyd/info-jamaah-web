@@ -1,23 +1,14 @@
 import { Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
 import { LayoutService } from '../../services/layout.service';
-import icBookmarks from '@iconify/icons-ic/twotone-bookmarks';
-import emojioneUS from '@iconify/icons-emojione/flag-for-flag-united-states';
-import emojioneDE from '@iconify/icons-emojione/flag-for-flag-germany';
 import icMenu from '@iconify/icons-ic/twotone-menu';
+import icRefresh from '@iconify/icons-ic/baseline-refresh';
 import { ConfigService } from '../../services/config.service';
 import { map } from 'rxjs/operators';
-import icPersonAdd from '@iconify/icons-ic/twotone-person-add';
-import icAssignmentTurnedIn from '@iconify/icons-ic/twotone-assignment-turned-in';
-import icBallot from '@iconify/icons-ic/twotone-ballot';
-import icDescription from '@iconify/icons-ic/twotone-description';
-import icAssignment from '@iconify/icons-ic/twotone-assignment';
-import icReceipt from '@iconify/icons-ic/twotone-receipt';
-import icDoneAll from '@iconify/icons-ic/twotone-done-all';
 import { NavigationService } from '../../services/navigation.service';
 import icArrowDropDown from '@iconify/icons-ic/twotone-arrow-drop-down';
 import { PopoverService } from '../../components/popover/popover.service';
-import icSearch from '@iconify/icons-ic/twotone-search';
 import { IntegrationMenuComponent } from 'src/app/pages/dashboard/integration-menu/integration-menu.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'vex-toolbar',
@@ -39,24 +30,16 @@ export class ToolbarComponent implements OnInit {
   isNavbarInToolbar$ = this.configService.config$.pipe(map(config => config.navbar.position === 'in-toolbar'));
   isNavbarBelowToolbar$ = this.configService.config$.pipe(map(config => config.navbar.position === 'below-toolbar'));
 
-  icSearch = icSearch;
-  icBookmarks = icBookmarks;
-  emojioneUS = emojioneUS;
-  emojioneDE = emojioneDE;
   icMenu = icMenu;
-  icPersonAdd = icPersonAdd;
-  icAssignmentTurnedIn = icAssignmentTurnedIn;
-  icBallot = icBallot;
-  icDescription = icDescription;
-  icAssignment = icAssignment;
-  icReceipt = icReceipt;
-  icDoneAll = icDoneAll;
   icArrowDropDown = icArrowDropDown;
+  icRefresh = icRefresh;
 
-  constructor(private layoutService: LayoutService,
-              private configService: ConfigService,
-              private navigationService: NavigationService,
-              private popoverService: PopoverService) { }
+  constructor(
+    private layoutService: LayoutService,
+    private configService: ConfigService,
+    private navigationService: NavigationService,
+    private popoverService: PopoverService,
+    private router: Router,) { }
 
   ngOnInit() {
   }
@@ -87,6 +70,13 @@ export class ToolbarComponent implements OnInit {
           overlayY: 'top',
         },
       ]
+    });
+  }
+
+  reloadPage() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
     });
   }
 }
