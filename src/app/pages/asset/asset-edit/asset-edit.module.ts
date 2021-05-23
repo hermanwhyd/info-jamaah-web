@@ -18,6 +18,8 @@ import { IconModule } from '@visurel/iconify-angular';
 import { BackButtonModule } from 'src/app/directives/back-button/back-button.module';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CustomFieldEditorModule } from '../../shared/custom-fields/custom-field-editor/custom-field-editor.module';
+import { NgxShimmerLoadingModule } from 'ngx-shimmer-loading';
+import { MatButtonLoadingModule } from 'src/app/utilities/mat-button-loading/mat-button-loading.module';
 
 const routes: Routes = [
   { path: '', component: AssetEditComponent },
@@ -46,7 +48,9 @@ const routes: Routes = [
     SecondaryToolbarModule,
     BackButtonModule,
     MatExpansionModule,
-    CustomFieldEditorModule
+    CustomFieldEditorModule,
+    NgxShimmerLoadingModule,
+    MatButtonLoadingModule
   ]
 })
 export class AssetEditModule { }

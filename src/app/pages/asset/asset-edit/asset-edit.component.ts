@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { tap } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
 import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
 import { stagger60ms } from 'src/@vex/animations/stagger.animation';
 import { SharedProperty } from 'src/app/types/shared-property.interface';
@@ -42,6 +42,8 @@ export class AssetEditComponent implements OnInit {
 
   isNew = true;
   submitted = false;
+  isFetching = true;
+  isSubmitting = false;
 
   form = this.fb.group({
     id: null,
@@ -59,6 +61,7 @@ export class AssetEditComponent implements OnInit {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
+    private router: Router,
     private enumSvc: SharedPropertyService,
     private assetSvc: AssetService) { }
 
@@ -71,27 +74,35 @@ export class AssetEditComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(params => {
         const id = params.get('id');
+
+        // fetch required data
+        const callCategories = this.enumSvc.findByGroup('ASSET_CATEGORY');
+        const callStatuses = this.enumSvc.findByGroup('ASSET_STATUS');
+        const callLocations = this.enumSvc.getSelectOptions('location', 'type');
+        const callPembinas = this.enumSvc.getSelectOptions('pembina');
+
+        const arr = [callCategories, callStatuses, callLocations, callPembinas];
         if (id) {
-          const callAsset = this.assetSvc.getById(id).pipe(tap((gr) => {
-            this.isNew = true;
+          const callAset = this.assetSvc.getById(id).pipe(tap((gr) => {
+            this.isNew = false;
             this.form.patchValue(gr.data);
           }));
           const callAssetDetail = this.assetSvc.getDetail(id);
-          const callCategories = this.enumSvc.findByGroup('ASSET_CATEGORY');
-          const callStatuses = this.enumSvc.findByGroup('ASSET_STATUS');
-          const callLocations = this.enumSvc.getSelectOptions('location', 'type');
-          const callPembinas = this.enumSvc.getSelectOptions('pembina');
-
-          const multiCall = forkJoin([callAsset, callAssetDetail, callCategories, callStatuses, callLocations, callPembinas]);
-          multiCall.subscribe(res => {
-            this.model = res[0].data;
-            this.assetDetail = res[1].data;
-            this.categories = res[2].data;
-            this.statuses = res[3].data;
-            this.locations = _.groupBy(res[4].data, 'type.label');
-            this.pembinas = res[5].data;
-          });
+          arr.push(callAset, callAssetDetail);
         }
+
+        const multiCall = forkJoin(arr);
+        multiCall.pipe(finalize(() => this.isFetching = false)).subscribe(res => {
+          this.categories = res[0].data;
+          this.statuses = res[1].data;
+          this.locations = _.groupBy(res[2].data, 'type.label');
+          this.pembinas = res[3].data;
+
+          if (res.length > 4) {
+            this.model = res[4].data;
+            this.assetDetail = res[5].data;
+          }
+        });
       });
   }
 
@@ -114,17 +125,23 @@ export class AssetEditComponent implements OnInit {
   }
 
   submit() {
-    this.submitted = true;
+    this.isSubmitting = true;
     const form = this.form.getRawValue();
     this.model = {
       ...form
-      , id: this.model.id
+      , id: this.model?.id
     };
 
     this.assetSvc.saveOrUpdate(this.model)
+      .pipe(finalize(() => this.isSubmitting = false))
       .subscribe({
-        next: data => {
+        next: gr => {
+          this.submitted = true;
+          this.reset();
           this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: 'Berhasil menyimpan data!', type: 'success' } });
+          if (this.isNew) {
+            this.router.navigate([gr.data.id], { relativeTo: this.route })
+          }
         },
         error: err => {
           this.snackBar.openFromComponent(SnackbarNotifComponent, {

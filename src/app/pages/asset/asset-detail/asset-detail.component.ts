@@ -7,7 +7,6 @@ import icAttachFile from '@iconify/icons-ic/twotone-attach-file';
 import icArrowBack from '@iconify/icons-ic/arrow-back';
 import icEdit from '@iconify/icons-ic/baseline-edit';
 import icDelete from '@iconify/icons-ic/baseline-delete';
-import icRefresh from '@iconify/icons-ic/baseline-refresh';
 import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -37,7 +36,6 @@ export class AssetDetailComponent implements OnInit {
   icAttachFile = icAttachFile;
   icDelete = icDelete;
   icEdit = icEdit;
-  icRefresh = icRefresh;
   icMoreVert = icMoreVert;
 
   componentReference: any;
@@ -98,13 +96,6 @@ export class AssetDetailComponent implements OnInit {
     // Below will subscribe to the searchItem emitter
     componentReference.fireUploadFileDialog?.subscribe((data: any) => {
       this.uploadFile();
-    });
-  }
-
-  reloadPage() {
-    const currentUrl = this.router.url;
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate([currentUrl]);
     });
   }
 
