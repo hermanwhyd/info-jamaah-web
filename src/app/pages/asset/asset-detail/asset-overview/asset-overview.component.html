@@ -3,8 +3,24 @@
     <h2 class="title m-0">Informasi Aset</h2>
   </div>
 
-  <div *ngIf="isLoading" @scaleFadeIn class="flex-auto flex flex-col justify-center items-center p-20">
-    <mat-progress-spinner mode="indeterminate" class="text-left"></mat-progress-spinner>
+  <div *ngIf="isLoading" class="card p-gutter flex flex-col md:flex-row">
+    <div class="w-full md:w-1/2">
+      <div class="flex flex-col">
+        <ngx-shimmer-loading class="flex-1" [width]="'100%'"></ngx-shimmer-loading>
+        <ngx-shimmer-loading class="flex-1" [width]="'100%'" [height]="'100px'"></ngx-shimmer-loading>
+      </div>
+      <div class="flex flex-col">
+        <ngx-shimmer-loading class="flex-1" [width]="'100%'"></ngx-shimmer-loading>
+        <ngx-shimmer-loading class="flex-1" [width]="'100%'" [height]="'100px'"></ngx-shimmer-loading>
+      </div>
+    </div>
+    <div class="w-full md:w-1/2 flex flex-row place-content-around">
+      <div class="flex flex-col w-full md:px-2 pr-2">
+        <ngx-shimmer-loading [width]="'100%'"></ngx-shimmer-loading>
+        <ngx-shimmer-loading [width]="'100%'" [height]="'30px'"></ngx-shimmer-loading>
+      </div>
+      <ngx-shimmer-loading [shape]="'square'" [width]="'120px'"></ngx-shimmer-loading>
+    </div>
   </div>
 
   <div *ngIf="!isLoading" class="py-4 flex flex-col md:flex-row md:items-start">
@@ -64,10 +80,13 @@
   <div class="px-gutter py-4 border-b">
     <h2 class="title m-0">Dokumentasi Foto</h2>
   </div>
-  <div *ngIf="isLoading" @scaleFadeIn class="flex-auto flex flex-col justify-center items-center p-20">
-    <mat-progress-spinner mode="indeterminate" class="text-left"></mat-progress-spinner>
+  <div *ngIf="isLoading" class="p-2" fxLayout="row" fxLayoutGap="8px">
+    <ngx-shimmer-loading [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
+    <ngx-shimmer-loading [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
+    <ngx-shimmer-loading class="overflow-hidden" [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
+    <ngx-shimmer-loading class="overflow-hidden" [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
   </div>
-  <div *ngIf="!isLoading" class="px-gutter py-4">
+  <div *ngIf=" !isLoading" class="px-gutter py-4">
     <img *ngIf="!imageObject" class="rounded" src="/assets/img/default/default-img-hori.png" height="200"
       width="auto" />
     <ng-image-slider *ngIf="imageObject" #nav [images]="imageObject" [infinite]="false" [autoSlide]="1"
