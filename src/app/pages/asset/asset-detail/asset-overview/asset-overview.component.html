@@ -80,16 +80,38 @@
   <div class="px-gutter py-4 border-b">
     <h2 class="title m-0">Dokumentasi Foto</h2>
   </div>
-  <div *ngIf="isLoading" class="p-2" fxLayout="row" fxLayoutGap="8px">
-    <ngx-shimmer-loading [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
-    <ngx-shimmer-loading [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
-    <ngx-shimmer-loading class="overflow-hidden" [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
-    <ngx-shimmer-loading class="overflow-hidden" [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
+
+  <gallery class="hidden" [id]="galleryId" [itemTemplate]="itemTemplate"></gallery>
+
+  <div *ngIf="isLoading" @stagger class="px-gutter py-4" gdColumns="1fr 1fr 1fr 1fr 1fr"
+    gdColumns.lt-lg="1fr 1fr 1fr 1fr" gdColumns.xs="1fr 1fr" gdGap="16px">
+    <ngx-shimmer-loading [shape]="'square'" [width]="'200px'"></ngx-shimmer-loading>
+    <ngx-shimmer-loading [shape]="'square'" [width]="'200px'"></ngx-shimmer-loading>
+    <ngx-shimmer-loading class="hidden md:block" [shape]="'square'" [width]="'200px'"></ngx-shimmer-loading>
+    <ngx-shimmer-loading class="hidden md:block" [shape]="'square'" [width]="'200px'"></ngx-shimmer-loading>
+    <ngx-shimmer-loading class="hidden md:block" [shape]="'square'" [width]="'200px'"></ngx-shimmer-loading>
   </div>
-  <div *ngIf=" !isLoading" class="px-gutter py-4">
-    <img *ngIf="!imageObject" class="rounded" src="/assets/img/default/default-img-hori.png" height="200"
-      width="auto" />
-    <ng-image-slider *ngIf="imageObject" #nav [images]="imageObject" [infinite]="false" [autoSlide]="1"
-      [imageSize]="{height: 200}" slideImage="2" [animationSpeed]="0.5"></ng-image-slider>
+  <div *ngIf="!isLoading" @stagger class="px-gutter py-4" gdColumns="1fr 1fr 1fr 1fr 1fr 1fr"
+    gdColumns.lt-lg="1fr 1fr 1fr 1fr" gdColumns.lt-md="1fr 1fr 1fr" gdColumns.xs="1fr 1fr" gdGap="24px">
+    <div class="flex items-center justify-center" *ngFor="let item of galleries; let i = index" [gallery]="galleryId"
+      [lightbox]="i" @scaleIn gdGridAlign="center">
+      <figure class="relative cursor-pointer">
+        <img class="rounded-lg shadow-xl hover:shadow-2xl" [src]="item.data.thumb" />
+        <figcaption class="absolute text-lg text-white px-2 w-full bg-contrast-black bg-opacity-50 -mt-5">
+          <div>
+            <p class="truncate">{{item.data.title}}</p>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
   </div>
-</div>
+
+  <!-- Add custom template to image items -->
+  <ng-template #itemTemplate let-index="index" let-types="type" let-data="data" let-currIndex="currIndex">
+    <figcaption class="absolute mt-16 px-4 w-full h-full">
+      <span *ngIf="index === currIndex" [@stagger]
+        class="truncate text-center block w-full text-4xl bg-contrast-black bg-opacity-25 text-white">
+        {{ data?.title }}
+      </span>
+    </figcaption>
+  </ng-template>

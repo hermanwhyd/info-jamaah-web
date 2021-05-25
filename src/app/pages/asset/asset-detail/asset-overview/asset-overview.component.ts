@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
 import { fadeInRight400ms } from 'src/@vex/animations/fade-in-right.animation';
 import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
@@ -26,7 +26,7 @@ import { AssetService } from '../../service/asset.service';
 import { finalize } from 'rxjs/operators';
 import { scaleFadeIn400ms } from 'src/@vex/animations/scale-fade-in.animation';
 import _ from 'lodash';
-import { AdditionalField } from 'src/app/types/additional-field.interface';
+import { Gallery, GalleryItem } from 'ng-gallery';
 
 @UntilDestroy()
 @Component({
@@ -58,13 +58,20 @@ export class AssetOverviewComponent implements OnInit {
   icHome = icHome;
   icMap = icMap;
 
+  galleryId = 'myLightbox';
+  galleries: GalleryItem[] = [];
+
   model: Asset;
 
-  imageObject: any[];
   isLoading: boolean;
   additionalFields: any = []; // = new Map<string, AdditionalField>();
 
-  constructor(private route: ActivatedRoute, private assetSvc: AssetService) { }
+  @ViewChild('itemTemplate', { read: TemplateRef }) itemTemplate: TemplateRef<any>;
+
+  constructor(
+    private route: ActivatedRoute,
+    private assetSvc: AssetService,
+    private gallery: Gallery) { }
 
   ngOnInit(): void {
     this.initModel();
@@ -80,19 +87,30 @@ export class AssetOverviewComponent implements OnInit {
   }
 
   private fetchData(id: string) {
+    const galleryRef = this.gallery.ref(this.galleryId);
+    galleryRef.reset();
+
     this.isLoading = true;
     this.assetSvc.getById(id, 'pembina,location,status,additionalFields.customField.group,photos')
       .pipe(finalize(() => this.isLoading = false))
       .subscribe(g => {
         this.model = g.data;
-        this.imageObject = [];
+        this.galleries = [];
         this.model.photos.forEach(p => {
-          this.imageObject.push({
-            image: p.file?.url,
-            thumbImage: p.file?.thumb,
+          this.galleries.push({
+            data: {
+              thumb: p.file?.thumb,
+              title: p.properties?.notes
+            }
+          });
+
+          galleryRef.addImage({
+            src: p.file?.url,
+            thumb: p.file?.thumb,
             title: p.properties?.notes
           });
         });
+
         if (this.model.additionalFields) {
           this.additionalFields = _.groupBy(this.model.additionalFields, function (af) {
             return af.customField?.group?.label;

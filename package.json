@@ -44,7 +44,7 @@
     "lodash": "^4.17.21",
     "luxon": "~1.25.0",
     "ng-apexcharts": "^1.5.10",
-    "ng-image-slider": "^2.8.0",
+    "ng-gallery": "^5.0.0",
     "ngx-awesome-uploader": "^10.0.4",
     "ngx-cookie-service": "^11.0.2",
     "ngx-quill": "~13.1.0",
