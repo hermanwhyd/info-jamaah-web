@@ -19,7 +19,7 @@
         <ngx-shimmer-loading [width]="'100%'"></ngx-shimmer-loading>
         <ngx-shimmer-loading [width]="'100%'" [height]="'30px'"></ngx-shimmer-loading>
       </div>
-      <ngx-shimmer-loading [shape]="'square'" [width]="'120px'"></ngx-shimmer-loading>
+      <ngx-shimmer-loading [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
     </div>
   </div>
 
@@ -46,13 +46,13 @@
         </tbody>
       </table>
 
-      <div *ngFor="let item of additionalFields | keyvalue">
-        <span class="title mt-4 block border-b">{{ item.key }}</span>
+      <div *ngFor="let item of additionalFields">
+        <span class="title mt-4 block border-b">{{ item.label }}</span>
         <table class="text-left w-full table-collapse">
           <tbody>
-            <tr class="border-b" *ngFor="let data of item.value">
-              <td class="caption font-semibold w-1/3">{{data.customField?.fieldName}}</td>
-              <td class="caption">{{data.value}}</td>
+            <tr class="border-b" *ngFor="let cf of item.customFields">
+              <td class="caption font-semibold w-1/3">{{cf.fieldName}}</td>
+              <td class="caption">{{cf | customField}}</td>
             </tr>
           </tbody>
         </table>
@@ -85,11 +85,11 @@
 
   <div *ngIf="isLoading" @stagger class="px-gutter py-4" gdColumns="1fr 1fr 1fr 1fr 1fr"
     gdColumns.lt-lg="1fr 1fr 1fr 1fr" gdColumns.xs="1fr 1fr" gdGap="16px">
-    <ngx-shimmer-loading [shape]="'square'" [width]="'200px'"></ngx-shimmer-loading>
-    <ngx-shimmer-loading [shape]="'square'" [width]="'200px'"></ngx-shimmer-loading>
-    <ngx-shimmer-loading class="hidden md:block" [shape]="'square'" [width]="'200px'"></ngx-shimmer-loading>
-    <ngx-shimmer-loading class="hidden md:block" [shape]="'square'" [width]="'200px'"></ngx-shimmer-loading>
-    <ngx-shimmer-loading class="hidden md:block" [shape]="'square'" [width]="'200px'"></ngx-shimmer-loading>
+    <ngx-shimmer-loading [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
+    <ngx-shimmer-loading [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
+    <ngx-shimmer-loading [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
+    <ngx-shimmer-loading class="hidden sm:block" [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
+    <ngx-shimmer-loading class="hidden md:block" [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
   </div>
   <div *ngIf="!isLoading" @stagger class="px-gutter py-4" gdColumns="1fr 1fr 1fr 1fr 1fr 1fr"
     gdColumns.lt-lg="1fr 1fr 1fr 1fr" gdColumns.lt-md="1fr 1fr 1fr" gdColumns.xs="1fr 1fr" gdGap="24px">

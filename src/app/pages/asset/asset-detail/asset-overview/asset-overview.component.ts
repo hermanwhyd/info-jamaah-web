@@ -27,6 +27,8 @@ import { finalize } from 'rxjs/operators';
 import { scaleFadeIn400ms } from 'src/@vex/animations/scale-fade-in.animation';
 import _ from 'lodash';
 import { Gallery, GalleryItem } from 'ng-gallery';
+import { SharedProperty } from 'src/app/types/shared-property.interface';
+import { forkJoin } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -91,31 +93,31 @@ export class AssetOverviewComponent implements OnInit {
     galleryRef.reset();
 
     this.isLoading = true;
-    this.assetSvc.getById(id, 'pembina,location,status,additionalFields.customField.group,photos')
-      .pipe(finalize(() => this.isLoading = false))
-      .subscribe(g => {
-        this.model = g.data;
-        this.galleries = [];
-        this.model.photos.forEach(p => {
-          this.galleries.push({
-            data: {
-              thumb: p.file?.thumb,
-              title: p.properties?.notes
-            }
-          });
+    const callModel = this.assetSvc.getById(id, 'pembina,location,status,photos');
+    const callDetail = this.assetSvc.getDetail(id);
+    const multiCall = forkJoin([callModel, callDetail]);
+    multiCall.pipe(finalize(() => this.isLoading = false)).subscribe(rs => {
+      this.model = rs[0].data;
 
-          galleryRef.addImage({
-            src: p.file?.url,
+      this.galleries = [];
+      galleryRef.reset();
+
+      this.model.photos.forEach(p => {
+        this.galleries.push({
+          data: {
             thumb: p.file?.thumb,
             title: p.properties?.notes
-          });
+          }
         });
 
-        if (this.model.additionalFields) {
-          this.additionalFields = _.groupBy(this.model.additionalFields, function (af) {
-            return af.customField?.group?.label;
-          });
-        }
+        galleryRef.addImage({
+          src: p.file?.url,
+          thumb: p.file?.thumb,
+          title: p.properties?.notes
+        });
       });
+
+      this.additionalFields = rs[1].data;
+    });
   }
 }

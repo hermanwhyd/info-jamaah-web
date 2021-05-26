@@ -7,7 +7,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { NgxShimmerLoadingModule } from 'ngx-shimmer-loading';
 import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
-
+import { CustomFieldModule } from 'src/app/pipes/custom-field/custom-field.module';
 
 const routes: Routes = [
   { path: '', component: AssetOverviewComponent }
@@ -22,7 +22,8 @@ const routes: Routes = [
     QRCodeModule,
     NgxShimmerLoadingModule,
     GalleryModule,
-    LightboxModule
+    LightboxModule,
+    CustomFieldModule,
   ]
 })
 export class AssetOverviewModule { }

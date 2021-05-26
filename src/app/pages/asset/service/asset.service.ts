@@ -27,8 +27,10 @@ export class AssetService {
     return this.httpClient.get([this.URL, id].join('/'), { params }) as Observable<GenericRs<Asset>>;
   }
 
-  public getDetail(id: number | string) {
-    return this.httpClient.get([this.URL, id, 'detail'].join('/')) as Observable<GenericRs<SharedProperty[]>>;
+  public getDetail(id: number | string, include?: string) {
+    let params = new HttpParams();
+    if (include !== undefined) { params = params.append('include', include); }
+    return this.httpClient.get([this.URL, id, 'detail'].join('/'), { params }) as Observable<GenericRs<SharedProperty[]>>;
   }
 
   public delete(id: number | string) {
