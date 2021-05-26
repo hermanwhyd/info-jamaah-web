@@ -97,7 +97,8 @@
       [lightbox]="i" @scaleIn gdGridAlign="center">
       <figure class="relative cursor-pointer">
         <img class="rounded-lg shadow-xl hover:shadow-2xl" [src]="item.data.thumb" />
-        <figcaption class="absolute text-lg text-white px-2 w-full bg-contrast-black bg-opacity-50 -mt-5">
+        <figcaption [title]="item.data.title"
+          class="absolute text-lg text-white px-2 w-full bg-contrast-black bg-opacity-50 -mt-5">
           <div>
             <p class="truncate">{{item.data.title}}</p>
           </div>
