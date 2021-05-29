@@ -57,6 +57,10 @@ export class AssetDetailComponent implements OnInit {
     {
       label: 'Files',
       route: './files',
+    },
+    {
+      label: 'Notifications',
+      route: './notifications',
     }
   ];
 

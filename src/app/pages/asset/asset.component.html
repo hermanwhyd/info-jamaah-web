@@ -31,8 +31,9 @@
           class="hidden sm:block mr-6"></vex-table-menu>
 
         <div class="card overflow-hidden flex-auto">
-          <vex-data-table (openDetail)="createOrUpdateModel($event)" (deleteModel)="deleteModel($event)"
-            [columns]="tableColumns" [data]="assets" [isLoading]="isLoading" [searchStr]="searchStr$ | async">
+          <vex-data-table (openDetail)="createOrUpdateModel($event)" (delete)="deleteModel($event)"
+            (clone)="cloneModel($event)" [columns]="tableColumns" [data]="assets" [isLoading]="isLoading"
+            [searchStr]="searchStr$ | async">
           </vex-data-table>
         </div>
       </mat-drawer-content>

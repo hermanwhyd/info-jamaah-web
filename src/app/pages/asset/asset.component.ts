@@ -106,7 +106,7 @@ export class AssetComponent implements OnInit {
   deleteModel(model: Asset) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        message: `Apakah Anda ingin menghapus benda-sb <strong>${model.title}</strong>?`,
+        message: `Apakah Anda ingin menghapus benda SB <strong>${model.title}</strong>?`,
         buttonText: {
           ok: 'Ya',
           cancel: 'Cancel'
@@ -117,15 +117,39 @@ export class AssetComponent implements OnInit {
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         this.assetService.delete(model.id)
-          .subscribe((rs) => {
-            if (rs.status === 'ok') {
+          .subscribe(
+            (rs) => {
               const assets = this.assetsSubject$.getValue();
               _.remove(assets, { id: model.id });
               this.refreshData();
-            } else {
-              this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: rs.message, type: 'danger' } });
-            }
-          });
+            },
+            (err) => this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: err.message, type: 'danger' } })
+          );
+      }
+    });
+  }
+
+  cloneModel(model: Asset) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        message: `Apakah Anda ingin menduplikasi benda SB <strong>${model.title}</strong>?`,
+        buttonText: {
+          ok: 'Ya',
+          cancel: 'Cancel'
+        }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.assetService.clone(model.id)
+          .subscribe(
+            (rs) => {
+              const commands = model ? ['form', rs.data.id] : ['form'];
+              this.router.navigate(commands, { relativeTo: this.activatedRoute });
+            },
+            (err) => this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: err.message, type: 'danger' } })
+          );
       }
     });
   }

@@ -33,6 +33,10 @@ export class AssetService {
     return this.httpClient.get([this.URL, id, 'detail'].join('/'), { params }) as Observable<GenericRs<SharedProperty[]>>;
   }
 
+  public clone(id: number | string) {
+    return this.httpClient.post(`${this.URL}/clone/${id}`, null) as Observable<GenericRs<Asset>>;
+  }
+
   public delete(id: number | string) {
     return this.httpClient.delete(`${this.URL}/${id}`) as Observable<GenericRs<Asset>>;
   }
