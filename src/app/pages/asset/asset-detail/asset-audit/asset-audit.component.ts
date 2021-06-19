@@ -169,8 +169,6 @@ export class AssetAuditComponent implements OnInit, AfterViewInit {
     this.dialog.open(AssetAuditEditComponent, {
       data: {
         model: model || { assetId: this.assetId } as AssetAudit,
-        locations: [{ id: 1, title: 'Manba\'ul \'Ulum' }, { id: 2, title: 'Gria Aslamba' }],
-        statuses: [{ code: 'GOOD', label: 'Baik' }, { code: 'BRKN', label: 'Rusak' }, { code: 'LOST', label: 'Hilang' }]
       },
       width: '100%',
       maxWidth: 600,

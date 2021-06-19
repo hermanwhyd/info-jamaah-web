@@ -8,6 +8,8 @@ import { Asset, AssetAudit, AssetMaintenance } from '../interfaces/asset.model';
 import { UploadStatus, FilePreviewModel } from 'ngx-awesome-uploader';
 import { SharedProperty } from 'src/app/types/shared-property.interface';
 import { AdditionalField } from 'src/app/types/additional-field.interface';
+import { Notifier } from 'src/app/types/notifier.interface';
+import { Subscription } from 'src/app/types/subscription.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -106,6 +108,27 @@ export class AssetService {
 
   public deleteMaintenance(id: number | string) {
     return this.httpClient.delete(`${this.URL}/maintenance/${id}`) as Observable<GenericRs<void>>;
+  }
+
+  // Asset Notifier
+  saveOrUpdateNotifier(model: Notifier, assetId: number | string) {
+    if (model.id) {
+      return this.httpClient.put(`${this.URL}/notifier/${model.id}`, model) as Observable<GenericRs<Notifier>>;
+    } else {
+      return this.httpClient.post(`${this.URL}/${assetId}/notifier`, model) as Observable<GenericRs<Notifier>>;
+    }
+  }
+
+  public deleteNotifier(id: number | string) {
+    return this.httpClient.delete(`${this.URL}/notifier/${id}`) as Observable<GenericRs<void>>;
+  }
+
+  public subscribeNotifier(id: number | string, subscription: Subscription) {
+    return this.httpClient.post(`${this.URL}/notifier/${id}/subscription`, subscription) as Observable<GenericRs<Subscription>>;
+  }
+
+  public unsubscribeNotifier(id: number, subsId: number) {
+    return this.httpClient.delete(`${this.URL}/notifier/${id}/subscription/${subsId}`) as Observable<GenericRs<void>>;
   }
 
 }

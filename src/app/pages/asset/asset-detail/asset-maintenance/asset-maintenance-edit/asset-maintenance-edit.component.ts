@@ -2,15 +2,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 import icClose from '@iconify/icons-ic/twotone-close';
-import icDelete from '@iconify/icons-ic/twotone-delete';
-import icAttachFile from '@iconify/icons-ic/twotone-attach-file';
 
 import { AssetMaintenance, Supplier } from '../../../interfaces/asset.model';
 import { SharedProperty } from 'src/app/types/shared-property.interface';
 import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/helpers/format-datepicker';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { SharedPropertyService } from 'src/app/services/shared-property.service';
 
 @Component({
   selector: 'vex-asset-maintenance-edit',
@@ -23,10 +21,7 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 })
 export class AssetMaintenanceEditComponent implements OnInit {
 
-  icMoreVert = icMoreVert;
   icClose = icClose;
-  icDelete = icDelete;
-  icAttachFile = icAttachFile;
 
   isNew = true;
   submitted = false;
@@ -46,14 +41,16 @@ export class AssetMaintenanceEditComponent implements OnInit {
     endDate: ['', Validators.required],
   });
 
-  constructor(@Inject(MAT_DIALOG_DATA) private data: any,
+  constructor(
+    @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<AssetMaintenanceEditComponent>,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private sharedPropSvc: SharedPropertyService) { }
 
   ngOnInit(): void {
     this.model = this.data.model;
-    this.suppliers = this.data.suppliers;
-    this.types = this.data.types;
+    this.sharedPropSvc.getSelectOptions('vendor').subscribe(rs => this.suppliers = rs.data);
+    this.sharedPropSvc.findByGroup('MAINTENANCE_TYPE').subscribe(rs => this.types = rs.data);
 
     this.isNew = this.model.id == null;
     this.form.patchValue(this.model);

@@ -9,6 +9,7 @@ import { AssetMaintenance, Location } from '../../../interfaces/asset.model';
 import { SharedProperty } from 'src/app/types/shared-property.interface';
 import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/helpers/format-datepicker';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { SharedPropertyService } from 'src/app/services/shared-property.service';
 
 @Component({
   selector: 'vex-asset-audit-edit',
@@ -41,14 +42,16 @@ export class AssetAuditEditComponent implements OnInit {
     auditedAt: ['', Validators.required]
   });
 
-  constructor(@Inject(MAT_DIALOG_DATA) private data: any,
+  constructor(
+    @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<AssetAuditEditComponent>,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private sharedPropSvc: SharedPropertyService) { }
 
   ngOnInit(): void {
     this.model = this.data.model;
-    this.locations = this.data.locations;
-    this.statuses = this.data.statuses;
+    this.sharedPropSvc.getSelectOptions('location').subscribe(rs => this.locations = rs.data);
+    this.sharedPropSvc.findByGroup('ASSET_STATUS').subscribe(rs => this.statuses = rs.data);
 
     this.isNew = this.model.id == null;
     this.form.patchValue(this.model);

@@ -78,7 +78,7 @@ export class AssetEditComponent implements OnInit {
         // fetch required data
         const callCategories = this.enumSvc.findByGroup('ASSET_CATEGORY');
         const callStatuses = this.enumSvc.findByGroup('ASSET_STATUS');
-        const callLocations = this.enumSvc.getSelectOptions('location', 'type');
+        const callLocations = this.enumSvc.getSelectOptions('location', { include: 'type' });
         const callPembinas = this.enumSvc.getSelectOptions('pembina');
 
         const arr = [callCategories, callStatuses, callLocations, callPembinas];

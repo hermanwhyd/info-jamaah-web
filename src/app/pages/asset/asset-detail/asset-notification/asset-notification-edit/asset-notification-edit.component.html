@@ -1,0 +1,120 @@
+<div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+  <h2 class="headline m-0" fxFlex="auto">{{ form.get('name').value || 'Formulir Notifikasi baru' }}</h2>
+
+  <button class="text-secondary" (click)="close()" mat-icon-button type="button">
+    <mat-icon [icIcon]="icClose"></mat-icon>
+  </button>
+</div>
+
+<mat-divider class="-mx-6 text-border"></mat-divider>
+
+<mat-dialog-content class="p-0">
+  <mat-horizontal-stepper #stepper [linear]="true">
+    <ng-template matStepperIcon="edit">
+      <mat-icon [icIcon]="icDoneAll"></mat-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="done">
+      <mat-icon [icIcon]="icDoneAll"></mat-icon>
+    </ng-template>
+
+    <mat-step [stepControl]="form">
+      <form [formGroup]="form">
+        <ng-template matStepLabel>Reminder</ng-template>
+        <div fxLayout="column">
+          <mat-form-field appearance="outline" required>
+            <mat-label>Nama</mat-label>
+            <input name="reminder_name" cdkFocusInitial formControlName="name" matInput required>
+            <mat-error *ngIf="(formControl.name.touched || submitted) && formControl.name.errors?.required">
+              Nama harus diisi
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Deskripsi</mat-label>
+            <textarea formControlName="description" matInput cdkAutosizeMinRows="2" matTextareaAutosize></textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Referensi</mat-label>
+            <mat-select formControlName="referable" (selectionChange)="changeReferable($event)"
+              [compareWith]="compareObjectId">
+              <mat-option disabled>Pilih Referensi</mat-option>
+              <mat-option>-- Tanpa Referensi --</mat-option>
+              <mat-option *ngFor="let item of referables" [value]="item">
+                <span class="mr-2">{{ item.customField.fieldName }}</span>
+                <span class="text-xs text-secondary"> {{ item.value | date:'dd MMM yyyy'}}</span>
+              </mat-option>
+            </mat-select>
+            <mat-hint>Informasi dari detail aset yang dijadikan sebagai referensi tgl jatuh tempo</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" required>
+            <mat-label>Tgl Jatuh Tempo</mat-label>
+            <input formControlName="dueDateAt" matInput [matDatepicker]="picker" (click)="picker.open()"
+              (focus)="picker.open()" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-hint *ngIf="isUseReferable">Tanggal jatuh tempo akan mengikuti nilai dari referensi diatas</mat-hint>
+            <mat-error *ngIf="(formControl.dueDateAt.touched || submitted) && formControl.dueDateAt.errors?.required">
+              Tgl Jatuh Tempo harus diisi
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" required>
+            <mat-label>Hari Reminder</mat-label>
+            <mat-chip-list #chipList formControlName="reminderDays">
+              <mat-chip *ngFor="let day of formControl.reminderDays.value" (removed)="removeReminderDay(day)">
+                {{ day }}
+                <mat-icon matChipRemove [icIcon]="icDelete"></mat-icon>
+              </mat-chip>
+              <span matPrefix>H-</span>
+              <input matInput type="number" min="1" [matChipInputFor]="chipList" placeholder="jmlh hari.."
+                (matChipInputTokenEnd)="addReminderDay($event)" matChipInputAddOnBlur="'true'">
+            </mat-chip-list>
+            <mat-error
+              *ngIf="(formControl.reminderDays.touched || submitted) && formControl.reminderDays.errors?.required">
+              Hari Reminder harus diisi
+            </mat-error>
+          </mat-form-field>
+
+          <div class="mb-2 flex flex-col">
+            <p>Notifikasi berulang setiap periode</p>
+            <mat-slide-toggle formControlName="isRepetition" [checked]="false">{{ formControl.isRepetition.value ?
+              'Berulang' : 'Hanya sekali' }}</mat-slide-toggle>
+          </div>
+
+        </div>
+      </form>
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button (click)="reset()" [disabled]="form.pristine">RESET</button>
+        <button mat-button (click)="submit()" [disabled]="!submitable" color="primary">SIMPAN</button>
+        <button mat-button matStepperNext [disabled]="!nextable">NEXT</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Penerima</ng-template>
+      <div @stagger class="p-4" gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="24px">
+        <div *ngFor="let item of subscriptions; let i = index" fxLayout="row" fxLayoutAlign="start center">
+          <!-- <img @scaleIn [src]="friend.imageSrc" alt="Profile Picture" class="avatar ltr:mr-3 rtl:ml-3" fxFlex="none"/> -->
+          <div @fadeInRight fxFlex="auto">
+            <h4 class="body-2 m-0 leading-snug">{{ item.subscriber.label }}</h4>
+            <h5 class="text-secondary m-0 caption leading-none">{{ item.subscriber.enumablesCount || 0 }} penerima</h5>
+          </div>
+          <button (click)="subscribe(i, item)" *ngIf="!item.id" color="primary" mat-icon-button type="button"
+            matTooltip="Klik Untuk Aktifkan" matTooltipPosition="above" [loading]="isSubsLoading[i]">
+            <mat-icon [icIcon]="icNotifAdd"></mat-icon>
+          </button>
+
+          <button (click)="unsubscriber(i, item)" *ngIf="item.id" color="primary" mat-icon-button type="button"
+            matTooltip="Aktif" matTooltipPosition="above" [loading]="isSubsLoading[i]">
+            <mat-icon [icIcon]="icNotifActive"></mat-icon>
+          </button>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button matStepperPrevious>PREV</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-dialog-content>

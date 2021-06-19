@@ -1,4 +1,5 @@
 import { AdditionalField } from 'src/app/types/additional-field.interface';
+import { Notifier } from 'src/app/types/notifier.interface';
 import { SharedProperty } from 'src/app/types/shared-property.interface';
 import { User } from '../../user/interfaces/user.interface';
 
@@ -20,6 +21,7 @@ export interface Asset {
   audits?: AssetAudit[];
   media?: AssetMedia[];
   photos?: AssetMedia[];
+  notifiers?: Notifier[];
 }
 
 export interface Location {
@@ -41,6 +43,7 @@ export interface AssetMaintenance {
   type?: SharedProperty;
   supplier?: Supplier;
   creator?: User;
+  notifiers: Notifier[];
 }
 
 export interface Supplier {

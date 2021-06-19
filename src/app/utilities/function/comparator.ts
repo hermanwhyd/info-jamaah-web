@@ -11,12 +11,12 @@ export function compareObject(o1: any, o2: any) {
  * Compare object.id
  */
 export function compareObjectId(o1: any, o2: any) {
-  return o1.id === o2.id;
+  return o1?.id === o2?.id;
 }
 
 /**
  * Compare enum object
  */
 export function compareEnum(o1: SharedProperty, o2: SharedProperty) {
-  return o1.code === o2.code;
+  return o1?.code === o2?.code;
 }
