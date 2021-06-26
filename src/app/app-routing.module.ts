@@ -4,6 +4,7 @@ import { VexRoutes } from 'src/@vex/interfaces/vex-route.interface';
 import { AuthGuard } from './auth/guard/auth.guard';
 import { MainGuard } from './auth/guard/main.guard';
 import { CustomLayoutComponent } from './custom-layout/custom-layout.component';
+import { QuicklinkModule, QuicklinkStrategy } from 'ngx-quicklink';
 
 const routes: VexRoutes = [
   {
@@ -65,12 +66,12 @@ const routes: VexRoutes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    // preloadingStrategy: PreloadAllModules,
+    preloadingStrategy: QuicklinkStrategy,
     scrollPositionRestoration: 'enabled',
     relativeLinkResolution: 'corrected',
     anchorScrolling: 'enabled'
   })],
-  exports: [RouterModule]
+  exports: [RouterModule, QuicklinkModule]
 })
 export class AppRoutingModule {
 }

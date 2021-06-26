@@ -50,12 +50,12 @@
   visibility: hidden;
   z-index: 800 !important;
 
-  &.visible {
+  &.show {
     background-color: rgba(0, 0, 0, .6);
     visibility: visible;
   }
 
-  &.invisible {
+  &.opaque {
     background-color: transparent;
   }
 }

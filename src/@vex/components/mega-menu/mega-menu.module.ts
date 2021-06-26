@@ -7,7 +7,6 @@ import { IconModule } from '@visurel/iconify-angular';
 import { RouterModule } from '@angular/router';
 
 
-
 @NgModule({
   declarations: [MegaMenuComponent],
   imports: [

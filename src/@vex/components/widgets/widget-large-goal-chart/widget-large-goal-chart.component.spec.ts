@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { WidgetLargeGoalChartComponent } from './widget-large-goal-chart.component';
 
@@ -6,7 +6,7 @@ describe('WidgetLargeGoalChartComponent', () => {
   let component: WidgetLargeGoalChartComponent;
   let fixture: ComponentFixture<WidgetLargeGoalChartComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [WidgetLargeGoalChartComponent]
     })

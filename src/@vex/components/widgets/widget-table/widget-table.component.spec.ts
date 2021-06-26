@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { WidgetTableComponent } from './widget-table.component';
 
@@ -6,7 +6,7 @@ describe('WidgetTableComponent', () => {
   let component: WidgetTableComponent;
   let fixture: ComponentFixture<WidgetTableComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [WidgetTableComponent]
     })
