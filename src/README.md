@@ -3,7 +3,9 @@
 
 # Introduction
 
-Vex is a Creative, Responsive Material Design Admin Template built with Angular 10+ and the Angular-CLI. It extends the Material Design components built by the Angular team and it offers you everything you need to get started with your next CRM, CMS, Project Management, or other projects.
+Vex is a Creative, Responsive Material Design Admin Template built with Angular 12+ and the Angular-CLI. It extends the
+Material Design components built by the Angular team and it offers you everything you need to get started with your next
+CRM, CMS, Project Management, or other projects.
 
 Vex has **no dependency on jQuery or similiar libraries**, Angular's functionality is completely used.
 
