@@ -18,6 +18,7 @@ import { ContainerModule } from 'src/@vex/directives/container/container.module'
 import { SnackBarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
 import { DataTableComponent } from '../asset/data-table/data-table.component';
 import { TableMenuComponent } from '../asset/table-menu/table-menu.component';
+import { AssetCopyModule } from './asset-copy/asset-copy.module';
 
 const routes: Routes = [
   {
@@ -53,6 +54,7 @@ const routes: Routes = [
     MatProgressSpinnerModule,
     MatDividerModule,
     SnackBarNotifModule,
+    AssetCopyModule
   ]
 })
 export class AssetModule { }

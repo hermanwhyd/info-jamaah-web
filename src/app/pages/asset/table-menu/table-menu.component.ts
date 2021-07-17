@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { fadeInRight400ms } from '../../../../@vex/animations/fade-in-right.animation';
-import icPersonAdd from '@iconify/icons-ic/twotone-person-add';
 import { stagger40ms } from '../../../../@vex/animations/stagger.animation';
 import { TableMenu } from '../interfaces/table-menu.inteface';
 import _ from 'lodash';
+import icAdd from '@iconify/icons-ic/baseline-post-add';
 
 @Component({
   selector: 'vex-table-menu',
@@ -12,13 +12,14 @@ import _ from 'lodash';
 })
 export class TableMenuComponent implements OnInit {
 
+  icAdd = icAdd;
+
   @Input() items: TableMenu[];
 
   @Output() filterChange = new EventEmitter<TableMenu['id']>();
   @Output() openAddNew = new EventEmitter<void>();
 
   activeCategory: TableMenu['id'] = 'all';
-  icPersonAdd = icPersonAdd;
 
   constructor() { }
 

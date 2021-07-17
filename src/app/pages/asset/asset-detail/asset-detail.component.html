@@ -9,6 +9,10 @@
       </h2>
     </div>
     <div fxHide.xs>
+      <button mat-button (click)="copyModel()">
+        <ic-icon [icon]="icCopy" [inline]="true" class="sm:-ml-1 sm:mr-2" size="20px"></ic-icon>
+        <span class="text-xs hidden sm:inline-block">COPY</span>
+      </button>
       <button mat-button [routerLink]="['../', 'form', model?.id]">
         <ic-icon [icon]="icEdit" [inline]="true" class="sm:-ml-1 sm:mr-2" size="20px"></ic-icon>
         <span class="text-xs hidden sm:inline-block">EDIT</span>

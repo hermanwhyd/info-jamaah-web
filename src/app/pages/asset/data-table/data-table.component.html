@@ -109,13 +109,13 @@
       <mat-icon [icIcon]="icEdit"></mat-icon>
       <span>Edit</span>
     </button>
+    <button mat-menu-item (click)="clone.emit(model)">
+      <mat-icon [icIcon]="icCopy"></mat-icon>
+      <span>Copy</span>
+    </button>
     <button mat-menu-item (click)="delete.emit(model)">
       <mat-icon [icIcon]="icDeleteForever"></mat-icon>
       <span>Delete</span>
-    </button>
-    <button mat-menu-item (click)="clone.emit(model)">
-      <mat-icon [icIcon]="icCopy"></mat-icon>
-      <span>Clone</span>
     </button>
   </ng-template>
 </mat-menu>

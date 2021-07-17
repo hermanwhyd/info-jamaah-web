@@ -84,6 +84,10 @@ export class AssetService {
     );
   }
 
+  public copy(id: string | number, option: any) {
+    return this.httpClient.post([this.URL, id, 'copy'].join('/'), option) as Observable<GenericRs<Asset>>;
+  }
+
   // Asset Audit
   public deleteAudit(id: number | string) {
     return this.httpClient.delete(`${this.URL}/audit/${id}`) as Observable<GenericRs<void>>;

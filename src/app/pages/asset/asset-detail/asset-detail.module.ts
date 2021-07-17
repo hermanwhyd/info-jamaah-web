@@ -9,6 +9,7 @@ import { FilePickerModule } from 'ngx-awesome-uploader';
 import { MatMenuModule } from '@angular/material/menu';
 import { SnackBarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
 import { ConfirmationDialogModule } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.module';
+import { AssetCopyModule } from '../asset-copy/asset-copy.module';
 
 const routes: Routes = [
   {
@@ -55,6 +56,7 @@ const routes: Routes = [
     MatMenuModule,
     SnackBarNotifModule,
     ConfirmationDialogModule,
+    AssetCopyModule
   ]
 })
 export class AssetDetailModule { }

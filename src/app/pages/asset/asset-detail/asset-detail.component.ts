@@ -8,6 +8,7 @@ import icArrowBack from '@iconify/icons-ic/arrow-back';
 import icEdit from '@iconify/icons-ic/baseline-edit';
 import icDelete from '@iconify/icons-ic/baseline-delete';
 import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
+import icCopy from '@iconify/icons-ic/twotone-file-copy';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -18,6 +19,7 @@ import { AssetUploadComponent } from '../asset-upload/asset-upload.component';
 import { ConfirmationDialogComponent } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.component';
 import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackbar-notif.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AssetCopyComponent } from '../asset-copy/asset-copy.component';
 
 @UntilDestroy()
 @Component({
@@ -36,6 +38,7 @@ export class AssetDetailComponent implements OnInit {
   icAttachFile = icAttachFile;
   icDelete = icDelete;
   icEdit = icEdit;
+  icCopy = icCopy;
   icMoreVert = icMoreVert;
 
   componentReference: any;
@@ -100,6 +103,12 @@ export class AssetDetailComponent implements OnInit {
     // Below will subscribe to the searchItem emitter
     componentReference.fireUploadFileDialog?.subscribe((data: any) => {
       this.uploadFile();
+    });
+  }
+
+  copyModel() {
+    this.dialog.open(AssetCopyComponent, {
+      data: this.model
     });
   }
 

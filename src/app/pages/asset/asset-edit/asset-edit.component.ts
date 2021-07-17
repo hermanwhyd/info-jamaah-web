@@ -140,7 +140,7 @@ export class AssetEditComponent implements OnInit {
           this.reset();
           this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: 'Berhasil menyimpan data!', type: 'success' } });
           if (this.isNew) {
-            this.router.navigate([gr.data.id], { relativeTo: this.route })
+            this.router.navigate([gr.data.id], { relativeTo: this.route });
           }
         },
         error: err => {
@@ -156,7 +156,10 @@ export class AssetEditComponent implements OnInit {
   onSaveDetail(detail: AdditionalField, cf: CustomField) {
     this.assetSvc.createDetail(this.model.id, detail)
       .subscribe({
-        next: gr => cf.value = gr.data,
+        next: gr => {
+          cf.value = gr.data;
+          this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: 'Berhasil menyimpan data!', type: 'success' } });
+        },
         error: err => {
           this.snackBar.openFromComponent(SnackbarNotifComponent, {
             data: {
