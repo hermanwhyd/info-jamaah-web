@@ -9,10 +9,8 @@ import { stagger40ms } from '../../../@vex/animations/stagger.animation';
 import icPhoneInTalk from '@iconify/icons-ic/twotone-phone-in-talk';
 import icMail from '@iconify/icons-ic/twotone-mail';
 
-import icPolicy from '@iconify/icons-ic/round-policy';
 import icPayment from '@iconify/icons-ic/baseline-payment';
 
-import icFlag from '@iconify/icons-ic/twotone-flag';
 import icLandScap from '@iconify/icons-ic/round-landscape';
 import icNote2 from '@iconify/icons-ic/round-sticky-note-2';
 

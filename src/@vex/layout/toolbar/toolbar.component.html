@@ -9,14 +9,6 @@
     <h1 [fxHide]="mobileQuery" class="title ltr:pl-4 rtl:pr-4 m-0 select-none">INFO JM</h1>
   </a>
 
-  <div #megaMenuOriginRef>
-    <button type="button" [fxHide]="mobileQuery" color="primary" mat-raised-button
-      (click)="openMegaMenu(megaMenuOriginRef)">
-      PORTAL INTEGRASI (IPORTAL)
-      <ic-icon [icon]="icArrowDropDown" class="ltr:-mr-1 rtl:-ml-1" inline="true"></ic-icon>
-    </button>
-  </div>
-
   <div *ngIf="(isVerticalLayout$ | async) && isNavbarInToolbar$ | async" [fxHide]="mobileQuery" class="px-gutter"
     fxFlex="none" fxLayout="row" fxLayoutAlign="start center">
     <vex-navigation-item *ngFor="let item of navigationItems" [item]="item"></vex-navigation-item>

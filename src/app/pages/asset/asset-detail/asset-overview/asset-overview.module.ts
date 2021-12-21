@@ -3,7 +3,7 @@ import { AssetOverviewComponent } from './asset-overview.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedModule } from 'src/app/common/shared.module';
-import { QRCodeModule } from 'angularx-qrcode';
+import { QrCodeModule } from 'ng-qrcode';
 import { NgxShimmerLoadingModule } from 'ngx-shimmer-loading';
 import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
@@ -19,7 +19,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule,
     MatTooltipModule,
-    QRCodeModule,
+    QrCodeModule,
     NgxShimmerLoadingModule,
     GalleryModule,
     LightboxModule,

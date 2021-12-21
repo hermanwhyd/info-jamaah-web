@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
 import { NavigationService } from '../../services/navigation.service';
 import icArrowDropDown from '@iconify/icons-ic/twotone-arrow-drop-down';
 import { PopoverService } from '../../components/popover/popover.service';
-import { IntegrationMenuComponent } from 'src/app/pages/dashboard/integration-menu/integration-menu.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -50,27 +49,6 @@ export class ToolbarComponent implements OnInit {
 
   openSidenav() {
     this.layoutService.openSidenav();
-  }
-
-  openMegaMenu(origin: ElementRef | HTMLElement) {
-    this.popoverService.open({
-      content: IntegrationMenuComponent,
-      origin,
-      position: [
-        {
-          originX: 'start',
-          originY: 'bottom',
-          overlayX: 'start',
-          overlayY: 'top'
-        },
-        {
-          originX: 'end',
-          originY: 'bottom',
-          overlayX: 'end',
-          overlayY: 'top',
-        },
-      ]
-    });
   }
 
   reloadPage() {

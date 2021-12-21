@@ -68,8 +68,8 @@
         <div class="flex-none justify-items-end p-2">
           <img *ngIf="!model?.tagNo" class="rounded" src="/assets/img/default/default-img.png" height="150px"
             width="150px" />
-          <qrcode *ngIf="model?.tagNo" [qrdata]="model?.tagNo" [width]="150" [errorCorrectionLevel]="'M'" margin="0">
-          </qrcode>
+          <qr-code *ngIf="model?.tagNo" [value]="model?.tagNo" [errorCorrectionLevel]="'M'" margin="0">
+          </qr-code>
         </div>
       </div>
     </div>
