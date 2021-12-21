@@ -13,7 +13,6 @@ import { MatDialog } from '@angular/material/dialog';
 import icMenu from '@iconify/icons-ic/twotone-menu';
 import icViewHeadline from '@iconify/icons-ic/twotone-view-headline';
 import icAdmin from '@iconify/icons-ic/outline-admin-panel-settings';
-import icPegawai from '@iconify/icons-ic/baseline-supervised-user-circle';
 
 import { User } from './interfaces/user.interface';
 import { UserService } from './service/user.service';
@@ -85,11 +84,11 @@ export class UserComponent implements OnInit {
   fetchData() {
     this.isLoading = true;
     this.userService.getUserList('jamaah')
-    .pipe(finalize(() => this.isLoading = false))
-    .subscribe((rs) => {
-      this.usersSubject$.next(rs.data);
-      this.refreshData();
-    });
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe((rs) => {
+        this.usersSubject$.next(rs.data);
+        this.refreshData();
+      });
   }
 
   createOrUpdateUser(user?: User) {
@@ -98,28 +97,28 @@ export class UserComponent implements OnInit {
       width: '500px',
       disableClose: true
     })
-    .afterClosed().subscribe((newUser: User) => {
-      if (!newUser) { return; }
+      .afterClosed().subscribe((newUser: User) => {
+        if (!newUser) { return; }
 
-      // creation or update existing
-      this.userService.saveOrUpdate(newUser)
-        .subscribe(rs => {
-          const users = this.usersSubject$.getValue();
-          // Update or create
-          if (user) {
-            const index = _.findIndex(users, user);
-            users[index] = rs.data;
-          } else {
-            users.unshift(rs.data);
-          }
+        // creation or update existing
+        this.userService.saveOrUpdate(newUser)
+          .subscribe(rs => {
+            const users = this.usersSubject$.getValue();
+            // Update or create
+            if (user) {
+              const index = _.findIndex(users, user);
+              users[index] = rs.data;
+            } else {
+              users.unshift(rs.data);
+            }
 
-          this.refreshData();
-          this.snackBar.openFromComponent(SnackbarNotifComponent, {data: {message: 'User berhasil disimpan', type: 'success'}});
-        }, (err: GenericRs<any>) => {
-          this.snackBar.openFromComponent(SnackbarNotifComponent, {data: {message: err.message, type: 'danger'}});
-          this.createOrUpdateUser(newUser);
-        });
-    });
+            this.refreshData();
+            this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: 'User berhasil disimpan', type: 'success' } });
+          }, (err: GenericRs<any>) => {
+            this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: err.message, type: 'danger' } });
+            this.createOrUpdateUser(newUser);
+          });
+      });
   }
 
   deleteUser(model: User) {
@@ -136,15 +135,15 @@ export class UserComponent implements OnInit {
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         this.userService.delete(model.id)
-        .subscribe((rs) => {
-          if (rs.status === 'ok') {
-            const users = this.usersSubject$.getValue();
-            _.remove(users, {id: model.id});
-            this.refreshData();
-          } else {
-            this.snackBar.openFromComponent(SnackbarNotifComponent, {data: {message: rs.message, type: 'danger'}});
-          }
-        });
+          .subscribe((rs) => {
+            if (rs.status === 'ok') {
+              const users = this.usersSubject$.getValue();
+              _.remove(users, { id: model.id });
+              this.refreshData();
+            } else {
+              this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: rs.message, type: 'danger' } });
+            }
+          });
       }
     });
   }

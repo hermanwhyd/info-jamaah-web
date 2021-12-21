@@ -8,17 +8,17 @@
 
 <mat-divider class="-mx-6 text-border"></mat-divider>
 
-<mat-dialog-content class="p-0">
-  <mat-horizontal-stepper #stepper [linear]="true">
-    <ng-template matStepperIcon="edit">
-      <mat-icon [icIcon]="icDoneAll"></mat-icon>
-    </ng-template>
+<mat-horizontal-stepper #stepper [linear]="true">
+  <ng-template matStepperIcon="edit">
+    <mat-icon [icIcon]="icDoneAll"></mat-icon>
+  </ng-template>
 
-    <ng-template matStepperIcon="done">
-      <mat-icon [icIcon]="icDoneAll"></mat-icon>
-    </ng-template>
+  <ng-template matStepperIcon="done">
+    <mat-icon [icIcon]="icDoneAll"></mat-icon>
+  </ng-template>
 
-    <mat-step [stepControl]="form">
+  <mat-step [stepControl]="form">
+    <mat-dialog-content>
       <form [formGroup]="form">
         <ng-template matStepLabel>Reminder</ng-template>
         <div fxLayout="column">
@@ -86,35 +86,35 @@
 
         </div>
       </form>
-      <div fxLayout="row" fxLayoutAlign="end center">
-        <button mat-button (click)="reset()" [disabled]="form.pristine">RESET</button>
-        <button mat-button (click)="submit()" [disabled]="!submitable" color="primary">SIMPAN</button>
-        <button mat-button matStepperNext [disabled]="!nextable">NEXT</button>
-      </div>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Penerima</ng-template>
-      <div @stagger class="p-4" gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="24px">
-        <div *ngFor="let item of subscriptions; let i = index" fxLayout="row" fxLayoutAlign="start center">
-          <!-- <img @scaleIn [src]="friend.imageSrc" alt="Profile Picture" class="avatar ltr:mr-3 rtl:ml-3" fxFlex="none"/> -->
-          <div @fadeInRight fxFlex="auto">
-            <h4 class="body-2 m-0 leading-snug">{{ item.subscriber.label }}</h4>
-            <h5 class="text-secondary m-0 caption leading-none">{{ item.subscriber.enumablesCount || 0 }} penerima</h5>
-          </div>
-          <button (click)="subscribe(i, item)" *ngIf="!item.id" color="primary" mat-icon-button type="button"
-            matTooltip="Klik Untuk Aktifkan" matTooltipPosition="above" [loading]="isSubsLoading[i]">
-            <mat-icon [icIcon]="icNotifAdd"></mat-icon>
-          </button>
-
-          <button (click)="unsubscriber(i, item)" *ngIf="item.id" color="primary" mat-icon-button type="button"
-            matTooltip="Aktif" matTooltipPosition="above" [loading]="isSubsLoading[i]">
-            <mat-icon [icIcon]="icNotifActive"></mat-icon>
-          </button>
+    </mat-dialog-content>
+    <div fxLayout="row" fxLayoutAlign="end center">
+      <button mat-button (click)="reset()" [disabled]="form.pristine">RESET</button>
+      <button mat-button (click)="submit()" [disabled]="!submitable" color="primary">SIMPAN</button>
+      <button mat-button matStepperNext [disabled]="!nextable">NEXT</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Penerima</ng-template>
+    <div @stagger class="p-4" gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="24px">
+      <div *ngFor="let item of subscriptions; let i = index" fxLayout="row" fxLayoutAlign="start center">
+        <!-- <img @scaleIn [src]="friend.imageSrc" alt="Profile Picture" class="avatar ltr:mr-3 rtl:ml-3" fxFlex="none"/> -->
+        <div @fadeInRight fxFlex="auto">
+          <h4 class="body-2 m-0 leading-snug">{{ item.subscriber.label }}</h4>
+          <h5 class="text-secondary m-0 caption leading-none">{{ item.subscriber.enumablesCount || 0 }} penerima</h5>
         </div>
+        <button (click)="subscribe(i, item)" *ngIf="!item.id" color="primary" mat-icon-button type="button"
+          matTooltip="Klik Untuk Aktifkan" matTooltipPosition="above" [loading]="isSubsLoading[i]">
+          <mat-icon [icIcon]="icNotifAdd"></mat-icon>
+        </button>
+
+        <button (click)="unsubscriber(i, item)" *ngIf="item.id" color="primary" mat-icon-button type="button"
+          matTooltip="Aktif" matTooltipPosition="above" [loading]="isSubsLoading[i]">
+          <mat-icon [icIcon]="icNotifActive"></mat-icon>
+        </button>
       </div>
-      <div fxLayout="row" fxLayoutAlign="end center">
-        <button mat-button matStepperPrevious>PREV</button>
-      </div>
-    </mat-step>
-  </mat-horizontal-stepper>
-</mat-dialog-content>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="end center">
+      <button mat-button matStepperPrevious>PREV</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

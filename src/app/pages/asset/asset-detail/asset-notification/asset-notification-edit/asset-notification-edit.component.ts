@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -41,7 +41,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     fadeInRight400ms,
     scaleIn400ms,
     stagger40ms
-  ]
+  ],
+  encapsulation: ViewEncapsulation.None
 })
 export class AssetNotificationEditComponent implements OnInit {
 
