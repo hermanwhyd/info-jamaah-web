@@ -9,6 +9,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CustomLayoutModule } from './custom-layout/custom-layout.module';
 import { AuthModule } from './auth/auth.module';
 import { JsonDateInterceptor } from './config/json-date.interceptor';
+import { LoadingInterceptor } from './config/loading.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +28,11 @@ import { JsonDateInterceptor } from './config/json-date.interceptor';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JsonDateInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
       multi: true
     }
   ],

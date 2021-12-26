@@ -94,6 +94,7 @@
   ::ng-deep .vex-footer {
     box-shadow: var(--footer-elevation);
     position: fixed;
+    width: var(--toolbar-width);
   }
 
   .content {

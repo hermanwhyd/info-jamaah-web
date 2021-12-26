@@ -14,3 +14,4 @@ export function scaleInAnimation(duration: number) {
 }
 
 export const scaleIn400ms = scaleInAnimation(400);
+export const scaleIn200ms = scaleInAnimation(200);

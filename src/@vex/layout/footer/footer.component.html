@@ -3,7 +3,10 @@
     Portal Informasi Jamaah
   </div>
   <span fxFlex></span>
-  <div class="text-gray">
+  <div @scaleIn class="text-gray text-center" *ngIf="!isLoading">
     Versi 1.0
+  </div>
+  <div *ngIf="isLoading">
+    <img src="/assets/img/illustrations/DualBall-1s-48px.svg" class="w-10 z-10">
   </div>
 </div>
