@@ -2,15 +2,15 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AdditionalFieldService } from 'src/app/services/additional-field.service';
-import { AdditionalField } from 'src/app/types/additional-field.interface';
-import { CustomField } from 'src/app/types/custom-field.model';
-import { ConfirmationDialogComponent } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.component';
-import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackbar-notif.component';
+import { AdditionalFieldService } from 'src/app/shared/services/additional-field.service';
+import { AdditionalField } from 'src/app/shared/types/additional-field.interface';
+import { CustomField } from 'src/app/shared/types/custom-field.model';
+import { ConfirmationDialogComponent } from 'src/app/shared/utilities/confirmation-dialog/confirmation-dialog.component';
+import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
 
 import icEdit from '@iconify/icons-ic/twotone-edit';
 import icDelete from '@iconify/icons-ic/delete';
-import { SharedPropertyService } from 'src/app/services/shared-property.service';
+import { SharedPropertyService } from 'src/app/shared/services/shared-property.service';
 
 @Component({
   selector: 'vex-custom-field-editor',

@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiConfig } from 'src/app/common/api.config';
-import { GenericRs } from 'src/app/types/generic-rs.model';
+import { ApiConfig } from 'src/app/core/common/api.config';
+import { GenericRs } from 'src/app/shared/types/generic-rs.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +10,10 @@ import { GenericRs } from 'src/app/types/generic-rs.model';
 export class StatisticService {
   private readonly URL = [ApiConfig.url, 'v1', 'statistic'].join('/');
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   private joiner(...str: any[]) {
-    return [this.URL, ... str].join('/');
+    return [this.URL, ...str].join('/');
   }
 
   public getBankDiklatDataFeed() {

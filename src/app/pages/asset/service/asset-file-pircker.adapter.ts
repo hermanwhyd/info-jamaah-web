@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { FilePickerAdapter, UploadResponse, FilePreviewModel } from 'ngx-awesome-uploader';
 import { Asset } from '../interfaces/asset.model';
 import { AssetService } from './asset.service';
-import { MediaService } from 'src/app/services/media.service';
+import { MediaService } from 'src/app/shared/services/media.service';
 
 export class AssetFilePickerAdapter extends FilePickerAdapter {
 

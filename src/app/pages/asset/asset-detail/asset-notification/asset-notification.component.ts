@@ -27,13 +27,13 @@ import { scaleFadeIn400ms } from 'src/@vex/animations/scale-fade-in.animation';
 import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
 import { stagger40ms } from 'src/@vex/animations/stagger.animation';
 import jmespath from 'jmespath';
-import { Notifier } from 'src/app/types/notifier.interface';
+import { Notifier } from 'src/app/shared/types/notifier.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableColumn } from 'src/@vex/interfaces/table-column.interface';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ConfirmationDialogComponent } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.component';
-import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackbar-notif.component';
+import { ConfirmationDialogComponent } from 'src/app/shared/utilities/confirmation-dialog/confirmation-dialog.component';
+import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AssetNotificationEditComponent } from './asset-notification-edit/asset-notification-edit.component';
 

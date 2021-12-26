@@ -6,16 +6,16 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { finalize, tap } from 'rxjs/operators';
 import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
 import { stagger60ms } from 'src/@vex/animations/stagger.animation';
-import { SharedProperty } from 'src/app/types/shared-property.interface';
-import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackbar-notif.component';
+import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
+import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
 import { Asset, Location } from '../interfaces/asset.model';
 import { AssetService } from '../service/asset.service';
 import icBack from '@iconify/icons-ic/chevron-left';
 import { MatAccordion } from '@angular/material/expansion';
 import { forkJoin } from 'rxjs';
-import { AdditionalField } from 'src/app/types/additional-field.interface';
-import { CustomField } from 'src/app/types/custom-field.model';
-import { SharedPropertyService } from 'src/app/services/shared-property.service';
+import { AdditionalField } from 'src/app/shared/types/additional-field.interface';
+import { CustomField } from 'src/app/shared/types/custom-field.model';
+import { SharedPropertyService } from 'src/app/shared/services/shared-property.service';
 import _ from 'lodash';
 
 @UntilDestroy()

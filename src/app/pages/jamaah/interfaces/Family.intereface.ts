@@ -1,4 +1,4 @@
-import { SharedProperty } from 'src/app/types/shared-property.interface';
+import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
 import { Jamaah } from './jamaah.model';
 import { Residance } from './residance.model';
 

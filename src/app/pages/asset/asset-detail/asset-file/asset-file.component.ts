@@ -20,22 +20,22 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject } from 'rxjs';
-import { ConfirmationDialogComponent } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from 'src/app/shared/utilities/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 import _ from 'lodash';
 import fileSaver from 'file-saver';
 
-import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackbar-notif.component';
+import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
 import { fadeInRight400ms } from 'src/@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from 'src/@vex/animations/scale-fade-in.animation';
 import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
 import { stagger40ms } from 'src/@vex/animations/stagger.animation';
 import jmespath from 'jmespath';
-import { MediaService } from 'src/app/services/media.service';
+import { MediaService } from 'src/app/shared/services/media.service';
 import { AssetFileEditComponent } from './asset-file-edit/asset-file-edit.component';
-import { GenericRs } from 'src/app/types/generic-rs.model';
+import { GenericRs } from 'src/app/shared/types/generic-rs.model';
 
 @UntilDestroy()
 @Component({

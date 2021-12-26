@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { JamaahDetailComponent } from './jamaah-detail.component';
-import { SharedModule } from 'src/app/common/shared.module';
+import { SharedModule } from 'src/app/shared/components/common/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { PageLayoutModule } from 'src/@vex/components/page-layout/page-layout.module';
 import { MatTabsModule } from '@angular/material/tabs';

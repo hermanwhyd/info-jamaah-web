@@ -27,7 +27,7 @@ import { finalize } from 'rxjs/operators';
 import { scaleFadeIn400ms } from 'src/@vex/animations/scale-fade-in.animation';
 import _ from 'lodash';
 import { Gallery, GalleryItem } from 'ng-gallery';
-import { SharedProperty } from 'src/app/types/shared-property.interface';
+import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
 import { forkJoin } from 'rxjs';
 
 @UntilDestroy()

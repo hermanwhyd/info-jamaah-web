@@ -16,8 +16,8 @@ import { AssetService } from '../service/asset.service';
 import { Asset } from '../interfaces/asset.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AssetUploadComponent } from '../asset-upload/asset-upload.component';
-import { ConfirmationDialogComponent } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.component';
-import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackbar-notif.component';
+import { ConfirmationDialogComponent } from 'src/app/shared/utilities/confirmation-dialog/confirmation-dialog.component';
+import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AssetCopyComponent } from '../asset-copy/asset-copy.component';
 

@@ -15,9 +15,9 @@ import icLandScap from '@iconify/icons-ic/round-landscape';
 import icNote2 from '@iconify/icons-ic/round-sticky-note-2';
 
 import * as _ from 'lodash';
-import { AuthService } from 'src/app/auth/auth.service';
-import { SharedPropertyService } from '../../services/shared-property.service';
-import { SharedProperty } from 'src/app/types/shared-property.interface';
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { SharedPropertyService } from '../../shared/services/shared-property.service';
+import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
 
 @Component({
   selector: 'vex-dashboard',

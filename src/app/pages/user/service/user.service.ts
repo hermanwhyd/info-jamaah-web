@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ApiConfig } from 'src/app/common/api.config';
+import { ApiConfig } from 'src/app/core/common/api.config';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user.interface';
 import * as _ from 'lodash';
-import { GenericRs } from 'src/app/types/generic-rs.model';
+import { GenericRs } from 'src/app/shared/types/generic-rs.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,14 +19,14 @@ export class UserService {
     const params = {
       include: (include !== undefined) ? include : null
     };
-    return this.httpClient.get(this.URL, {params}) as Observable<GenericRs<User[]>>;
+    return this.httpClient.get(this.URL, { params }) as Observable<GenericRs<User[]>>;
   }
 
   public getById(id: number | string, include?: string) {
     const params = {
       include: (include !== undefined) ? include : null
     };
-    return this.httpClient.get([this.URL, id].join('/'), {params}) as Observable<GenericRs<User>>;
+    return this.httpClient.get([this.URL, id].join('/'), { params }) as Observable<GenericRs<User>>;
   }
 
   public delete(id: number | string): Observable<GenericRs<User>> {

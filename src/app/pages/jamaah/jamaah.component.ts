@@ -16,13 +16,13 @@ import icViewHeadline from '@iconify/icons-ic/twotone-view-headline';
 import { Jamaah } from './interfaces/jamaah.model';
 import { JamaahService } from './service/jamaah.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackbar-notif.component';
+import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
 import { TableMenu } from './interfaces/table-menu.inteface';
-import { ConfirmationDialogComponent } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from 'src/app/shared/utilities/confirmation-dialog/confirmation-dialog.component';
 
 import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
-import { GenericRs } from 'src/app/types/generic-rs.model';
+import { GenericRs } from 'src/app/shared/types/generic-rs.model';
 import { JamaahEditComponent } from './jamaah-edit/jamaah-edit.component';
 
 @Component({

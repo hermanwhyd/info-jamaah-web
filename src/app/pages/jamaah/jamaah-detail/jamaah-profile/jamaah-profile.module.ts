@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { JamaahProfileComponent } from './jamaah-profile.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { SharedModule } from 'src/app/common/shared.module';
+import { SharedModule } from 'src/app/shared/components/common/shared.module';
 
 const routes: Routes = [
   { path: '', component: JamaahProfileComponent }

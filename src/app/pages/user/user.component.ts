@@ -18,13 +18,13 @@ import { User } from './interfaces/user.interface';
 import { UserService } from './service/user.service';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackbar-notif.component';
+import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
 import { UserTableMenu } from './interfaces/user-table-menu.inteface';
-import { ConfirmationDialogComponent } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from 'src/app/shared/utilities/confirmation-dialog/confirmation-dialog.component';
 
 import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
-import { GenericRs } from 'src/app/types/generic-rs.model';
+import { GenericRs } from 'src/app/shared/types/generic-rs.model';
 
 @Component({
   selector: 'vex-user',

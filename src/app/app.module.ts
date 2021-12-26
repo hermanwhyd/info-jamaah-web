@@ -6,10 +6,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VexModule } from '../@vex/vex.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CustomLayoutModule } from './custom-layout/custom-layout.module';
-import { AuthModule } from './auth/auth.module';
-import { JsonDateInterceptor } from './config/json-date.interceptor';
-import { LoadingInterceptor } from './config/loading.interceptor';
+import { CustomLayoutModule } from './core/custom-layout/custom-layout.module';
+import { AuthModule } from 'src/app/core/auth/auth.module';
+import { JsonDateInterceptor } from './core/interceptor/json-date.interceptor';
+import { LoadingInterceptor } from './core/interceptor/loading.interceptor';
 
 @NgModule({
   declarations: [AppComponent],

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'vex-logout',

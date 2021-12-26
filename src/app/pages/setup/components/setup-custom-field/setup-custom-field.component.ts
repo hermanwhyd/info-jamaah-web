@@ -10,20 +10,20 @@ import { fadeInRight400ms } from 'src/@vex/animations/fade-in-right.animation';
 import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
 import { stagger40ms } from 'src/@vex/animations/stagger.animation';
 import { finalize } from 'rxjs/operators';
-import { ConfirmationDialogComponent } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from 'src/app/shared/utilities/confirmation-dialog/confirmation-dialog.component';
 import { MatAccordion } from '@angular/material/expansion';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SharedPropertyService } from 'src/app/services/shared-property.service';
+import { SharedPropertyService } from 'src/app/shared/services/shared-property.service';
 import _ from 'lodash';
-import { GenericRs } from 'src/app/types/generic-rs.model';
-import { SharedProperty } from 'src/app/types/shared-property.interface';
-import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackbar-notif.component';
+import { GenericRs } from 'src/app/shared/types/generic-rs.model';
+import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
+import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
 import { SetupEnumEditComponent } from '../setup-enum-edit/setup-enum-edit.component';
 import { BehaviorSubject } from 'rxjs';
-import { CustomField } from 'src/app/types/custom-field.model';
+import { CustomField } from 'src/app/shared/types/custom-field.model';
 import { SetupCustomFieldEditComponent } from './setup-custom-field-edit/setup-custom-field-edit.component';
-import { CustomFieldService } from 'src/app/services/custom-field.service';
+import { CustomFieldService } from 'src/app/shared/services/custom-field.service';
 
 @Component({
   selector: 'vex-setup-custom-field',

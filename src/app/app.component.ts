@@ -16,7 +16,7 @@ import icTraining from '@iconify/icons-ic/baseline-model-training';
 import icAccountBalance from '@iconify/icons-ic/account-balance';
 import icStyle from '@iconify/icons-ic/style';
 import icCheckedAssignment from '@iconify/icons-ic/assignment-turned-in';
-import { AuthService } from './auth/auth.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'vex-root',

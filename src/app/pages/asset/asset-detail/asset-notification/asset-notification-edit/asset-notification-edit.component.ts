@@ -10,22 +10,22 @@ import icNotifActive from '@iconify/icons-ic/outline-notifications-active';
 
 import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/helpers/format-datepicker';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { Notifier } from 'src/app/types/notifier.interface';
-import { SharedPropertyService } from 'src/app/services/shared-property.service';
+import { Notifier } from 'src/app/shared/types/notifier.interface';
+import { SharedPropertyService } from 'src/app/shared/services/shared-property.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { AdditionalField } from 'src/app/types/additional-field.interface';
-import { compareObjectId } from 'src/app/utilities/function/comparator';
+import { AdditionalField } from 'src/app/shared/types/additional-field.interface';
+import { compareObjectId } from 'src/app/shared/utilities/function/comparator';
 import { finalize } from 'rxjs/operators';
 import { AssetService } from '../../../service/asset.service';
-import { Subscription } from 'src/app/types/subscription.interface';
+import { Subscription } from 'src/app/shared/types/subscription.interface';
 
 import { fadeInRight400ms } from 'src/@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
 import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
 import { stagger40ms } from 'src/@vex/animations/stagger.animation';
-import { SharedProperty } from 'src/app/types/shared-property.interface';
-import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackbar-notif.component';
+import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
+import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

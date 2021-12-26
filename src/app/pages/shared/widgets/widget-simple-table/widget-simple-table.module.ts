@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { WidgetSimpleTableComponent } from './widget-simple-table.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { SharedModule } from 'src/app/common/shared.module';
+import { SharedModule } from 'src/app/shared/components/common/shared.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 

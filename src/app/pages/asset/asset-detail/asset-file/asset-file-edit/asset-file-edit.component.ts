@@ -8,7 +8,7 @@ import icDelete from '@iconify/icons-ic/twotone-delete';
 import icDownload from '@iconify/icons-ic/twotone-cloud-download';
 
 import { AssetMedia } from '../../../interfaces/asset.model';
-import { SharedProperty } from 'src/app/types/shared-property.interface';
+import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
 
 @Component({
   selector: 'vex-asset-file-edit',

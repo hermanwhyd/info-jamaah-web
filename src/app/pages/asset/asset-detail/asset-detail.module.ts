@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { AssetDetailComponent } from './asset-detail.component';
-import { SharedModule } from 'src/app/common/shared.module';
+import { SharedModule } from 'src/app/shared/components/common/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { PageLayoutModule } from 'src/@vex/components/page-layout/page-layout.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FilePickerModule } from 'ngx-awesome-uploader';
 import { MatMenuModule } from '@angular/material/menu';
-import { SnackBarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
-import { ConfirmationDialogModule } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.module';
+import { SnackBarNotifModule } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.module';
+import { ConfirmationDialogModule } from 'src/app/shared/utilities/confirmation-dialog/confirmation-dialog.module';
 import { AssetCopyModule } from '../asset-copy/asset-copy.module';
 
 const routes: Routes = [

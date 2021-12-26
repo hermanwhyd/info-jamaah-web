@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import icVisibility from '@iconify/icons-ic/twotone-visibility';
 import icVisibilityOff from '@iconify/icons-ic/twotone-visibility-off';
-import { fadeInUp400ms } from '../../../../@vex/animations/fade-in-up.animation';
-import { AuthService } from 'src/app/auth/auth.service';
-import { LoginRq } from 'src/app/auth/interfaces/login-rq.interface';
+import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { LoginRq } from 'src/app/core/auth/interfaces/login-rq.interface';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -34,11 +34,11 @@ export class LoginComponent implements OnInit {
   icVisibilityOff = icVisibilityOff;
 
   constructor(private router: Router,
-              private route: ActivatedRoute,
-              private fb: FormBuilder,
-              private cd: ChangeDetectorRef,
-              private authService: AuthService
-  ) {}
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    private cd: ChangeDetectorRef,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -53,23 +53,23 @@ export class LoginComponent implements OnInit {
   get f() { return this.form.controls; }
 
   send() {
-    this.loginRq = {email: this.f.email.value, password: this.f.password.value};
+    this.loginRq = { email: this.f.email.value, password: this.f.password.value };
 
     this.error = null;
     this.isLoading = true;
     this.authService.login(this.loginRq)
-    .pipe(finalize(() => {
-      this.isLoading = false;
-      this.cd.markForCheck();
-    }))
-    .subscribe(rs => {
-      if (rs === 'OK') {
-        window.location.href = this.returnUrl;
-        // this.router.navigate([this.returnUrl]);
-      } else {
-        this.error = rs;
-      }
-    });
+      .pipe(finalize(() => {
+        this.isLoading = false;
+        this.cd.markForCheck();
+      }))
+      .subscribe(rs => {
+        if (rs === 'OK') {
+          window.location.href = this.returnUrl;
+          // this.router.navigate([this.returnUrl]);
+        } else {
+          this.error = rs;
+        }
+      });
   }
 
   toggleVisibility() {

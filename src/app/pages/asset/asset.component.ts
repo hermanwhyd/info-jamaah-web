@@ -15,9 +15,9 @@ import icViewHeadline from '@iconify/icons-ic/twotone-view-headline';
 
 import { Asset } from './interfaces/asset.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackbar-notif.component';
+import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
 import { TableMenu } from './interfaces/table-menu.inteface';
-import { ConfirmationDialogComponent } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from 'src/app/shared/utilities/confirmation-dialog/confirmation-dialog.component';
 
 import { BehaviorSubject } from 'rxjs';
 import { AssetService } from './service/asset.service';

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CustomFieldEditorComponent } from './custom-field-editor.component';
-import { SharedModule } from 'src/app/common/shared.module';
-import { MatButtonFamilyModule } from 'src/app/common/mat-button-family.module';
+import { SharedModule } from 'src/app/shared/components/common/shared.module';
+import { MatButtonFamilyModule } from 'src/app/shared/components/common/mat-button-family.module';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ConfirmationDialogModule } from 'src/app/utilities/confirmation-dialog/confirmation-dialog.module';
-import { SnackBarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
+import { ConfirmationDialogModule } from 'src/app/shared/utilities/confirmation-dialog/confirmation-dialog.module';
+import { SnackBarNotifModule } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.module';
 import { EditableModule } from '@ngneat/edit-in-place';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';

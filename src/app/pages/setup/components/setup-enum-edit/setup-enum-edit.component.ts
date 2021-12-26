@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import icClose from '@iconify/icons-ic/twotone-close';
-import { SharedProperty } from 'src/app/types/shared-property.interface';
+import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
 
 @Component({
   selector: 'vex-setup-enum-edit',
@@ -25,11 +25,11 @@ export class SetupEnumEditComponent implements OnInit {
   });
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: any,
-              private dialogRef: MatDialogRef<SetupEnumEditComponent>,
-              private fb: FormBuilder) { }
+    private dialogRef: MatDialogRef<SetupEnumEditComponent>,
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.model = {...this.data.model, group: this.data.group};
+    this.model = { ...this.data.model, group: this.data.group };
     this.form.patchValue(this.model);
     this.form.get('group').setValue(this.data.group);
     if (this.model.id) {

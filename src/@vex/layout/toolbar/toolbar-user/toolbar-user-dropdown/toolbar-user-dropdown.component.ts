@@ -10,7 +10,7 @@ import icVerifiedUser from '@iconify/icons-ic/twotone-verified-user';
 import icLock from '@iconify/icons-ic/twotone-lock';
 import icNotificationsOff from '@iconify/icons-ic/twotone-notifications-off';
 import { PopoverRef } from '../../../../components/popover/popover-ref';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 
 @Component({
@@ -36,8 +36,8 @@ export class ToolbarUserDropdownComponent implements OnInit {
   fullname = 'GUEST';
 
   constructor(private cd: ChangeDetectorRef,
-              private popoverRef: PopoverRef<ToolbarUserDropdownComponent>,
-              private authService: AuthService) { }
+    private popoverRef: PopoverRef<ToolbarUserDropdownComponent>,
+    private authService: AuthService) { }
 
   ngOnInit() {
     const claim = this.authService.getJwtClaim();

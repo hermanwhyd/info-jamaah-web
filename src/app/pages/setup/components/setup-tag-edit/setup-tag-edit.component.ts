@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import icClose from '@iconify/icons-ic/twotone-close';
-import { Tag } from 'src/app/types/tag.interface';
+import { Tag } from 'src/app/shared/types/tag.interface';
 
 @Component({
   selector: 'vex-setup-tag-edit',
@@ -24,11 +24,11 @@ export class SetupTagEditComponent implements OnInit {
   });
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: any,
-              private dialogRef: MatDialogRef<SetupTagEditComponent>,
-              private fb: FormBuilder) { }
+    private dialogRef: MatDialogRef<SetupTagEditComponent>,
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.model = {...this.data.model, group: this.data.group};
+    this.model = { ...this.data.model, group: this.data.group };
     console.log(this.model);
     this.form.patchValue(this.model);
     if (this.model.id) {

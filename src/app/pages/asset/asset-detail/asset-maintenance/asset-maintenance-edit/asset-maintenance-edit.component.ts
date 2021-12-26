@@ -5,10 +5,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import icClose from '@iconify/icons-ic/twotone-close';
 
 import { AssetMaintenance, Supplier } from '../../../interfaces/asset.model';
-import { SharedProperty } from 'src/app/types/shared-property.interface';
+import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
 import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/helpers/format-datepicker';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { SharedPropertyService } from 'src/app/services/shared-property.service';
+import { SharedPropertyService } from 'src/app/shared/services/shared-property.service';
 
 @Component({
   selector: 'vex-asset-maintenance-edit',

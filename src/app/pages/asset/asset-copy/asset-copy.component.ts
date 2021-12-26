@@ -7,7 +7,7 @@ import icClose from '@iconify/icons-ic/twotone-close';
 import icDelete from '@iconify/icons-ic/twotone-delete';
 import { AssetService } from '../service/asset.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackbar-notif.component';
+import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 

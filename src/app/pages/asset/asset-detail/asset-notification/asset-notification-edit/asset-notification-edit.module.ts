@@ -17,8 +17,8 @@ import { AssetNotificationEditComponent } from './asset-notification-edit.compon
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatButtonLoadingModule } from 'src/app/utilities/mat-button-loading/mat-button-loading.module';
-import { SnackBarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
+import { MatButtonLoadingModule } from 'src/app/shared/utilities/mat-button-loading/mat-button-loading.module';
+import { SnackBarNotifModule } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.module';
 
 @NgModule({
   declarations: [AssetNotificationEditComponent],

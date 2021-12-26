@@ -1,6 +1,6 @@
-import { AdditionalField } from 'src/app/types/additional-field.interface';
-import { Notifier } from 'src/app/types/notifier.interface';
-import { SharedProperty } from 'src/app/types/shared-property.interface';
+import { AdditionalField } from 'src/app/shared/types/additional-field.interface';
+import { Notifier } from 'src/app/shared/types/notifier.interface';
+import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
 import { User } from '../../user/interfaces/user.interface';
 
 export interface Asset {

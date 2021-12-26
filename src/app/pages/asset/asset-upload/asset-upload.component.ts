@@ -8,11 +8,11 @@ import icWord from '@iconify/icons-fa-solid/file-word';
 import icExcel from '@iconify/icons-fa-solid/file-excel';
 
 import { FilePickerComponent, FilePreviewModel, UploaderCaptions, ValidationError } from 'ngx-awesome-uploader';
-import { SnackbarNotifComponent } from 'src/app/utilities/snackbar-notif/snackbar-notif.component';
+import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
 import { AssetFilePickerAdapter } from '../service/asset-file-pircker.adapter';
 import { Asset } from '../interfaces/asset.model';
 import { AssetService } from '../service/asset.service';
-import { MediaService } from 'src/app/services/media.service';
+import { MediaService } from 'src/app/shared/services/media.service';
 
 @Component({
   selector: 'vex-asset-upload',

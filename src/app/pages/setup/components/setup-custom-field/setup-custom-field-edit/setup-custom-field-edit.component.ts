@@ -7,7 +7,7 @@ import icCancel from '@iconify/icons-ic/cancel';
 
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { CustomField } from 'src/app/types/custom-field.model';
+import { CustomField } from 'src/app/shared/types/custom-field.model';
 
 @Component({
   selector: 'vex-setup-custom-field-edit',

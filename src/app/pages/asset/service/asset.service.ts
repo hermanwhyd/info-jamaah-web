@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpEventType, HttpParams, HttpRequest } from '@angular/common/http';
-import { ApiConfig } from 'src/app/common/api.config';
+import { ApiConfig } from 'src/app/core/common/api.config';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { GenericRs } from 'src/app/types/generic-rs.model';
+import { GenericRs } from 'src/app/shared/types/generic-rs.model';
 import { Asset, AssetAudit, AssetMaintenance } from '../interfaces/asset.model';
 import { UploadStatus, FilePreviewModel } from 'ngx-awesome-uploader';
-import { SharedProperty } from 'src/app/types/shared-property.interface';
-import { AdditionalField } from 'src/app/types/additional-field.interface';
-import { Notifier } from 'src/app/types/notifier.interface';
-import { Subscription } from 'src/app/types/subscription.interface';
+import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
+import { AdditionalField } from 'src/app/shared/types/additional-field.interface';
+import { Notifier } from 'src/app/shared/types/notifier.interface';
+import { Subscription } from 'src/app/shared/types/subscription.interface';
 @Injectable({
   providedIn: 'root'
 })

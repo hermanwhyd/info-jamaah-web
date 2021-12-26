@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ApiConfig } from 'src/app/common/api.config';
+import { ApiConfig } from 'src/app/core/common/api.config';
 import { Observable } from 'rxjs';
 import { Jamaah } from '../interfaces/jamaah.model';
 import * as _ from 'lodash';
-import { GenericRs } from 'src/app/types/generic-rs.model';
-import { AdditionalField } from 'src/app/types/additional-field.interface';
+import { GenericRs } from 'src/app/shared/types/generic-rs.model';
+import { AdditionalField } from 'src/app/shared/types/additional-field.interface';
 
 @Injectable({
   providedIn: 'root'

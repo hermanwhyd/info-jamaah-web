@@ -10,9 +10,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { IconModule } from '@visurel/iconify-angular';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { SnackBarNotifModule } from 'src/app/utilities/snackbar-notif/snackbar-notif.module';
+import { SnackBarNotifModule } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatButtonLoadingModule } from 'src/app/utilities/mat-button-loading/mat-button-loading.module';
+import { MatButtonLoadingModule } from 'src/app/shared/utilities/mat-button-loading/mat-button-loading.module';
 
 @NgModule({
   declarations: [

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { VexRoutes } from 'src/@vex/interfaces/vex-route.interface';
-import { AuthGuard } from './auth/guard/auth.guard';
-import { MainGuard } from './auth/guard/main.guard';
-import { CustomLayoutComponent } from './custom-layout/custom-layout.component';
+import { AuthGuard } from './core/auth/guard/auth.guard';
+import { MainGuard } from './core/auth/guard/main.guard';
+import { CustomLayoutComponent } from './core/custom-layout/custom-layout.component';
 import { QuicklinkModule, QuicklinkStrategy } from 'ngx-quicklink';
 
 const routes: VexRoutes = [
