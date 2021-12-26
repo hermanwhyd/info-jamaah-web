@@ -15,7 +15,6 @@ import icAccountCircle from '@iconify/icons-ic/baseline-people-outline';
 import icTraining from '@iconify/icons-ic/baseline-model-training';
 import icAccountBalance from '@iconify/icons-ic/account-balance';
 import icStyle from '@iconify/icons-ic/style';
-import icCheckedAssignment from '@iconify/icons-ic/assignment-turned-in';
 import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
@@ -73,6 +72,20 @@ export class AppComponent {
         label: 'Kalender Kegiatan',
         icon: icCalendar,
         route: 'event-calendar'
+      },
+      {
+        type: 'subheading',
+        label: 'Pembina',
+        hide: !authSvc.hasAccess(['ADMIN']),
+        children: [
+          {
+            type: 'link',
+            label: 'Pembina',
+            route: '/pembina',
+            icon: icAccountCircle,
+            hide: !authSvc.hasAccess(['ADMIN'])
+          }
+        ]
       },
       {
         type: 'subheading',
