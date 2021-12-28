@@ -1,13 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 
-import { LayoutService } from '../../../@vex/services/layout.service';
-import { ScrollDispatcher } from '@angular/cdk/overlay';
-import { fadeInRight400ms } from '../../../@vex/animations/fade-in-right.animation';
-import { fadeInUp400ms } from '../../../@vex/animations/fade-in-up.animation';
-import { stagger80ms } from '../../../@vex/animations/stagger.animation';
+import { fadeInRight400ms } from 'src/@vex/animations/fade-in-right.animation';
+import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
+import { stagger80ms } from 'src/@vex/animations/stagger.animation';
 import { SidebarMenu } from './interfaces/sidebar-menu.interface';
 import { SetupEnumComponent } from './components/setup-enum/setup-enum.component';
-import { SetupTagComponent } from './components/setup-tag/setup-tag.component';
 import { SetupCustomFieldComponent } from './components/setup-custom-field/setup-custom-field.component';
 
 @Component({
@@ -25,36 +22,32 @@ export class SetupComponent implements OnInit {
 
   sidebarMenu: SidebarMenu[] = [
     { type: 'subheader', title: 'SHARED PROPERTY', element: '', active: false },
-    { type: 'link', element: 'assetCategory', title: 'Kategori Aset', active: false },
-    { type: 'link', element: 'assetDetail', title: 'Detail Aset', active: false },
-    { type: 'link', element: 'assetStatus', title: 'Status Aset', active: false },
-    { type: 'link', element: 'maintenanceType', title: 'Tipe Perawatan Aset', active: false },
+    { type: 'link', element: 'setupEnumList', title: 'Kategori Aset', active: false },
+    { type: 'link', element: 'setupEnumList', title: 'Detail Aset', active: false },
+    { type: 'link', element: 'setupEnumList', title: 'Status Aset', active: false },
+    { type: 'link', element: 'setupEnumList', title: 'Tipe Perawatan Aset', active: false },
     { type: 'subheader', title: 'CUSTOM FIELD', element: '', active: false },
-    { type: 'link', element: 'assetCustomField', title: 'Asset Model', active: false },
-    { type: 'link', element: 'jamaahCustomField', title: 'Jamaah Model', active: false },
+    { type: 'link', element: 'setupCustomFieldList', title: 'Asset Model', active: false },
+    { type: 'link', element: 'setupCustomFieldList', title: 'Jamaah Model', active: false },
+    { type: 'subheader', title: 'PENGURUS', element: '', active: false },
+    { type: 'link', element: 'setupEnumList', title: 'Pengurus Desa', active: false },
+    { type: 'link', element: 'setupEnumList', title: 'Pengurus Kelompok', active: false }
   ];
 
-  @ViewChild(SetupEnumComponent, { read: ElementRef, static: true }) private assetCategory: ElementRef;
-  @ViewChild(SetupEnumComponent, { read: ElementRef, static: true }) private assetDetail: ElementRef;
-  @ViewChild(SetupEnumComponent, { read: ElementRef, static: true }) private assetStatus: ElementRef;
-  @ViewChild(SetupEnumComponent, { read: ElementRef, static: true }) private maintenanceType: ElementRef;
-  @ViewChild(SetupCustomFieldComponent, { read: ElementRef, static: true }) private assetCustomField: ElementRef;
-  @ViewChild(SetupCustomFieldComponent, { read: ElementRef, static: true }) private jamaahCustomField: ElementRef;
-  constructor(
-    private layoutService: LayoutService,
-    private scrollDispatcher: ScrollDispatcher,
-    private elem: ElementRef) { }
+  @ViewChildren(SetupEnumComponent) setupEnumList: QueryList<SetupEnumComponent>;
+  @ViewChildren(SetupCustomFieldComponent) setupCustomFieldList: QueryList<SetupCustomFieldComponent>;
+  constructor() { }
 
   ngOnInit(): void {
     this.sidebarMenu[1].active = true;
   }
 
   scrollTo(element: SidebarMenu) {
-    this.scrollDispatcher.getAncestorScrollContainers(this.elem)[0].scrollTo({
-      top: this[element.element].nativeElement.offsetTop - 24,
+    const idx = this.sidebarMenu.filter(f => f.element === element.element).indexOf(element);
+    this[element.element].toArray()[idx].scrollIntoView({
+      block: 'center',
       behavior: 'smooth'
     });
-
     // -- Set active
     this.sidebarMenu.forEach(sm => sm.active = false);
     element.active = true;

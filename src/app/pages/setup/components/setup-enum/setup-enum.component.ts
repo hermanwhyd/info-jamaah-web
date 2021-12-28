@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import _ from 'lodash';
@@ -46,10 +46,17 @@ export class SetupEnumComponent implements OnInit {
   sharedPropsSubject$: BehaviorSubject<SharedProperty[]> = new BehaviorSubject([]);
 
   constructor(
-    private sharedPropSvc: SharedPropertyService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
+    private sharedPropSvc: SharedPropertyService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private elRef: ElementRef) { }
 
   ngOnInit(): void {
     this.fetchModels();
+  }
+
+  scrollIntoView(opt?: any) {
+    this.elRef.nativeElement.scrollIntoView(opt || { block: 'start', behavior: 'smooth' });
   }
 
   fetchModels() {

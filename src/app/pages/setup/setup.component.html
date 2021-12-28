@@ -7,7 +7,8 @@
             {{ item.title }}
           </h5>
           <a *ngIf="item.type === 'link'" (click)="scrollTo(item)" @fadeInRight [class.bg-hover]="item.active"
-            [class.text-primary]="item.active" class="list-item mb-2 no-underline flex items-center" matRipple>
+            [class.text-primary]="item.active"
+            class="py-3 px-2 rounded-sm cursor-pointer mb-2 no-underline flex items-center" matRipple>
             <span>{{ item.title }}</span>
           </a>
         </div>
@@ -36,6 +37,12 @@
         CUSTOMFIELD_DESC="Data-data tambahan untuk model Jamaah. Data dikelompokan berdasarkan kategori tertentu.">
       </vex-setup-custom-field>
 
+      <vex-setup-enum @fadeInUp SHAREDPROP_GROUP="PENGURUS_DS" SHAREDPROP_TITLE="PENGURUS DESA" SHAREDPROP_DESC="?">
+      </vex-setup-enum>
+
+      <vex-setup-enum @fadeInUp SHAREDPROP_GROUP="PENGURUS_KLP" SHAREDPROP_TITLE="PENGURUS KELOMPOK"
+        SHAREDPROP_DESC="?">
+      </vex-setup-enum>
     </div>
   </vex-page-layout-content>
 </vex-page-layout>

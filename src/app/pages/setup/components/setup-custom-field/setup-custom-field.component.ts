@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import icEdit from '@iconify/icons-ic/edit';
 import icAdd from '@iconify/icons-ic/add-circle';
 import icUp from '@iconify/icons-ic/baseline-arrow-circle-up';
@@ -58,10 +58,15 @@ export class SetupCustomFieldComponent implements OnInit {
     private sharedPropSvc: SharedPropertyService,
     private customFieldSvc: CustomFieldService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private elRef: ElementRef) { }
 
   ngOnInit(): void {
     this.fetchGroupEnum();
+  }
+
+  scrollIntoView(opt?: any) {
+    this.elRef.nativeElement.scrollIntoView(opt || { block: 'start', behavior: 'smooth' });
   }
 
   fetchGroupEnum() {
