@@ -48,6 +48,11 @@ const routes: VexRoutes = [
         data: ['ADMIN']
       },
       {
+        path: 'pembina',
+        loadChildren: () => import('./pages/pembina/pembina.module').then(m => m.PembinaModule),
+        data: ['ADMIN']
+      },
+      {
         path: 'setup',
         loadChildren: () => import('./pages/setup/setup.module').then(m => m.SetupModule),
         data: ['ADMIN']

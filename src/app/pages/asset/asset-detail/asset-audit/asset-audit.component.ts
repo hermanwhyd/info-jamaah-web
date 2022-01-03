@@ -79,7 +79,7 @@ export class AssetAuditComponent implements OnInit, AfterViewInit {
 
   columns: TableColumn<AssetAudit>[] = [
     { label: 'TGL PELAKSANAAN', property: 'auditedAt', type: 'date', visible: true, cssClasses: ['font-medium'] },
-    { label: 'STATUS ASSET TERAKHIR', property: 'assetStatus.label', type: 'text', visible: true, cssClasses: ['text-secondary'] },
+    { label: 'STATUS TERAKHIR', property: 'assetStatus.label', type: 'text', visible: true, cssClasses: ['text-secondary'] },
     { label: 'LOKASI TERAKHIR', property: 'location.label', type: 'text', visible: true, cssClasses: ['text-secondary'] },
     { label: 'NOTES', property: 'notes', type: 'text', visible: true, cssClasses: ['text-secondary'] },
     { label: 'ACTION', property: 'menu', type: 'button', visible: true, cssClasses: ['text-secondary', 'w-10'] }

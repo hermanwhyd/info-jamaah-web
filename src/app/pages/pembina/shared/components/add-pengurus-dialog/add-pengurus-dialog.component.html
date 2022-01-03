@@ -1,0 +1,50 @@
+<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" mat-dialog-title>
+  <div @fadeInUp class="border rounded-lg bg-card py-2 pl-4 pr-3 text-secondarymx-auto shadow-8" fxLayout="row"
+    fxLayoutAlign="start center">
+    <ic-icon [icon]="icSearch" fxFlex="none" size="24px"></ic-icon>
+    <input fxFlex="auto" [formControl]="searchCtrl" placeholder="Cari jamaah..." type="text"
+      class="border-0 ml-3  max-w-2xl w-full placeholder:text-secondary subheading-2 outline-none font-medium bg-card">
+  </div>
+</div>
+
+<mat-divider class="-mx-6 text-border"></mat-divider>
+
+<mat-dialog-content fxLayout="column">
+  <h2 class="text-secondary text-xs m-0 text-center" fxFlex="auto" *ngIf="jamaahList?.length > 0">
+    Tambah Pengurus {{ pengurusTable.dapuan?.label }}
+  </h2>
+
+  <div *ngIf="isFetch" class="py-4" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+    <ngx-shimmer-loading [shape]="'circle'" [width]="'50px'" fxFlex="none"></ngx-shimmer-loading>
+    <div fxFlex="auto">
+      <ngx-shimmer-loading [width]="'100%'" [height]="'20px'"></ngx-shimmer-loading>
+      <ngx-shimmer-loading [width]="'100%'" [height]="'10px'"></ngx-shimmer-loading>
+    </div>
+    <ngx-shimmer-loading [shape]="'circle'" [width]="'30px'" fxFlex="none"></ngx-shimmer-loading>
+  </div>
+
+  <div *ngIf="!isFetch" @stagger class="py-4" fxLayout="column" fxLayoutGap="16px">
+    <h2 class="text-secondary text-xs m-0 text-center" fxFlex="auto" *ngIf="jamaahList === undefined">
+      silakan ubah pencarian untuk mencari jamaah!
+    </h2>
+    <h2 class="text-secondary text-xs m-0 text-center" fxFlex="auto" *ngIf="jamaahList?.length == 0">Jamaah tidak
+      ditemukan, silakan ubah pencarian!</h2>
+    <div *ngFor="let item of jamaahList; trackBy: trackByName" fxLayout="row" fxLayoutAlign="start center">
+      <img @scaleIn [src]="item.avatar || '/assets/img/user/default.png'" alt="Profile Picture" class="avatar mr-3"
+        fxFlex="none" />
+      <div @fadeInRight fxFlex="auto">
+        <h4 class="body-2 m-0 leading-snug">{{ item.fullName }}</h4>
+        <h5 class="text-secondary m-0 caption leading-none">{{ item.pembinaEnum + ' - ' + item.lvPembinaanEnum }}</h5>
+      </div>
+      <button (click)="addPengurus(item)" color="primary" mat-icon-button type="button" [loading]="isSubmit[item.id]"
+        matTooltip="Tambah">
+        <mat-icon [icIcon]="icPersonAdd"></mat-icon>
+      </button>
+    </div>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close type="button">CLOSE</button>
+</mat-dialog-actions>

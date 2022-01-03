@@ -11,6 +11,7 @@ export class Jamaah {
     public birthDate?: Date,
     public pembinaEnum?: string,
     public lvPembinaamEnum?: string,
+    public avatar?: string,
     public photos?: Photo,
     public lvPembinaan?: SharedProperty,
     public contacts?: Contact[],

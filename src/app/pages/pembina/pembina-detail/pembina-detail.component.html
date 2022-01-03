@@ -1,0 +1,24 @@
+<vex-page-layout mode="card">
+  <vex-page-layout-header class="h-14 pt-4" fxLayout="column" fxLayoutAlign="center start">
+    <div class="flex items-center" vexContainer>
+      <h2 class="headline text-primary-contrast m-0 flex items-center w-full mr-6">
+        <button @scaleIn mat-icon-button [routerLink]="['/pembina']">
+          <ic-icon [icon]="icArrowBack" height="24px" width="24px"></ic-icon>
+        </button>
+        <span @fadeInRight class="ml-2 block">{{ pembina }}</span>
+      </h2>
+    </div>
+  </vex-page-layout-header>
+  <vex-page-layout-content class="container">
+    <div class="relative bg-white mt-4 rounded-t-sm">
+      <nav class="vex-tabs vex-tabs-dense border-0" mat-tab-nav-bar>
+        <a #rla="routerLinkActive" *ngFor="let link of links" [active]="rla.isActive" [disabled]="link.disabled"
+          [routerLink]="link.route" mat-tab-link queryParamsHandling="preserve"
+          [routerLinkActiveOptions]="link.routerLinkActiveOptions || { exact: false }" routerLinkActive>
+          {{ link.label }}
+        </a>
+      </nav>
+    </div>
+    <router-outlet></router-outlet>
+  </vex-page-layout-content>
+</vex-page-layout>

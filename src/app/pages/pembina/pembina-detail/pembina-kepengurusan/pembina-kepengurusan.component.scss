@@ -1,0 +1,14 @@
+.members {
+  .avatar {
+    border: 2px solid var(--background-card);
+    box-sizing: border-box;
+    height: 36px;
+    margin-right: -8px;
+    margin-top: var(--padding-4);
+    width: 36px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

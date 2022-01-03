@@ -1,0 +1,51 @@
+<div class="mt-4 md:items-start">
+
+  <div class="flex-auto">
+
+    <div class="card">
+      <div class="px-gutter py-4 border-b">
+        <h2 class="title m-0">Statistic A</h2>
+      </div>
+      <div class="px-gutter py-4" gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="16px">
+
+        <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+          <div @scaleIn
+            class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+            <ic-icon [icon]="icWork" size="20px"></ic-icon>
+          </div>
+
+          <div @fadeInRight>
+            <p class="m-0 body-1">XYZ</p>
+            <p class="m-0 caption text-hint">ABC</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card mt-4">
+      <div class="px-gutter py-4 border-b">
+        <h2 class="title m-0">Statistic B</h2>
+      </div>
+      <div class="px-gutter py-4" gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="16px">
+
+        <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+          <div @scaleIn
+            class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+            <!-- <ic-icon *ngIf="item.contactType === 'phone'" [icon]="icPhone" size="20px"></ic-icon> -->
+            <!-- <ic-icon *ngIf="item.contactType === 'email'" [icon]="icMail" size="20px"></ic-icon> -->
+            <ic-icon [icon]="icMail" size="20px"></ic-icon>
+          </div>
+
+          <div @fadeInRight>
+            <p class="m-0 body-1">Email</p>
+            <p class="m-0 caption text-hint">herman.whyd@gmail.com</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

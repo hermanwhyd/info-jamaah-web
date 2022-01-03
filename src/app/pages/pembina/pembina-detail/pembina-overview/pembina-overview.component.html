@@ -1,0 +1,77 @@
+<div class="mt-4 flex flex-col md:flex-row md:items-start">
+
+  <div class="max-w-unset md:max-w-xs mr-6 my-6 md:mt-0 w-full flex-none">
+
+    <div class="card">
+      <div class="px-gutter py-4 border-b">
+        <h2 class="title m-0">Informasi Pembina</h2>
+      </div>
+
+      <div class="px-gutter py-3">
+
+        <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+          <div @scaleIn
+            class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+            <ic-icon [icon]="icNumber" size="20px"></ic-icon>
+          </div>
+
+          <div @fadeInRight>
+            <p class="m-0 body-1">{{ model?.code }}</p>
+            <p class="m-0 caption text-hint">Inisial Pembina</p>
+          </div>
+        </div>
+
+        <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+          <div @scaleIn
+            class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+            <ic-icon [icon]="icNumber" size="20px"></ic-icon>
+          </div>
+
+          <div @fadeInRight>
+            <p class="m-0 body-1">{{ model?.label }}</p>
+            <p class="m-0 caption text-hint">Nama Pembina</p>
+          </div>
+        </div>
+
+        <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+          <div @scaleIn
+            class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+            <ic-icon [icon]="icNumber" size="20px"></ic-icon>
+          </div>
+
+          <div @fadeInRight>
+            <p class="m-0 body-1">{{ model?.jamaahCount || 0 }} jiwa</p>
+            <p class="m-0 caption text-hint">Jumlah Jamaah</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <div class="flex-auto">
+
+    <div class="card">
+      <div class="px-gutter py-4 border-b">
+        <h2 class="title m-0">Informasi Lainnya</h2>
+      </div>
+      <div class="px-gutter py-4" gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="16px">
+
+        <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+          <div @scaleIn
+            class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+            <ic-icon [icon]="icWork" size="20px"></ic-icon>
+          </div>
+
+          <div @fadeInRight>
+            <p class="m-0 body-1">XYZ</p>
+            <p class="m-0 caption text-hint">ABC</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
