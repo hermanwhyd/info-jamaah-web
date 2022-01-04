@@ -10,7 +10,7 @@ import icDelete from '@iconify/icons-ic/twotone-delete';
 import icClose from '@iconify/icons-ic/twotone-close';
 
 import { FormControl } from '@angular/forms';
-import { debounceTime, filter, finalize } from 'rxjs/operators';
+import { debounceTime, finalize } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -29,7 +29,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TableColumn } from 'src/@vex/interfaces/table-column.interface';
 import { MatPaginator } from '@angular/material/paginator';
 import { ConfirmationDialogComponent } from 'src/app/shared/utilities/confirmation-dialog/confirmation-dialog.component';
-import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { PembinaService } from '../../shared/pembina.service';
 import { Kepengurusan } from '../../shared/kepengurusan.interface';
@@ -102,8 +101,7 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
     private pembinaSvc: PembinaService,
     private sharedPropSvc: SharedPropertyService,
     private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
