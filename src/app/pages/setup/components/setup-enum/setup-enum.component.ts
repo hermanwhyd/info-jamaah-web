@@ -32,9 +32,9 @@ import { ConfirmationDialogComponent } from 'src/app/shared/utilities/confirmati
   ]
 })
 export class SetupEnumComponent implements OnInit {
-  @Input() SHAREDPROP_GROUP: string;
-  @Input() SHAREDPROP_DESC: string;
-  @Input() SHAREDPROP_TITLE: string;
+  @Input() GROUP: string;
+  @Input() DESCRIPTION: string;
+  @Input() TITLE: string;
 
   icUp = icUp;
   icDown = icDown;
@@ -61,7 +61,7 @@ export class SetupEnumComponent implements OnInit {
 
   fetchModels() {
     this.isLoading = true;
-    this.sharedPropSvc.findFullByGroup(this.SHAREDPROP_GROUP)
+    this.sharedPropSvc.findFullByGroup(this.GROUP)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe((rs) => {
         this.sharedPropsSubject$.next(rs.data);
@@ -88,7 +88,7 @@ export class SetupEnumComponent implements OnInit {
     this.dialog.open(SetupEnumEditComponent, {
       data: {
         model: model || {} as SharedProperty,
-        group: this.SHAREDPROP_GROUP,
+        group: this.GROUP,
         errors
       },
       width: '500px',

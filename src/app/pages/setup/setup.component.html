@@ -17,32 +17,16 @@
     </div>
 
     <div @stagger class="max-w-6xl w-full" fxLayout="column" fxLayoutGap="24px">
-      <vex-setup-enum @fadeInUp SHAREDPROP_GROUP="ASSET_CATEGORY" SHAREDPROP_TITLE="KATEGORI ASET" SHAREDPROP_DESC="?">
-      </vex-setup-enum>
 
-      <vex-setup-enum @fadeInUp SHAREDPROP_GROUP="ASSET_DETAIL" SHAREDPROP_TITLE="DETAIL ASET" SHAREDPROP_DESC="?">
-      </vex-setup-enum>
+      <section *ngFor="let item of getLinkMenu">
+        <vex-setup-enum *ngIf="item.element === 'setupEnumList'" @fadeInUp [GROUP]="item.data.group"
+          [TITLE]="item.title" [DESCRIPTION]="item.data.description">
+        </vex-setup-enum>
+        <vex-setup-custom-field *ngIf="item.element === 'setupCustomFieldList'" @fadeInUp [GROUP]="item.data.group"
+          [TITLE]="item.title" [DESCRIPTION]="item.data.description">
+        </vex-setup-custom-field>
+      </section>
 
-      <vex-setup-enum @fadeInUp SHAREDPROP_GROUP="ASSET_STATUS" SHAREDPROP_TITLE="STATUS ASET" SHAREDPROP_DESC="?">
-      </vex-setup-enum>
-
-      <vex-setup-enum @fadeInUp SHAREDPROP_GROUP="MAINTENANCE_TYPE" SHAREDPROP_TITLE="TIPE PERAWATAN ASET"
-        SHAREDPROP_DESC="?">
-      </vex-setup-enum>
-
-      <vex-setup-custom-field @fadeInUp CUSTOMFIELD_TITLE="ASSET MODEL" CUSTOMFIELD_GROUP="CUSTOM_FIELD_ASSET"
-        CUSTOMFIELD_DESC="Data-data tambahan untuk model Asset. Data dikelompokan berdasarkan kategori tertentu.">
-      </vex-setup-custom-field>
-
-      <vex-setup-custom-field @fadeInUp CUSTOMFIELD_TITLE="JAMAAH MODEL" CUSTOMFIELD_GROUP="CUSTOM_FIELD_JAMAAH"
-        CUSTOMFIELD_DESC="Data-data tambahan untuk model Jamaah. Data dikelompokan berdasarkan kategori tertentu.">
-      </vex-setup-custom-field>
-
-      <vex-setup-enum @fadeInUp SHAREDPROP_GROUP="DAPUKAN_DS" SHAREDPROP_TITLE="DAPUKAN DESA" SHAREDPROP_DESC="?">
-      </vex-setup-enum>
-
-      <vex-setup-enum @fadeInUp SHAREDPROP_GROUP="DAPUKAN_KLP" SHAREDPROP_TITLE="DAPUKAN KELOMPOK" SHAREDPROP_DESC="?">
-      </vex-setup-enum>
     </div>
   </vex-page-layout-content>
 </vex-page-layout>

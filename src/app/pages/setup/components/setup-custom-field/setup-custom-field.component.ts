@@ -45,9 +45,9 @@ export class SetupCustomFieldComponent implements OnInit {
   icTrash = icTrash;
   icPlus = icPlus;
 
-  @Input() CUSTOMFIELD_GROUP: string;
-  @Input() CUSTOMFIELD_DESC: string;
-  @Input() CUSTOMFIELD_TITLE: string;
+  @Input() GROUP: string;
+  @Input() DESCRIPTION: string;
+  @Input() TITLE: string;
 
   groupEnumSubject = new BehaviorSubject<SharedProperty[]>([]);
 
@@ -71,7 +71,7 @@ export class SetupCustomFieldComponent implements OnInit {
 
   fetchGroupEnum() {
     this.isLoading = true;
-    this.sharedPropSvc.findFullByGroup(this.CUSTOMFIELD_GROUP, 'customFields')
+    this.sharedPropSvc.findFullByGroup(this.GROUP, 'customFields')
       .pipe(finalize(() => this.isLoading = false))
       .subscribe((rs) => {
         this.groupEnumSubject.next(rs.data);
@@ -98,7 +98,7 @@ export class SetupCustomFieldComponent implements OnInit {
     this.dialog.open(SetupEnumEditComponent, {
       data: {
         model: model || {} as SharedProperty,
-        group: this.CUSTOMFIELD_GROUP,
+        group: this.GROUP,
         errors
       },
       width: '500px',

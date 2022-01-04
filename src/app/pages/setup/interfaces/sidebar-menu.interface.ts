@@ -1,6 +1,7 @@
 export interface SidebarMenu {
   type: string;
-  element: string;
   title: string;
   active: boolean;
+  element?: string;
+  data?: any;
 }

@@ -2,7 +2,7 @@
 
   <div class="p-6" fxFlex="60%">
     <div class="mt-0 mb-4" fxLayout="row" fxLayoutAlign="start center">
-      <h2 class="title" fxFlex="auto">{{ SHAREDPROP_TITLE }}</h2>
+      <h2 class="title uppercase" fxFlex="auto">{{ TITLE }}</h2>
       <button (click)="createOrUpdateModel()" matTooltip="Tambah" matTooltipPosition="above"
         class="cursor-pointer text-primary" mat-icon-button type="button" [loading]="isLoading">
         <mat-icon [icIcon]="icAdd"></mat-icon>
@@ -40,7 +40,7 @@
     <div class="p-6">
       <h2 class="title mt-0 mb-4">DESKRIPSI</h2>
       <p class="text-secondary">
-        {{ SHAREDPROP_DESC }}
+        {{ DESCRIPTION }}
       </p>
     </div>
   </div>
