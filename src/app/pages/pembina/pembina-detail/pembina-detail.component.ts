@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import icArrowBack from '@iconify/icons-ic/arrow-back';
 
@@ -28,7 +28,8 @@ export class PembinaDetailComponent implements OnInit {
   links: Link[] = [
     {
       label: 'Overview',
-      route: './overview'
+      route: './',
+      routerLinkActiveOptions: { exact: true }
     },
     {
       label: 'Statistik',
@@ -42,7 +43,6 @@ export class PembinaDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
   ) { }
 
   ngOnInit(): void {

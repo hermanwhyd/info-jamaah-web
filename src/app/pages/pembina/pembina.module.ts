@@ -37,10 +37,6 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'overview'
-      },
-      {
-        path: 'overview',
         component: PembinaOverviewComponent
       },
       {

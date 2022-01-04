@@ -45,25 +45,25 @@ export class AssetDetailComponent implements OnInit {
 
   links: Link[] = [
     {
-      label: 'Details',
+      label: 'Detail',
       route: './',
       routerLinkActiveOptions: { exact: true }
     },
     {
-      label: 'Maintenances',
+      label: 'Perawatan',
       route: './maintenances',
     },
     {
-      label: 'Audits',
+      label: 'Audit',
       route: './audits',
     },
     {
-      label: 'Files',
+      label: 'Berkas',
       route: './files',
     },
     {
-      label: 'Notifications',
-      route: './notifications',
+      label: 'Pengingat',
+      route: './notifier',
     }
   ];
 
@@ -101,7 +101,7 @@ export class AssetDetailComponent implements OnInit {
     this.componentReference = componentReference;
 
     // Below will subscribe to the searchItem emitter
-    componentReference.fireUploadFileDialog?.subscribe((data: any) => {
+    componentReference.fireUploadFileDialog?.subscribe(() => {
       this.uploadFile();
     });
   }

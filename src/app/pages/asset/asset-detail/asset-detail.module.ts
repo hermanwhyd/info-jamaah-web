@@ -37,7 +37,7 @@ const routes: Routes = [
         loadChildren: () => import('./asset-file/asset-file.module').then(m => m.AssetFileModule)
       },
       {
-        path: 'notifications',
+        path: 'notifier',
         loadChildren: () => import('./asset-notification/asset-notification.module').then(m => m.AssetNotificationModule)
       }
     ]
