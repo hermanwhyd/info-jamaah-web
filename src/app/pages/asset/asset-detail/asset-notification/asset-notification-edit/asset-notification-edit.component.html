@@ -95,12 +95,11 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Penerima</ng-template>
-    <div @stagger class="p-4" gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="24px">
+    <div @stagger class="p-4" gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="20px">
       <div *ngFor="let item of subscriptions; let i = index" fxLayout="row" fxLayoutAlign="start center">
         <!-- <img @scaleIn [src]="friend.imageSrc" alt="Profile Picture" class="avatar ltr:mr-3 rtl:ml-3" fxFlex="none"/> -->
         <div @fadeInRight fxFlex="auto">
           <h4 class="body-2 m-0 leading-snug">{{ item.subscriber.label }}</h4>
-          <h5 class="text-secondary m-0 caption leading-none">{{ item.subscriber.enumablesCount || 0 }} penerima</h5>
         </div>
         <button (click)="subscribe(i, item)" *ngIf="!item.id" color="primary" mat-icon-button type="button"
           matTooltip="Klik Untuk Aktifkan" matTooltipPosition="above" [loading]="isSubsLoading[i]">
