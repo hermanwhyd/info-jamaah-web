@@ -82,7 +82,7 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
   );
 
   lvPembina: string;
-  pembinaInitial: string;
+  pembinaEnum: string;
 
   pageSize = 10;
   pageSizeOptions: number[] = [10, 25, 50, 100];
@@ -93,7 +93,7 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
 
   columns: TableColumn<PengurusTable>[] = [
     { label: 'DAPUAN', property: 'dapuan.label', type: 'text', visible: true, cssClasses: ['font-medium', 'border-b-0', 'w-1/3'] },
-    { label: 'PENGURUS', property: 'pengurus[*].jamaah', type: 'image', visible: true, cssClasses: ['text-right', 'text-secondary', 'border-b-0'] }
+    { label: 'DAPUAN', property: 'pengurus[*].jamaah', type: 'image', visible: true, cssClasses: ['text-right', 'text-secondary', 'border-b-0'] }
   ];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -127,7 +127,7 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
       .pipe(untilDestroyed(this))
       .subscribe(params => {
         this.lvPembina = params.get('level');
-        this.pembinaInitial = params.get('pembina');
+        this.pembinaEnum = params.get('pembina');
         this.fetchDapuan();
         this.fetchPengurus();
       });
@@ -138,7 +138,7 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
       .subscribe(([dapuan, kepengurusan]) => {
         const table: PengurusTable[] = [];
         const grouped = _.groupBy(kepengurusan, (v: any) => {
-          return v.pengurus?.code;
+          return v.dapuan?.code;
         });
 
         dapuan?.forEach((dp: any) => {
@@ -155,7 +155,7 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
   }
 
   private fetchDapuan() {
-    this.sharedPropSvc.findByGroup(`PENGURUS_${this.lvPembina}`)
+    this.sharedPropSvc.findByGroup(`DAPUAN_${this.lvPembina}`)
       .subscribe(data => {
         this.dapuanSubject.next(data.data);
       });
@@ -163,7 +163,7 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
 
   fetchPengurus() {
     this.loadingSubject.next(true);
-    this.pembinaSvc.getKepengurusan(this.pembinaInitial, 'jamaah,pengurus,pembina')
+    this.pembinaSvc.getKepengurusan(this.pembinaEnum, 'jamaah,dapuan,pembina')
       .pipe(finalize(() => this.loadingSubject.next(false)))
       .subscribe(data => {
         this.kepengurusanSubject.next(data.data);
@@ -174,7 +174,7 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
     this.dialog.open(AddPengurusDialogComponent, {
       data: {
         pengurusTable,
-        pembinaInitial: this.pembinaInitial
+        pembinaEnum: this.pembinaEnum
       }
     });
   }
@@ -182,7 +182,7 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
   onDeleteKepengurusan(model: Kepengurusan) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        message: `Apakah Anda ingin menghapus <strong>${model.jamaah.fullName}</strong> dari kepengurusan <strong>${model.pengurus.label}</strong>?`,
+        message: `Apakah Anda ingin menghapus <strong>${model.jamaah.fullName}</strong> dari dapuan <strong>${model.dapuan.label}</strong>?`,
         buttonText: {
           ok: 'Ya',
           cancel: 'Batal'
@@ -192,7 +192,7 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.pembinaSvc.removePengurus(this.pembinaInitial, model.id)
+        this.pembinaSvc.removePengurus(this.pembinaEnum, model.id)
           .subscribe(() => {
             const models = this.kepengurusanSubject.getValue();
             _.remove(models, { id: model.id });

@@ -43,14 +43,14 @@ export class PembinaService {
     if (include !== undefined) { params = params.append('include', include); }
     if (lvPembinaanList !== undefined) { params = params.append('lv_pembinaan', lvPembinaanList); }
     if (search !== undefined) { params = params.append('filter[full_name]', search); }
-    if (pengurusEnum !== undefined) { params = params.append('pengurus_enum', pengurusEnum); }
+    if (pengurusEnum !== undefined) { params = params.append('dapuan_enum', pengurusEnum); }
 
     return this.httpClient.get<GenericRs<Jamaah[]>>([URL, pembinaEnum, 'kepengurusan', 'candidate'].join('/'), { params });
   }
 
-  addPengurus(pembinaEnum: string, pengurusEnum: string, jamaahId: number) {
+  addPengurus(pembinaEnum: string, dapuanEnum: string, jamaahId: number) {
     return this.httpClient.post<GenericRs<Kepengurusan>>([URL, pembinaEnum, 'kepengurusan'].join('/'), {
-      pengurusEnum,
+      dapuanEnum,
       pembinaEnum,
       jamaahId
     });

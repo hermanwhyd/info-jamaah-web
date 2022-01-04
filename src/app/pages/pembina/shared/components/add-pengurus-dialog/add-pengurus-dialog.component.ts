@@ -35,7 +35,7 @@ export class AddPengurusDialogComponent implements OnInit {
   jamaahList: Jamaah[];
 
   lvPembinaan: string;
-  pembinaInitial: string;
+  pembinaEnum: string;
   pengurusTable: PengurusTable;
 
   searchCtrl = new FormControl();
@@ -48,7 +48,7 @@ export class AddPengurusDialogComponent implements OnInit {
     private pembinaSvc: PembinaService
   ) {
     this.lvPembinaan = data.lvPembina;
-    this.pembinaInitial = data.pembinaInitial;
+    this.pembinaEnum = data.pembinaEnum;
     this.pengurusTable = data.pengurusTable;
   }
 
@@ -57,7 +57,7 @@ export class AddPengurusDialogComponent implements OnInit {
       .pipe(tap(() => { this.jamaahList = []; }), filter<string>(Boolean))
       .subscribe(kw => {
         this.isFetch = true;
-        this.pembinaSvc.getPengurusCandidate(this.pembinaInitial, kw, ['UBPK', 'UIBU'], this.pengurusTable.dapuan.code)
+        this.pembinaSvc.getPengurusCandidate(this.pembinaEnum, kw, ['UBPK', 'UIBU'], this.pengurusTable.dapuan.code)
           .pipe(finalize(() => this.isFetch = false))
           .subscribe(data => {
             this.jamaahList = data.data;
@@ -72,7 +72,7 @@ export class AddPengurusDialogComponent implements OnInit {
   addPengurus(model: Jamaah) {
     this.isSubmit[model.id] = true;
 
-    this.pembinaSvc.addPengurus(this.pembinaInitial, this.pengurusTable.dapuan.code, model.id)
+    this.pembinaSvc.addPengurus(this.pembinaEnum, this.pengurusTable.dapuan.code, model.id)
       .subscribe(data => {
         const idx = this.jamaahList.indexOf(model);
         this.jamaahList.splice(idx, 1);

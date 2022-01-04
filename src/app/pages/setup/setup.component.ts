@@ -29,7 +29,7 @@ export class SetupComponent implements OnInit {
     { type: 'subheader', title: 'CUSTOM FIELD', element: '', active: false },
     { type: 'link', element: 'setupCustomFieldList', title: 'Asset Model', active: false },
     { type: 'link', element: 'setupCustomFieldList', title: 'Jamaah Model', active: false },
-    { type: 'subheader', title: 'PENGURUS', element: '', active: false },
+    { type: 'subheader', title: 'DAPUAN', element: '', active: false },
     { type: 'link', element: 'setupEnumList', title: 'Pengurus Desa', active: false },
     { type: 'link', element: 'setupEnumList', title: 'Pengurus Kelompok', active: false }
   ];
