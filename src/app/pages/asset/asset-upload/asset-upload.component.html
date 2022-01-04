@@ -5,13 +5,11 @@
   </button>
 </div>
 <mat-divider class="-mx-6 text-border"></mat-divider>
-<mat-dialog-content fxLayout="column">
-  <ngx-awesome-uploader #uploader [adapter]="adapter" [uploadType]="'multi'"
-    (validationError)="onValidationError($event)" [fileExtensions]="fileExtensions" [enableCropper]="false"
-    (uploadSuccess)="onUploadSuccess($event)" (removeSuccess)="onRemoveSuccess($event)"
-    (fileAdded)="onFileAdded($event)" [captions]="captions">
-  </ngx-awesome-uploader>
-</mat-dialog-content>
+<ngx-awesome-uploader class="mt-4" #uploader [adapter]="adapter" [uploadType]="'multi'"
+  (validationError)="onValidationError($event)" [fileExtensions]="fileExtensions" [enableCropper]="false"
+  (uploadSuccess)="onUploadSuccess($event)" (removeSuccess)="onRemoveSuccess($event)" (fileAdded)="onFileAdded($event)"
+  [captions]="captions">
+</ngx-awesome-uploader>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close type="button">CLOSE</button>
 </mat-dialog-actions>
