@@ -73,8 +73,8 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
   kepengurusanSubject = new BehaviorSubject<Kepengurusan[]>(null);
   kepengurusan$ = this.kepengurusanSubject.asObservable();
 
-  dapuanSubject = new BehaviorSubject<SharedProperty[]>(null);
-  dapuan$ = this.dapuanSubject.asObservable();
+  dapukanSubject = new BehaviorSubject<SharedProperty[]>(null);
+  dapukan$ = this.dapukanSubject.asObservable();
 
   searchCtrl = new FormControl();
   searchStr$ = this.searchCtrl.valueChanges.pipe(
@@ -92,8 +92,8 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
   expandedRow: Kepengurusan | null;
 
   columns: TableColumn<PengurusTable>[] = [
-    { label: 'DAPUAN', property: 'dapuan.label', type: 'text', visible: true, cssClasses: ['font-medium', 'border-b-0', 'w-1/3'] },
-    { label: 'DAPUAN', property: 'pengurus[*].jamaah', type: 'image', visible: true, cssClasses: ['text-right', 'text-secondary', 'border-b-0'] }
+    { label: 'DAPUKAN', property: 'dapukan.label', type: 'text', visible: true, cssClasses: ['font-medium', 'border-b-0', 'w-1/3'] },
+    { label: 'DAPUKAN', property: 'pengurus[*].jamaah', type: 'image', visible: true, cssClasses: ['text-right', 'text-secondary', 'border-b-0'] }
   ];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -128,23 +128,23 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
       .subscribe(params => {
         this.lvPembina = params.get('level');
         this.pembinaEnum = params.get('pembina');
-        this.fetchDapuan();
+        this.fetchDapukan();
         this.fetchPengurus();
       });
   }
 
   private registerDs() {
-    combineLatest([this.dapuan$, this.kepengurusan$])
-      .subscribe(([dapuan, kepengurusan]) => {
+    combineLatest([this.dapukan$, this.kepengurusan$])
+      .subscribe(([dapukan, kepengurusan]) => {
         const table: PengurusTable[] = [];
         const grouped = _.groupBy(kepengurusan, (v: any) => {
-          return v.dapuan?.code;
+          return v.dapukan?.code;
         });
 
-        dapuan?.forEach((dp: any) => {
+        dapukan?.forEach((dp: any) => {
           table.push(
             {
-              dapuan: dp,
+              dapukan: dp,
               pengurus: grouped[`${dp.code}`]
             }
           );
@@ -154,16 +154,16 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
       });
   }
 
-  private fetchDapuan() {
-    this.sharedPropSvc.findByGroup(`DAPUAN_${this.lvPembina}`)
+  private fetchDapukan() {
+    this.sharedPropSvc.findByGroup(`DAPUKAN_${this.lvPembina}`)
       .subscribe(data => {
-        this.dapuanSubject.next(data.data);
+        this.dapukanSubject.next(data.data);
       });
   }
 
   fetchPengurus() {
     this.loadingSubject.next(true);
-    this.pembinaSvc.getKepengurusan(this.pembinaEnum, 'jamaah,dapuan,pembina')
+    this.pembinaSvc.getKepengurusan(this.pembinaEnum, 'jamaah,dapukan,pembina')
       .pipe(finalize(() => this.loadingSubject.next(false)))
       .subscribe(data => {
         this.kepengurusanSubject.next(data.data);
@@ -182,7 +182,7 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
   onDeleteKepengurusan(model: Kepengurusan) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        message: `Apakah Anda ingin menghapus <strong>${model.jamaah.fullName}</strong> dari dapuan <strong>${model.dapuan.label}</strong>?`,
+        message: `Apakah Anda ingin menghapus <strong>${model.jamaah.fullName}</strong> dari dapukan <strong>${model.dapukan.label}</strong>?`,
         buttonText: {
           ok: 'Ya',
           cancel: 'Batal'

@@ -6,5 +6,5 @@ export interface Kepengurusan {
   id?: number;
   jamaah?: Jamaah;
   pembina?: Pembina;
-  dapuan?: SharedProperty;
+  dapukan?: SharedProperty;
 }

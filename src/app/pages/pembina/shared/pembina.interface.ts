@@ -7,6 +7,6 @@ export interface Pembina extends SharedProperty {
 }
 
 export interface PengurusTable {
-  dapuan: SharedProperty;
+  dapukan: SharedProperty;
   pengurus?: Kepengurusan[];
 }
