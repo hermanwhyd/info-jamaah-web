@@ -64,24 +64,44 @@
       </div>
     </section>
 
-    <section gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="16px" gdAuto="row dense">
-      <div class="card" *ngFor="let detail of jamaahDetails">
-        <div class="px-gutter py-4 border-b">
-          <h2 class="title m-0">{{ detail.label }}</h2>
-        </div>
-        <div class="px-gutter py-4">
-          <table class="text-left w-full table-collapse">
-            <tbody>
-              <tr [ngClass]="{'border-t': !first, 'border-b': !last}" class="py-1"
-                *ngFor="let item of detail.customFields; let first = first; let last = last">
-                <td class="caption font-semibold w-1/2">{{ item.fieldName }}</td>
-                <td class="caption">{{ item.value?.value }}</td>
-              </tr>
-            </tbody>
-          </table>
+    <div class="flex flex-col sm:flex-row">
+      <div class="flex-1">
+        <div class="card" *ngFor="let detail of jamaahDetailOdds; first as isFirst" [ngClass]="{'mt-4': !isFirst}">
+          <div class="px-gutter py-4 border-b">
+            <h2 class="title m-0">{{ detail.label }}</h2>
+          </div>
+          <div class="px-gutter py-4">
+            <table class="text-left w-full table-collapse">
+              <tbody>
+                <tr [ngClass]="{'border-t': !first, 'border-b': !last}" class="py-1"
+                  *ngFor="let item of detail.customFields; let first = first; let last = last">
+                  <td class="caption font-semibold w-1/2">{{ item.fieldName }}</td>
+                  <td class="caption">{{ item.value?.value }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </section>
+      <div class="flex-1 sm:ml-4 mt-4 sm:mt-0">
+        <div class="card" *ngFor="let detail of jamaahDetailEvens; first as isFirst" [ngClass]="{'mt-4': !isFirst}">
+          <div class="px-gutter py-4 border-b">
+            <h2 class="title m-0">{{ detail.label }}</h2>
+          </div>
+          <div class="px-gutter py-4">
+            <table class="text-left w-full table-collapse">
+              <tbody>
+                <tr [ngClass]="{'border-t': !first, 'border-b': !last}" class="py-1"
+                  *ngFor="let item of detail.customFields; let first = first; let last = last">
+                  <td class="caption font-semibold w-1/2">{{ item.fieldName }}</td>
+                  <td class="caption">{{ item.value?.value }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div *ngIf="model?.contacts" class="card mt-4">
       <div class="px-gutter py-4 border-b">

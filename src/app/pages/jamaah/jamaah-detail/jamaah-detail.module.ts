@@ -18,6 +18,10 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('./jamaah-profile/jamaah-profile.module').then(m => m.JamaahProfileModule)
+      },
+      {
+        path: 'dapuan',
+        loadChildren: () => import('./jamaah-dapuan/jamaah-dapuan.module').then(m => m.JamaahDapuanModule)
       }
     ]
   }

@@ -85,4 +85,12 @@ export class JamaahProfileComponent implements OnInit {
           });
       });
   }
+
+  get jamaahDetailOdds() {
+    return this.jamaahDetails.filter((e, i) => ++i % 2 !== 0);
+  }
+
+  get jamaahDetailEvens() {
+    return this.jamaahDetails.filter((e, i) => ++i % 2 === 0);
+  }
 }
