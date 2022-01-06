@@ -29,7 +29,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Album Koleksi</mat-label>
       <mat-select formControlName="collectionName">
-        <option [ngValue]="null" disabled>Pilih album koleksi</option>
+        <mat-option [value]="null" disabled>Pilih album koleksi</mat-option>
         <mat-option *ngFor="let item of collectionTypes" [value]="item.code">{{ item.label }}</mat-option>
       </mat-select>
       <mat-error

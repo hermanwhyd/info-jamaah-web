@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -27,6 +27,7 @@ import { stagger40ms } from 'src/@vex/animations/stagger.animation';
 import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
 import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'vex-asset-notification-edit',
@@ -69,13 +70,15 @@ export class AssetNotificationEditComponent implements OnInit {
 
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
+  @ViewChild('stepper') private myStepper: MatStepper;
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private sharedPropSvc: SharedPropertyService,
     private assetSvc: AssetService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<AssetNotificationEditComponent>,) { }
+    private dialogRef: MatDialogRef<AssetNotificationEditComponent>
+  ) { }
 
   ngOnInit(): void {
     this.initModel();
@@ -138,11 +141,17 @@ export class AssetNotificationEditComponent implements OnInit {
     this.assetSvc.saveOrUpdateNotifier(form, this.assetId)
       .pipe(finalize(() => this.submitted = true))
       .subscribe(rs => {
-        this.isNew = false;
         this.model = { ...form, id: rs.data.id, subscriptions: this.subscriptionUpdated };
         this.formControl.id.setValue(rs.data.id);
         this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: 'Data berhasil disimpan', type: 'success' } });
         this.reset();
+
+        // Go to next step if it is a new
+        if (this.isNew) {
+          this.myStepper.next();
+        } else {
+          this.isNew = false;
+        }
       });
   }
 

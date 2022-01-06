@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ApiConfig } from 'src/app/core/common/api.config';
 import { Observable } from 'rxjs';
 import { Jamaah } from '../interfaces/jamaah.model';
 import * as _ from 'lodash';
 import { GenericRs } from 'src/app/shared/types/generic-rs.model';
 import { AdditionalField } from 'src/app/shared/types/additional-field.interface';
+import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -43,4 +44,14 @@ export class JamaahService {
     return this.httpClient.post([this.URL, id, 'detail'].join('/'), value) as Observable<GenericRs<AdditionalField>>;
   }
 
+  public getDetail(id: number | string, options?: {
+    headers?: HttpHeaders | {
+      [header: string]: string | string[];
+    };
+    params?: HttpParams | {
+      [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
+    };
+  }) {
+    return this.httpClient.get([this.URL, id, 'detail'].join('/'), options) as Observable<GenericRs<SharedProperty[]>>;
+  }
 }

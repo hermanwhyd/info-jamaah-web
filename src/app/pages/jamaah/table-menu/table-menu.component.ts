@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { fadeInRight400ms } from '../../../../@vex/animations/fade-in-right.animation';
 import icPersonAdd from '@iconify/icons-ic/twotone-person-add';
 import { stagger40ms } from '../../../../@vex/animations/stagger.animation';
-import { TableMenu } from '../interfaces/table-menu.inteface';
+import { TableMenu } from '../shared/interfaces/table-menu.inteface';
 import * as _ from 'lodash';
 
 @Component({
@@ -22,7 +22,7 @@ export class TableMenuComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   setFilter(category: TableMenu['id']) {
     if (this.activeCategory === category) { return; }

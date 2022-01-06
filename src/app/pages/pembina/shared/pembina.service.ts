@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GenericRs } from 'src/app/shared/types/generic-rs.model';
 import { environment } from 'src/environments/environment';
-import { Jamaah } from '../../jamaah/interfaces/jamaah.model';
+import { Jamaah } from '../../jamaah/shared/interfaces/jamaah.model';
 import { Kepengurusan } from './kepengurusan.interface';
 import { Pembina } from './pembina.interface';
 

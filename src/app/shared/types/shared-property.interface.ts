@@ -1,5 +1,5 @@
 import { Kepengurusan } from 'src/app/pages/pembina/shared/kepengurusan.interface';
-import { Jamaah } from '../../pages/jamaah/interfaces/jamaah.model';
+import { Jamaah } from '../../pages/jamaah/shared/interfaces/jamaah.model';
 import { CustomField } from './custom-field.model';
 import { Variable } from './variable.model';
 

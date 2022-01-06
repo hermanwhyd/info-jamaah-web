@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Jamaah } from '../interfaces/jamaah.model';
+import { Jamaah } from '../shared/interfaces/jamaah.model';
 
 import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 import icClose from '@iconify/icons-ic/twotone-close';
@@ -18,7 +18,7 @@ export class JamaahEditComponent implements OnInit {
 
   roleList: string[] = ['ADMIN', 'PEGAWAI'];
 
-  fpassword = {placeholder: '', floatLabel: 'auto'};
+  fpassword = { placeholder: '', floatLabel: 'auto' };
   form = this.fb.group({
     id: null,
     nip: ['', [Validators.required, Validators.pattern('^[0-9]{18}$')]],
@@ -36,8 +36,8 @@ export class JamaahEditComponent implements OnInit {
   icDelete = icDelete;
 
   constructor(@Inject(MAT_DIALOG_DATA) private _jamaah: Jamaah,
-              private dialogRef: MatDialogRef<JamaahEditComponent>,
-              private fb: FormBuilder) { }
+    private dialogRef: MatDialogRef<JamaahEditComponent>,
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.jamaah = this._jamaah;
@@ -45,7 +45,7 @@ export class JamaahEditComponent implements OnInit {
       this.isNew = false;
       this.form.patchValue(this.jamaah);
       this.form.get('password').setValidators([]);
-      this.fpassword = {placeholder: '(tidak diubah)', floatLabel: 'always'};
+      this.fpassword = { placeholder: '(tidak diubah)', floatLabel: 'always' };
     }
   }
 

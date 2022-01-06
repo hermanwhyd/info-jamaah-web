@@ -47,6 +47,10 @@
 </vex-page-layout>
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
   <ng-template matMenuContent>
+    <button mat-menu-item (click)="copyModel()">
+      <mat-icon [icIcon]="icCopy"></mat-icon>
+      <span class="text-xs">COPY</span>
+    </button>
     <button mat-menu-item [routerLink]="['../', 'form', model?.id]">
       <mat-icon [icIcon]="icEdit"></mat-icon>
       <span class="text-xs">EDIT</span>

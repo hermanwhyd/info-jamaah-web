@@ -17,7 +17,7 @@
     <mat-icon [icIcon]="icDoneAll"></mat-icon>
   </ng-template>
 
-  <mat-step [stepControl]="form">
+  <mat-step [stepControl]="form" #stepper>
     <mat-dialog-content>
       <form [formGroup]="form">
         <ng-template matStepLabel>Reminder</ng-template>
@@ -95,9 +95,9 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Penerima</ng-template>
+    <h4 class="text-center text-xs text-secondary">Tambahkan pengurus yang akan menerima reminder:</h4>
     <div @stagger class="p-4" gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="20px">
       <div *ngFor="let item of subscriptions; let i = index" fxLayout="row" fxLayoutAlign="start center">
-        <!-- <img @scaleIn [src]="friend.imageSrc" alt="Profile Picture" class="avatar ltr:mr-3 rtl:ml-3" fxFlex="none"/> -->
         <div @fadeInRight fxFlex="auto">
           <h4 class="body-2 m-0 leading-snug">{{ item.subscriber.label }}</h4>
         </div>

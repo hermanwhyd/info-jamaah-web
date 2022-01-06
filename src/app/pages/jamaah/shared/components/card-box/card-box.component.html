@@ -1,0 +1,21 @@
+<div *ngIf="!loading" class="py-3" fxLayout="row" fxLayoutAlign="start center">
+  <div @scaleIn class="w-10 h-10 rounded-full bg-primary-light text-primary mr-3 flex items-center justify-center">
+    <ic-icon [icon]="icon" size="20px"></ic-icon>
+  </div>
+
+  <div @fadeInRight>
+    <p class="m-0 body-1">{{ value }}</p>
+    <p class="m-0 caption text-hint">{{ label }}</p>
+  </div>
+</div>
+
+<div *ngIf="loading" class="py-3" fxLayout="row" fxLayoutAlign="start center">
+  <div @scaleIn class="w-10 h-10 rounded-full bg-primary-light text-primary mr-3 flex items-center justify-center">
+    <ngx-shimmer-loading shape="circle" width="40px"></ngx-shimmer-loading>
+  </div>
+
+  <div @fadeInRight class="w-full" fxFlex="auto">
+    <ngx-shimmer-loading width="100%" height="15px"></ngx-shimmer-loading>
+    <ngx-shimmer-loading width="100%" height="10px"></ngx-shimmer-loading>
+  </div>
+</div>

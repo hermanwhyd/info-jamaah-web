@@ -26,7 +26,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Status Asset Terakhir</mat-label>
       <mat-select formControlName="assetStatusEnum">
-        <option [ngValue]="null" disabled>Pilih status asset terakhir</option>
+        <mat-option disabled>Pilih status asset terakhir</mat-option>
         <mat-option *ngFor="let item of statuses" [value]="item.code">{{ item.label }}</mat-option>
       </mat-select>
       <mat-error
@@ -38,7 +38,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Lokasi Terakhir</mat-label>
       <mat-select formControlName="locationId">
-        <option [ngValue]="null" disabled>Lokasi terakhir</option>
+        <mat-option disabled>Lokasi terakhir</mat-option>
         <mat-option *ngFor="let item of locations" [value]="item.id">{{ item.label }}</mat-option>
       </mat-select>
       <mat-error *ngIf="(formControl.locationId.touched || submitted) && formControl.locationId.errors?.required">

@@ -36,7 +36,7 @@
         <mat-form-field class="w-full" *ngSwitchCase="'dropdown'" appearance="outline">
           <mat-label>{{ model.fieldName }}</mat-label>
           <mat-select [formControl]="formCtrl">
-            <option [ngValue]="null" disabled>Pilih salah satu</option>
+            <mat-option disabled>Pilih salah satu</mat-option>
             <mat-option *ngFor="let item of dropdownOptions" [value]="item">{{ item }}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -44,7 +44,7 @@
         <mat-form-field class="w-full" *ngSwitchCase="'shared-property'" appearance="outline">
           <mat-label>{{ model.fieldName }}</mat-label>
           <mat-select [formControl]="formCtrl">
-            <option [ngValue]="null" disabled>Pilih salah satu</option>
+            <mat-option disabled>Pilih salah satu</mat-option>
             <mat-option *ngFor="let item of dropdownOptions" [value]="item.code">{{ item.label }}</mat-option>
           </mat-select>
         </mat-form-field>

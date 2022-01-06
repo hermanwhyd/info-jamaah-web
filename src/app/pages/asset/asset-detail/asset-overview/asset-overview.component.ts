@@ -27,7 +27,6 @@ import { finalize } from 'rxjs/operators';
 import { scaleFadeIn400ms } from 'src/@vex/animations/scale-fade-in.animation';
 import _ from 'lodash';
 import { Gallery, GalleryItem } from 'ng-gallery';
-import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
 import { forkJoin } from 'rxjs';
 
 @UntilDestroy()
@@ -94,7 +93,7 @@ export class AssetOverviewComponent implements OnInit {
 
     this.isLoading = true;
     const callModel = this.assetSvc.getById(id, 'pembina,location,status,photos');
-    const callDetail = this.assetSvc.getDetail(id);
+    const callDetail = this.assetSvc.getDetail(id, { params: { mode: 'view' } });
     const multiCall = forkJoin([callModel, callDetail]);
     multiCall.pipe(finalize(() => this.isLoading = false)).subscribe(rs => {
       this.model = rs[0].data;

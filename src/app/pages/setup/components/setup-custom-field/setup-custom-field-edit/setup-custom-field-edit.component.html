@@ -21,7 +21,7 @@
     <mat-form-field>
       <mat-label>Field Type</mat-label>
       <mat-select formControlName="fieldType" required>
-        <option [ngValue]="null" disabled>Pilih tipe perawatan</option>
+        <mat-option disabled>Pilih tipe perawatan</mat-option>
         <mat-option *ngFor="let item of fieldTypes" [value]="item">{{ item }}</mat-option>
       </mat-select>
       <mat-error *ngIf="(formControl.fieldType.touched || submitted) && formControl.fieldType.errors?.required">

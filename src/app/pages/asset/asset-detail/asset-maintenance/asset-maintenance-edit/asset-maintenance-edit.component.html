@@ -21,7 +21,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Tipe Perawatan</mat-label>
       <mat-select formControlName="typeEnum">
-        <option [ngValue]="null" disabled>Pilih tipe perawatan</option>
+        <mat-option disabled>Pilih tipe perawatan</mat-option>
         <mat-option *ngFor="let item of types" [value]="item.code">{{ item.label }}</mat-option>
       </mat-select>
       <mat-error *ngIf="(formControl.typeEnum.touched || submitted) && formControl.typeEnum.errors?.required">
@@ -64,7 +64,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Penyedia Jasa</mat-label>
       <mat-select formControlName="supplierId">
-        <option [ngValue]="null" disabled>Pilih penyedia jasa</option>
+        <mat-option disabled>Pilih penyedia jasa</mat-option>
         <mat-option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.title }}</mat-option>
       </mat-select>
       <mat-error *ngIf="(formControl.supplierId.touched || submitted) && formControl.supplierId.errors?.required">

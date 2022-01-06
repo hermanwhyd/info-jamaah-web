@@ -20,7 +20,7 @@ import icHome from '@iconify/icons-ic/baseline-home';
 import icMap from '@iconify/icons-ic/baseline-map';
 import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { JamaahService } from 'src/app/pages/jamaah/service/jamaah.service';
+import { JamaahService } from 'src/app/pages/jamaah/shared/services/jamaah.service';
 import { Pembina } from '../../shared/pembina.interface';
 import { PembinaService } from '../../shared/pembina.service';
 

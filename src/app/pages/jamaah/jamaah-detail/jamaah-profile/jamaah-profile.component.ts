@@ -21,8 +21,11 @@ import icMap from '@iconify/icons-ic/baseline-map';
 
 import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Jamaah } from '../../interfaces/jamaah.model';
-import { JamaahService } from '../../service/jamaah.service';
+import { Jamaah } from '../../shared/interfaces/jamaah.model';
+import { JamaahService } from '../../shared/services/jamaah.service';
+import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
+import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @UntilDestroy()
 @Component({
@@ -54,6 +57,9 @@ export class JamaahProfileComponent implements OnInit {
   icMap = icMap;
 
   model: Jamaah;
+  jamaahDetails: SharedProperty[];
+
+  isLoading = true;
 
   constructor(private route: ActivatedRoute, private jamaahSvc: JamaahService) { }
 
@@ -65,10 +71,18 @@ export class JamaahProfileComponent implements OnInit {
     this.route.paramMap
       .pipe(untilDestroyed(this))
       .subscribe(params => {
+        this.isLoading = true;
+        this.jamaahDetails = [];
+        this.model = null;
         const id = params.get('id');
-        this.jamaahSvc.getById(id, 'contacts,details,families.residance.type,families.residance.address,families.members.relationship,families.members.jamaah').subscribe(g => {
-          this.model = g.data;
-        });
+        forkJoin([
+          this.jamaahSvc.getDetail(id, { params: { mode: 'view' } }),
+          this.jamaahSvc.getById(id, 'contacts,families.residance.type,families.residance.address,families.members.relationship,families.members.jamaah')
+        ])
+          .pipe(finalize(() => this.isLoading = false)).subscribe(rs => {
+            this.jamaahDetails = rs[0].data;
+            this.model = rs[1].data;
+          });
       });
   }
 }

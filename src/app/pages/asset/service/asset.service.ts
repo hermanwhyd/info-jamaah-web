@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpEventType, HttpParams, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { ApiConfig } from 'src/app/core/common/api.config';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -29,10 +29,15 @@ export class AssetService {
     return this.httpClient.get([this.URL, id].join('/'), { params }) as Observable<GenericRs<Asset>>;
   }
 
-  public getDetail(id: number | string, include?: string) {
-    let params = new HttpParams();
-    if (include !== undefined) { params = params.append('include', include); }
-    return this.httpClient.get([this.URL, id, 'detail'].join('/'), { params }) as Observable<GenericRs<SharedProperty[]>>;
+  public getDetail(id: number | string, options?: {
+    headers?: HttpHeaders | {
+      [header: string]: string | string[];
+    };
+    params?: HttpParams | {
+      [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
+    };
+  }) {
+    return this.httpClient.get([this.URL, id, 'detail'].join('/'), options) as Observable<GenericRs<SharedProperty[]>>;
   }
 
   public clone(id: number | string) {

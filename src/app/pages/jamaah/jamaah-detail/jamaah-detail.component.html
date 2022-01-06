@@ -1,12 +1,27 @@
 <vex-page-layout mode="card">
-  <vex-page-layout-header class="h-14 pt-4" fxLayout="column" fxLayoutAlign="center start">
-    <div class="flex items-center" vexContainer>
+  <vex-page-layout-header class="h-14 pt-4" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="flex items-center" fxFlex="auto" vexContainer>
       <h2 class="headline text-primary-contrast m-0 flex items-center w-full mr-6">
-        <button @scaleIn mat-icon-button [routerLink]="['../']">
-          <ic-icon [icon]="icArrowBack" height="24px" width="24px"></ic-icon>
+        <button mat-icon-button type="button" [routerLink]="['../']">
+          <mat-icon [icIcon]="icArrowBack" height="24px" width="24px"></mat-icon>
         </button>
         <span @fadeInRight class="ml-2 block">{{ model?.fullName }}</span>
       </h2>
+    </div>
+    <div fxHide.xs>
+      <button mat-button [routerLink]="['../', 'form', model?.id]">
+        <ic-icon [icon]="icEdit" [inline]="true" class="sm:-ml-1 sm:mr-2" size="20px"></ic-icon>
+        <span class="text-xs hidden sm:inline-block">EDIT</span>
+      </button>
+      <button mat-button (click)="onDeleteModel()">
+        <ic-icon [icon]="icDelete" [inline]="true" class="sm:-ml-1 sm:mr-2" size="20px"></ic-icon>
+        <span class="text-xs hidden sm:inline-block">DELETE</span>
+      </button>
+    </div>
+    <div fxHide.gt-xs>
+      <button (click)="$event.stopPropagation()" [matMenuTriggerFor]="actionsMenu" mat-icon-button type="button">
+        <mat-icon [icIcon]="icMoreVert"></mat-icon>
+      </button>
     </div>
   </vex-page-layout-header>
   <vex-page-layout-content class="container">
@@ -22,3 +37,15 @@
     <router-outlet></router-outlet>
   </vex-page-layout-content>
 </vex-page-layout>
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+  <ng-template matMenuContent>
+    <button mat-menu-item [routerLink]="['../', 'form', model?.id]">
+      <mat-icon [icIcon]="icEdit"></mat-icon>
+      <span class="text-xs">EDIT</span>
+    </button>
+    <button mat-menu-item (click)="onDeleteModel()">
+      <mat-icon [icIcon]="icDelete"></mat-icon>
+      <span class="text-xs">DELETE</span>
+    </button>
+  </ng-template>
+</mat-menu>

@@ -3,7 +3,7 @@ import { fadeInRight400ms } from 'src/@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
 import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
 import { stagger40ms } from 'src/@vex/animations/stagger.animation';
-import { Jamaah } from 'src/app/pages/jamaah/interfaces/jamaah.model';
+import { Jamaah } from 'src/app/pages/jamaah/shared/interfaces/jamaah.model';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import icPersonAdd from '@iconify/icons-ic/twotone-person-add';

@@ -6,20 +6,20 @@
   <div *ngIf="isLoading" class="card p-gutter flex flex-col md:flex-row">
     <div class="w-full md:w-1/2">
       <div class="flex flex-col">
-        <ngx-shimmer-loading class="flex-1" [width]="'100%'"></ngx-shimmer-loading>
-        <ngx-shimmer-loading class="flex-1" [width]="'100%'" [height]="'100px'"></ngx-shimmer-loading>
+        <ngx-shimmer-loading class="flex-1" width="100%"></ngx-shimmer-loading>
+        <ngx-shimmer-loading class="flex-1" width="100%" height="100px"></ngx-shimmer-loading>
       </div>
       <div class="flex flex-col">
-        <ngx-shimmer-loading class="flex-1" [width]="'100%'"></ngx-shimmer-loading>
-        <ngx-shimmer-loading class="flex-1" [width]="'100%'" [height]="'100px'"></ngx-shimmer-loading>
+        <ngx-shimmer-loading class="flex-1" width="100%"></ngx-shimmer-loading>
+        <ngx-shimmer-loading class="flex-1" width="100%" height="100px"></ngx-shimmer-loading>
       </div>
     </div>
     <div class="w-full md:w-1/2 flex flex-row place-content-around">
       <div class="flex flex-col w-full md:px-2 pr-2">
-        <ngx-shimmer-loading [width]="'100%'"></ngx-shimmer-loading>
-        <ngx-shimmer-loading [width]="'100%'" [height]="'30px'"></ngx-shimmer-loading>
+        <ngx-shimmer-loading width="100%"></ngx-shimmer-loading>
+        <ngx-shimmer-loading width="100%" height="30px"></ngx-shimmer-loading>
       </div>
-      <ngx-shimmer-loading [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
+      <ngx-shimmer-loading height="100px" width="150px"></ngx-shimmer-loading>
     </div>
   </div>
 
@@ -27,7 +27,7 @@
     <div class="px-gutter flex-auto">
       <table class="text-left w-full table-collapse">
         <tbody>
-          <tr class="border-b border-t py-1">
+          <tr class="border-b py-1">
             <td class="caption font-semibold w-1/3">Nama Aset</td>
             <td class="caption">{{model?.title}}</td>
           </tr>
@@ -39,7 +39,7 @@
             <td class="caption font-semibold w-1/3">Pemilik</td>
             <td class="caption">{{model?.pembina.lvPembina}} {{model?.pembina.label}}</td>
           </tr>
-          <tr class="border-b py-1">
+          <tr class="py-1">
             <td class="caption font-semibold w-1/3">Lokasi default</td>
             <td class="caption">{{model?.location.label}}</td>
           </tr>
@@ -47,10 +47,11 @@
       </table>
 
       <div *ngFor="let item of additionalFields">
-        <span class="title mt-4 block border-b">{{ item.label }}</span>
+        <span class="title mt-4 block">{{ item.label }}</span>
         <table class="text-left w-full table-collapse">
           <tbody>
-            <tr class="border-b" *ngFor="let cf of item.customFields">
+            <tr [ngClass]="{'border-t': !first, 'border-b': !last}" class="py-1"
+              *ngFor="let cf of item.customFields; let first = first; let last = last">
               <td class="caption font-semibold w-1/3">{{cf.fieldName}}</td>
               <td class="caption">{{cf | customField}}</td>
             </tr>
@@ -85,11 +86,11 @@
 
   <div *ngIf="isLoading" @stagger class="px-gutter py-4" gdColumns="1fr 1fr 1fr 1fr 1fr"
     gdColumns.lt-lg="1fr 1fr 1fr 1fr" gdColumns.xs="1fr 1fr" gdGap="16px">
-    <ngx-shimmer-loading [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
-    <ngx-shimmer-loading [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
-    <ngx-shimmer-loading [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
-    <ngx-shimmer-loading class="hidden sm:block" [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
-    <ngx-shimmer-loading class="hidden md:block" [shape]="'square'" [width]="'150px'"></ngx-shimmer-loading>
+    <ngx-shimmer-loading height="100px" width="150px"></ngx-shimmer-loading>
+    <ngx-shimmer-loading height="100px" width="150px"></ngx-shimmer-loading>
+    <ngx-shimmer-loading height="100px" width="150px"></ngx-shimmer-loading>
+    <ngx-shimmer-loading class="hidden sm:block" height="100px" width="150px"></ngx-shimmer-loading>
+    <ngx-shimmer-loading class="hidden md:block" height="100px" width="150px"></ngx-shimmer-loading>
   </div>
   <div *ngIf="!isLoading" @stagger class="px-gutter py-4" gdColumns="1fr 1fr 1fr 1fr 1fr 1fr"
     gdColumns.lt-lg="1fr 1fr 1fr 1fr" gdColumns.lt-md="1fr 1fr 1fr" gdColumns.xs="1fr 1fr" gdGap="24px">

@@ -13,11 +13,11 @@ import { MatDialog } from '@angular/material/dialog';
 import icMenu from '@iconify/icons-ic/twotone-menu';
 import icViewHeadline from '@iconify/icons-ic/twotone-view-headline';
 
-import { Jamaah } from './interfaces/jamaah.model';
-import { JamaahService } from './service/jamaah.service';
+import { Jamaah } from './shared/interfaces/jamaah.model';
+import { JamaahService } from './shared/services/jamaah.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
-import { TableMenu } from './interfaces/table-menu.inteface';
+import { TableMenu } from './shared/interfaces/table-menu.inteface';
 import { ConfirmationDialogComponent } from 'src/app/shared/utilities/confirmation-dialog/confirmation-dialog.component';
 
 import * as _ from 'lodash';
@@ -68,7 +68,11 @@ export class JamaahComponent implements OnInit {
     { id: 'all', icon: icViewHeadline, label: 'Semua Jamaah' }
   ];
 
-  constructor(private jamaahService: JamaahService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
+  constructor(
+    private jamaahService: JamaahService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.fetchData();

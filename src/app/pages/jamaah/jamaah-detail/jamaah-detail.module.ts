@@ -4,6 +4,7 @@ import { SharedModule } from 'src/app/shared/components/common/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { PageLayoutModule } from 'src/@vex/components/page-layout/page-layout.module';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
 
 const routes: Routes = [
   {
@@ -28,7 +29,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule,
     PageLayoutModule,
-    MatTabsModule
+    MatTabsModule,
+    MatMenuModule
   ]
 })
 export class JamaahDetailModule { }

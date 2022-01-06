@@ -1,12 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Link } from 'src/@vex/interfaces/link.interface';
+
 import { scaleIn400ms } from '../../../../@vex/animations/scale-in.animation';
 import { fadeInRight400ms } from '../../../../@vex/animations/fade-in-right.animation';
+
 import icArrowBack from '@iconify/icons-ic/arrow-back';
-import { ActivatedRoute } from '@angular/router';
+import icEdit from '@iconify/icons-ic/baseline-edit';
+import icDelete from '@iconify/icons-ic/baseline-delete';
+import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
+
+import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { JamaahService } from '../service/jamaah.service';
-import { Jamaah } from '../interfaces/jamaah.model';
+import { JamaahService } from '../shared/services/jamaah.service';
+import { Jamaah } from '../shared/interfaces/jamaah.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from 'src/app/shared/utilities/confirmation-dialog/confirmation-dialog.component';
+import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { finalize } from 'rxjs/operators';
 
 @UntilDestroy()
 @Component({
@@ -20,8 +31,13 @@ import { Jamaah } from '../interfaces/jamaah.model';
 })
 export class JamaahDetailComponent implements OnInit {
 
-  model: Jamaah;
   icArrowBack = icArrowBack;
+  icDelete = icDelete;
+  icEdit = icEdit;
+  icMoreVert = icMoreVert;
+
+  model: Jamaah;
+  isLoading = true;
 
   links: Link[] = [
     {
@@ -35,13 +51,19 @@ export class JamaahDetailComponent implements OnInit {
       disabled: true,
     },
     {
-      label: 'Organisasi',
-      route: './pembinaan',
+      label: 'Dapuan',
+      route: './kepengurusan',
       disabled: true,
     }
   ];
 
-  constructor(private route: ActivatedRoute, private jamaahSvc: JamaahService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private jamaahSvc: JamaahService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.initModel();
@@ -52,9 +74,41 @@ export class JamaahDetailComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(params => {
         const id = params.get('id');
-        this.jamaahSvc.getById(id).subscribe(g => {
-          this.model = g.data;
-        });
+        this.isLoading = true;
+        this.jamaahSvc.getById(id)
+          .pipe(finalize(() => this.isLoading = false))
+          .subscribe(g => {
+            this.model = g.data;
+          });
+      });
+  }
+
+  public onDeleteModel() {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        message: `Apakah Anda ingin menghapus jamaah <strong>${this.model.fullName}</strong>?`,
+        buttonText: {
+          ok: 'Ya',
+          cancel: 'Cancel'
+        }
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe((confirmed: boolean) => {
+        if (confirmed) {
+          this.jamaahSvc.delete(this.model.id)
+            .subscribe({
+              next: () => this.router.navigateByUrl('/jamaah'),
+              error: err => {
+                this.snackBar.openFromComponent(SnackbarNotifComponent, {
+                  data: {
+                    message: err.message || 'Gagal menghapus data!', type: 'danger'
+                  }
+                });
+              }
+            });
+        }
       });
   }
 }
