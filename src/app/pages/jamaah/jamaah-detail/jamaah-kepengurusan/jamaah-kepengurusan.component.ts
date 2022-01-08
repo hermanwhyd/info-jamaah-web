@@ -183,8 +183,6 @@ export class JamaahKepengurusanComponent implements OnInit, AfterViewInit {
   }
 
   onDeleteKepengurusan(model: Kepengurusan) {
-    console.log(this.kepengurusanSubject.getValue());
-    console.log(model);
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         message: `Apakah Anda ingin menghapus dapukan <strong>${model.dapukan.label}</strong>?`,

@@ -51,7 +51,6 @@ export class PembinaDetailComponent implements OnInit {
       .subscribe(params => {
         this.level = params.get('level');
         this.pembina = params.get('pembina');
-        console.log(this.level, this.pembina);
       });
   }
 

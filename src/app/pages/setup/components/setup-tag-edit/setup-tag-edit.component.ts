@@ -29,7 +29,6 @@ export class SetupTagEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.model = { ...this.data.model, group: this.data.group };
-    console.log(this.model);
     this.form.patchValue(this.model);
     if (this.model.id) {
       this.isNew = false;

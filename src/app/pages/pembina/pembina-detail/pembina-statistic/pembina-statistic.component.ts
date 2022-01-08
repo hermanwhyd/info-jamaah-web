@@ -65,7 +65,6 @@ export class PembinaStatisticComponent implements OnInit {
       .subscribe(params => {
         const lvPembina = params.get('level');
         const pembinaInitial = params.get('pembina');
-        console.log(lvPembina, pembinaInitial);
       });
   }
 
