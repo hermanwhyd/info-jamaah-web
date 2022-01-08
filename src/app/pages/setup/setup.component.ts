@@ -26,7 +26,17 @@ export class SetupComponent implements OnInit {
   menuWidth = '250px';
 
   sidebarMenu: SidebarMenu[] = [
-    { type: 'subheader', title: 'PEMBINA', active: false },
+    { type: 'subheader', title: 'DAPUKAN', active: false },
+    {
+      type: 'link',
+      element: 'setupEnumList',
+      title: 'Dapukan Daerah',
+      active: false,
+      data: {
+        group: 'DAPUKAN_DA',
+        description: '?'
+      }
+    },
     {
       type: 'link',
       element: 'setupEnumList',

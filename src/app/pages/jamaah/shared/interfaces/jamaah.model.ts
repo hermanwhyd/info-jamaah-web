@@ -1,3 +1,4 @@
+import { Kepengurusan } from 'src/app/pages/pembina/shared/kepengurusan.interface';
 import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
 import { AssetMedia } from '../../../asset/interfaces/asset.model';
 import { Contact } from './contact.interface';
@@ -18,5 +19,12 @@ export class Jamaah {
     public contacts?: Contact[],
     public family?: Family,
     public families?: Family[],
+    public kepengurusans?: Kepengurusan[]
   ) { }
+}
+
+export interface JamaahPengurus {
+  lvPembinaEnum: string;
+  pembina: SharedProperty;
+  pengurus?: Kepengurusan[];
 }

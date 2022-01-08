@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import { GenericRs } from 'src/app/shared/types/generic-rs.model';
 import { AdditionalField } from 'src/app/shared/types/additional-field.interface';
 import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
+import { Pembina } from 'src/app/shared/types/pembina.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +54,9 @@ export class JamaahService {
     };
   }) {
     return this.httpClient.get([this.URL, id, 'detail'].join('/'), options) as Observable<GenericRs<SharedProperty[]>>;
+  }
+
+  public getPembina(id: number | string) {
+    return this.httpClient.get<GenericRs<Pembina>>([this.URL, id, 'pembina'].join('/'));
   }
 }

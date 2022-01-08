@@ -20,8 +20,8 @@ const routes: Routes = [
         loadChildren: () => import('./jamaah-profile/jamaah-profile.module').then(m => m.JamaahProfileModule)
       },
       {
-        path: 'dapuan',
-        loadChildren: () => import('./jamaah-dapuan/jamaah-dapuan.module').then(m => m.JamaahDapuanModule)
+        path: 'kepengurusan',
+        loadChildren: () => import('./jamaah-kepengurusan/jamaah-kepengurusan.module').then(m => m.JamaahKepengurusanModule)
       }
     ]
   }

@@ -1,0 +1,44 @@
+<div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+  <h2 class="headline m-0" fxFlex="auto">Tambah Kepengurusan</h2>
+
+  <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+    <mat-icon [icIcon]="icClose"></mat-icon>
+  </button>
+</div>
+
+<mat-divider class="-mx-6 text-border"></mat-divider>
+
+<mat-dialog-content fxLayout="column">
+  <h2 class="text-secondary text-sm m-0 text-center" fxFlex="auto">
+    Tambah Pengurus <strong>{{ jamaahPengurus.pembina.label }}</strong>
+  </h2>
+
+  <div *ngIf="isFetch" class="py-4" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+    <ngx-shimmer-loading shape="circle" width="50px" fxFlex="none"></ngx-shimmer-loading>
+    <div fxFlex="auto">
+      <ngx-shimmer-loading width="100%" height="20px"></ngx-shimmer-loading>
+      <ngx-shimmer-loading width="100%" height="10px"></ngx-shimmer-loading>
+    </div>
+    <ngx-shimmer-loading shape="circle" width="30px" fxFlex="none"></ngx-shimmer-loading>
+  </div>
+
+  <div *ngIf="!isFetch" @stagger class="py-4" fxLayout="column" fxLayoutGap="16px">
+    <div *ngFor="let item of pengurusList; trackBy" fxLayout="row" fxLayoutAlign="start center">
+      <img @scaleIn [src]="item.avatar || '/assets/img/user/default.png'" alt="Profile Picture" class="avatar mr-3"
+        fxFlex="none" />
+      <div @fadeInRight fxFlex="auto">
+        <h4 class="body-2 m-0 leading-snug">{{ item.label }}</h4>
+        <h5 class="text-secondary m-0 caption leading-none">{{ item.code }}</h5>
+      </div>
+      <button (click)="addPengurus(item)" color="primary" mat-icon-button type="button" [loading]="isSubmit[item.code]"
+        matTooltip="Tambah">
+        <mat-icon [icIcon]="icPersonAdd"></mat-icon>
+      </button>
+    </div>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close type="button">CLOSE</button>
+</mat-dialog-actions>

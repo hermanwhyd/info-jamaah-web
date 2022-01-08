@@ -3,18 +3,20 @@ import { fadeInRight400ms } from 'src/@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
 import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
 import { stagger40ms } from 'src/@vex/animations/stagger.animation';
-import { Jamaah } from 'src/app/pages/jamaah/shared/interfaces/jamaah.model';
+import { JamaahPengurus } from 'src/app/pages/jamaah/shared/interfaces/jamaah.model';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import icPersonAdd from '@iconify/icons-ic/twotone-person-add';
 import icSearch from '@iconify/icons-ic/twotone-search';
+import icClose from '@iconify/icons-ic/twotone-close';
 
-import { PembinaService } from '../../pembina.service';
 import { FormControl } from '@angular/forms';
-import { debounceTime, filter, finalize, tap } from 'rxjs/operators';
-import { PengurusTable } from '../../pembina.interface';
+import { debounceTime, finalize } from 'rxjs/operators';
+import { PembinaService } from 'src/app/pages/pembina/shared/pembina.service';
+import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
+import { SharedPropertyService } from 'src/app/shared/services/shared-property.service';
 import { BehaviorSubject } from 'rxjs';
-import { Kepengurusan } from '../../kepengurusan.interface';
+import { Kepengurusan } from 'src/app/pages/pembina/shared/kepengurusan.interface';
 
 @Component({
   selector: 'vex-add-pengurus-dialog',
@@ -31,15 +33,15 @@ export class AddPengurusDialogComponent implements OnInit {
 
   icPersonAdd = icPersonAdd;
   icSearch = icSearch;
+  icClose = icClose;
 
-  isFetch = false;
+  isFetch = true;
   isSubmit = {};
-  jamaahList: Jamaah[];
 
-  lvPembinaan: string;
-  pembinaEnum: string;
-  pengurusTable: PengurusTable;
+  pengurusList: SharedProperty[];
 
+  jamaahId: number;
+  jamaahPengurus: JamaahPengurus;
   kepengurusanSubject: BehaviorSubject<Kepengurusan[]>;
 
   searchCtrl = new FormControl();
@@ -49,39 +51,32 @@ export class AddPengurusDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) data: any,
+    private sharedPropSvc: SharedPropertyService,
     private pembinaSvc: PembinaService
   ) {
-    this.lvPembinaan = data.lvPembina;
-    this.pembinaEnum = data.pembinaEnum;
-    this.pengurusTable = data.pengurusTable;
+    this.jamaahId = data.jamaahId;
+    this.jamaahPengurus = data.jamaahPengurus;
     this.kepengurusanSubject = data.kepengurusanSubject;
   }
 
   ngOnInit(): void {
-    this.searchStr$
-      .pipe(tap(() => { this.jamaahList = []; }), filter<string>(Boolean))
-      .subscribe(kw => {
-        this.isFetch = true;
-        this.pembinaSvc.getPengurusCandidate(this.pembinaEnum, kw, ['UBPK', 'UIBU'], this.pengurusTable.dapukan.code)
-          .pipe(finalize(() => this.isFetch = false))
-          .subscribe(data => {
-            this.jamaahList = data.data;
-          });
+    this.isFetch = true;
+    this.pengurusList = [];
+    this.sharedPropSvc.findByGroup('DAPUKAN_' + this.jamaahPengurus.lvPembinaEnum)
+      .pipe(finalize(() => this.isFetch = false))
+      .subscribe(data => {
+        this.pengurusList = data.data;
       });
   }
 
-  trackByName(index: number, item: Jamaah) {
-    return item.fullName;
-  }
+  addPengurus(model: SharedProperty) {
+    this.isSubmit[model.code] = true;
 
-  addPengurus(model: Jamaah) {
-    this.isSubmit[model.id] = true;
-
-    this.pembinaSvc.addPengurus(this.pembinaEnum, this.pengurusTable.dapukan.code, model.id)
-      .pipe(finalize(() => this.isSubmit[model.id] = true))
+    this.pembinaSvc.addPengurus(this.jamaahPengurus.pembina.code, model.code, this.jamaahId)
+      .pipe(finalize(() => this.isSubmit[model.code] = false))
       .subscribe(data => {
-        const idx = this.jamaahList.indexOf(model);
-        this.jamaahList.splice(idx, 1);
+        const idx = this.pengurusList.indexOf(model);
+        this.pengurusList.splice(idx, 1);
 
         // Insert into current pengurus object
         const models = this.kepengurusanSubject.value || [];

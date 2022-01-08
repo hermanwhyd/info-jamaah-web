@@ -8,39 +8,42 @@ import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 import icEdit from '@iconify/icons-ic/twotone-edit';
 import icDelete from '@iconify/icons-ic/twotone-delete';
 import icClose from '@iconify/icons-ic/twotone-close';
+import icTime from '@iconify/icons-ic/baseline-access-time';
 
 import { FormControl } from '@angular/forms';
 import { debounceTime, finalize } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, forkJoin } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
 import _ from 'lodash';
+import jmespath from 'jmespath';
 
 import { fadeInRight400ms } from 'src/@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from 'src/@vex/animations/scale-fade-in.animation';
 import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
 import { stagger40ms } from 'src/@vex/animations/stagger.animation';
-import jmespath from 'jmespath';
+
 import { MatTableDataSource } from '@angular/material/table';
 import { TableColumn } from 'src/@vex/interfaces/table-column.interface';
 import { MatPaginator } from '@angular/material/paginator';
 import { ConfirmationDialogComponent } from 'src/app/shared/utilities/confirmation-dialog/confirmation-dialog.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { PembinaService } from '../../shared/pembina.service';
-import { Kepengurusan } from '../../shared/kepengurusan.interface';
-import { PengurusTable } from '../../shared/pembina.interface';
 import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
-import { SharedPropertyService } from 'src/app/shared/services/shared-property.service';
-import { AddPengurusDialogComponent } from '../../shared/components/add-pengurus-dialog/add-pengurus-dialog.component';
+import { JamaahService } from '../../shared/services/jamaah.service';
+import { Jamaah, JamaahPengurus } from '../../shared/interfaces/jamaah.model';
+import { Kepengurusan } from 'src/app/pages/pembina/shared/kepengurusan.interface';
+import { Pembina } from 'src/app/shared/types/pembina.interface';
+import { PembinaService } from 'src/app/pages/pembina/shared/pembina.service';
+import { AddPengurusDialogComponent } from './add-pengurus-dialog/add-pengurus-dialog.component';
 
 @UntilDestroy()
 @Component({
-  selector: 'vex-pembina-kepengurusan',
-  templateUrl: './pembina-kepengurusan.component.html',
-  styleUrls: ['./pembina-kepengurusan.component.scss'],
+  selector: 'vex-jamaah-kepengurusan',
+  templateUrl: './jamaah-kepengurusan.component.html',
+  styleUrls: ['./jamaah-kepengurusan.component.scss'],
   animations: [
     fadeInUp400ms,
     fadeInRight400ms,
@@ -54,7 +57,7 @@ import { AddPengurusDialogComponent } from '../../shared/components/add-pengurus
     ]),
   ]
 })
-export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
+export class JamaahKepengurusanComponent implements OnInit, AfterViewInit {
 
   icReload = icReload;
   icColumn = icColumn;
@@ -64,41 +67,46 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
   icDelete = icDelete;
   icMoreVert = icMoreVert;
   icClose = icClose;
+  icTime = icTime;
 
   jmespath = jmespath;
 
-  loadingSubject = new BehaviorSubject<boolean>(false);
+  isLoading = false;
 
   kepengurusanSubject = new BehaviorSubject<Kepengurusan[]>(null);
   kepengurusan$ = this.kepengurusanSubject.asObservable();
 
+  pembinaSubject = new BehaviorSubject<Pembina>(null);
+  pembina$ = this.pembinaSubject.asObservable();
+
   dapukanSubject = new BehaviorSubject<SharedProperty[]>(null);
   dapukan$ = this.dapukanSubject.asObservable();
+
+  jamaahKpngrsSubject = new BehaviorSubject<JamaahPengurus[]>(null);
+
+  jamaahId: number;
+  model: Jamaah;
 
   searchCtrl = new FormControl();
   searchStr$ = this.searchCtrl.valueChanges.pipe(
     debounceTime(10)
   );
 
-  lvPembina: string;
-  pembinaEnum: string;
-
   pageSize = 10;
   pageSizeOptions: number[] = [10, 25, 50, 100];
-  dataSource: MatTableDataSource<PengurusTable>;
-  menuOpen = false;
+  dataSource: MatTableDataSource<JamaahPengurus>;
 
   expandedRow: Kepengurusan | null;
 
-  columns: TableColumn<PengurusTable>[] = [
-    { label: 'DAPUKAN', property: 'dapukan.label', type: 'text', visible: true, cssClasses: ['font-medium', 'border-b-0', 'w-1/3'] },
-    { label: 'DAPUKAN', property: 'pengurus[*].jamaah', type: 'image', visible: true, cssClasses: ['text-right', 'text-secondary', 'border-b-0'] }
+  columns: TableColumn<JamaahPengurus>[] = [
+    { label: 'PEMBINA', property: 'pembina.label', type: 'text', visible: true, cssClasses: ['font-medium', 'border-b-0'] },
+    { label: 'PENGURUS', property: 'pengurus[*].dapukan', type: 'label', visible: true, cssClasses: ['text-right', 'text-secondary', 'border-b-0'] }
   ];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(
+    private jamaahSvc: JamaahService,
     private pembinaSvc: PembinaService,
-    private sharedPropSvc: SharedPropertyService,
     private route: ActivatedRoute,
     private dialog: MatDialog
   ) { }
@@ -122,68 +130,64 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
   }
 
   private initModel() {
-    this.route.parent.paramMap
+    this.route.parent.parent.paramMap
       .pipe(untilDestroyed(this))
       .subscribe(params => {
-        this.lvPembina = params.get('level');
-        this.pembinaEnum = params.get('pembina');
-        this.fetchDapukan();
-        this.fetchPengurus();
+        this.jamaahId = +params.get('id');
+        this.getJamaahPengurus();
+      });
+  }
+
+  getJamaahPengurus() {
+    this.isLoading = true;
+
+    forkJoin([
+      this.jamaahSvc.getById(this.jamaahId, 'kepengurusans.pembina,kepengurusans.dapukan'),
+      this.jamaahSvc.getPembina(this.jamaahId)
+    ])
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe(rs => {
+        this.model = rs[0].data;
+        this.kepengurusanSubject.next(this.model.kepengurusans);
+        this.pembinaSubject.next(rs[1].data);
       });
   }
 
   private registerDs() {
-    combineLatest([this.dapukan$, this.kepengurusan$])
-      .subscribe(([dapukan, kepengurusan]) => {
-        const table: PengurusTable[] = [];
+    combineLatest([this.pembina$, this.kepengurusan$])
+      .subscribe(([pembina, kepengurusan]) => {
+        const table: JamaahPengurus[] = [];
         const grouped = _.groupBy(kepengurusan, (v: any) => {
-          return v.dapukan?.code;
+          return v.pembina?.code;
         });
 
-        dapukan?.forEach((dp: any) => {
-          table.push(
-            {
-              dapukan: dp,
-              pengurus: grouped[`${dp.code}`]
-            }
-          );
-        });
+        if (pembina) {
+          table.push({ lvPembinaEnum: 'DA', pembina: pembina.DA, pengurus: grouped[`${pembina.DA.code}`] });
+          table.push({ lvPembinaEnum: 'DS', pembina: pembina.DS, pengurus: grouped[`${pembina.DS.code}`] });
+          table.push({ lvPembinaEnum: 'KLP', pembina: pembina.KLP, pengurus: grouped[`${pembina.KLP.code}`] });
+        }
 
         this.dataSource.data = table;
       });
   }
 
-  private fetchDapukan() {
-    this.sharedPropSvc.findByGroup(`DAPUKAN_${this.lvPembina}`)
-      .subscribe(data => {
-        this.dapukanSubject.next(data.data);
-      });
-  }
-
-  fetchPengurus() {
-    this.loadingSubject.next(true);
-    this.pembinaSvc.getKepengurusan(this.pembinaEnum, 'jamaah,dapukan,pembina')
-      .pipe(finalize(() => this.loadingSubject.next(false)))
-      .subscribe(data => {
-        this.kepengurusanSubject.next(data.data);
-      });
-  }
-
-  onAddKepengurusan(pengurusTable: PengurusTable) {
+  onAddKepengurusan(jamaahPengurus: JamaahPengurus) {
     this.dialog.open(AddPengurusDialogComponent, {
       width: '400px',
       data: {
-        pengurusTable,
-        pembinaEnum: this.pembinaEnum,
+        jamaahPengurus,
+        jamaahId: this.jamaahId,
         kepengurusanSubject: this.kepengurusanSubject
       }
     });
   }
 
   onDeleteKepengurusan(model: Kepengurusan) {
+    console.log(this.kepengurusanSubject.getValue());
+    console.log(model);
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        message: `Apakah Anda ingin menghapus <strong>${model.jamaah.fullName}</strong> dari dapukan <strong>${model.dapukan.label}</strong>?`,
+        message: `Apakah Anda ingin menghapus dapukan <strong>${model.dapukan.label}</strong>?`,
         buttonText: {
           ok: 'Ya',
           cancel: 'Batal'
@@ -193,7 +197,7 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.pembinaSvc.removePengurus(this.pembinaEnum, model.id)
+        this.pembinaSvc.removePengurus(model.pembina.code, model.id)
           .subscribe(() => {
             const models = this.kepengurusanSubject.getValue();
             _.remove(models, { id: model.id });

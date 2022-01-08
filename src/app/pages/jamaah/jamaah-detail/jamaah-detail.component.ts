@@ -51,8 +51,8 @@ export class JamaahDetailComponent implements OnInit {
       disabled: true,
     },
     {
-      label: 'Dapuan',
-      route: './dapuan',
+      label: 'Kepengurusan',
+      route: './kepengurusan',
     }
   ];
 
