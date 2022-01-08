@@ -10,8 +10,7 @@ import icPersonAdd from '@iconify/icons-ic/twotone-person-add';
 import icSearch from '@iconify/icons-ic/twotone-search';
 import icClose from '@iconify/icons-ic/twotone-close';
 
-import { FormControl } from '@angular/forms';
-import { debounceTime, finalize } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { PembinaService } from 'src/app/pages/pembina/shared/pembina.service';
 import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
 import { SharedPropertyService } from 'src/app/shared/services/shared-property.service';
@@ -44,11 +43,6 @@ export class AddPengurusDialogComponent implements OnInit {
   jamaahPengurus: JamaahPengurus;
   kepengurusanSubject: BehaviorSubject<Kepengurusan[]>;
 
-  searchCtrl = new FormControl();
-  searchStr$ = this.searchCtrl.valueChanges.pipe(
-    debounceTime(100)
-  );
-
   constructor(
     @Inject(MAT_DIALOG_DATA) data: any,
     private sharedPropSvc: SharedPropertyService,
@@ -67,6 +61,10 @@ export class AddPengurusDialogComponent implements OnInit {
       .subscribe(data => {
         this.pengurusList = data.data;
       });
+  }
+
+  get getCandidate() {
+    return this.pengurusList.filter(f => !this.jamaahPengurus.pengurus?.some(s => s.dapukan.code === f.code));
   }
 
   addPengurus(model: SharedProperty) {

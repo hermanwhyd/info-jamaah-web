@@ -20,7 +20,6 @@ import icHome from '@iconify/icons-ic/baseline-home';
 import icMap from '@iconify/icons-ic/baseline-map';
 import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { PembinaService } from '../../shared/pembina.service';
 import { Pembina } from '../../shared/pembina.interface';
 
 @UntilDestroy()
@@ -56,7 +55,6 @@ export class PembinaStatisticComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private pembinaSvc: PembinaService
   ) { }
 
   ngOnInit(): void {

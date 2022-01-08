@@ -23,7 +23,7 @@
   </div>
 
   <div *ngIf="!isFetch" @stagger class="py-4" fxLayout="column" fxLayoutGap="16px">
-    <div *ngFor="let item of pengurusList; trackBy" fxLayout="row" fxLayoutAlign="start center">
+    <div *ngFor="let item of getCandidate; trackBy" fxLayout="row" fxLayoutAlign="start center">
       <img @scaleIn [src]="item.avatar || '/assets/img/user/default.png'" alt="Profile Picture" class="avatar mr-3"
         fxFlex="none" />
       <div @fadeInRight fxFlex="auto">
