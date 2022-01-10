@@ -110,4 +110,5 @@ export class JamaahDetailComponent implements OnInit {
         }
       });
   }
+
 }

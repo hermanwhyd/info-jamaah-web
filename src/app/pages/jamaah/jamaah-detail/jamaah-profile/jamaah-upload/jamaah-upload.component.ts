@@ -9,18 +9,18 @@ import icExcel from '@iconify/icons-fa-solid/file-excel';
 
 import { FilePickerComponent, FilePreviewModel, UploaderCaptions, ValidationError } from 'ngx-awesome-uploader';
 import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
-import { AssetFilePickerAdapter } from '../service/asset-file-pircker.adapter';
-import { Asset } from '../interfaces/asset.model';
-import { AssetService } from '../service/asset.service';
 import { MediaService } from 'src/app/shared/services/media.service';
+import { JamaahService } from '../../../shared/services/jamaah.service';
+import { JamaahFilePickerAdapter } from '../../../shared/services/jamaah-file-pircker.adapter';
+import { Jamaah } from '../../../shared/interfaces/jamaah.model';
 
 @Component({
-  selector: 'vex-asset-upload',
-  templateUrl: './asset-upload.component.html',
-  styleUrls: ['./asset-upload.component.scss'],
+  selector: 'vex-jamaah-upload',
+  templateUrl: './jamaah-upload.component.html',
+  styleUrls: ['./jamaah-upload.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AssetUploadComponent implements OnInit {
+export class JamaahUploadComponent implements OnInit {
   submitted = false;
 
   icClose = icClose;
@@ -28,18 +28,16 @@ export class AssetUploadComponent implements OnInit {
   icWord = icWord;
   icExcel = icExcel;
 
-  childReference: any;
+  model: Jamaah;
 
-  model: Asset;
-
-  fileExtensions = ['pdf', 'jpg', 'jpeg', 'png', 'xlsx', 'docsx'];
+  fileExtensions = ['jpg', 'jpeg', 'png'];
 
   @ViewChild('uploader', { static: true }) uploader: FilePickerComponent;
   public adapter: any;
   public myFiles: FilePreviewModel[] = [];
   captions: UploaderCaptions = {
     dropzone: {
-      title: 'Drag dan drop file disini',
+      title: 'Drag dan drop foto disini',
       or: 'atau',
       browse: 'Cari File'
     },
@@ -48,7 +46,7 @@ export class AssetUploadComponent implements OnInit {
       cancel: 'Batal'
     },
     previewCard: {
-      remove: 'Hapus File',
+      remove: 'Hapus Foto',
       uploadError: 'Gagal mengupload'
     }
   };
@@ -56,13 +54,12 @@ export class AssetUploadComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private snackBar: MatSnackBar,
-    private assetSvc: AssetService,
+    private jamaahSvc: JamaahService,
     private mediaSvc: MediaService) { }
 
   ngOnInit(): void {
     this.model = this.data.model;
-    this.childReference = this.data.cf;
-    this.adapter = new AssetFilePickerAdapter(this.model, this.assetSvc, this.mediaSvc);
+    this.adapter = new JamaahFilePickerAdapter(this.model, this.jamaahSvc, this.mediaSvc);
   }
 
   public onValidationError(error: ValidationError): void {
@@ -78,16 +75,14 @@ export class AssetUploadComponent implements OnInit {
     );
   }
 
-  public onUploadSuccess(e: FilePreviewModel): void {
-    if (this.childReference.reloadTable !== undefined) {
-      this.childReference.reloadTable();
-    }
+  public onUploadSuccess(file: FilePreviewModel): void {
+    // change photo to default, then replace with actual
+    this.model.avatar = null;
+    this.model.avatar = file.uploadResponse?.file.thumb;
   }
 
-  public onRemoveSuccess(e: FilePreviewModel) {
-    if (this.childReference.reloadTable !== undefined) {
-      this.childReference.reloadTable();
-    }
+  public onRemoveSuccess(file: FilePreviewModel) {
+    this.model.avatar = null;
   }
 
   public onFileAdded(file: FilePreviewModel) {

@@ -18,6 +18,9 @@ import icView from '@iconify/icons-ic/remove-red-eye';
 import icQuestion from '@iconify/icons-ic/help-outline';
 import icHome from '@iconify/icons-ic/baseline-home';
 import icMap from '@iconify/icons-ic/baseline-map';
+import icCamera from '@iconify/icons-ic/baseline-photo-camera';
+import icUploadPhoto from '@iconify/icons-ic/baseline-photo-camera';
+import icViewPhoto from '@iconify/icons-ic/baseline-photo-camera';
 
 import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -26,6 +29,8 @@ import { JamaahService } from '../../shared/services/jamaah.service';
 import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { JamaahUploadComponent } from './jamaah-upload/jamaah-upload.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @UntilDestroy()
 @Component({
@@ -55,13 +60,20 @@ export class JamaahProfileComponent implements OnInit {
   icAccessTime = icAccessTime;
   icHome = icHome;
   icMap = icMap;
+  icCamera = icCamera;
+  icViewPhoto = icViewPhoto;
+  icUploadPhoto = icUploadPhoto;
 
   model: Jamaah;
   jamaahDetails: SharedProperty[];
 
   isLoading = true;
 
-  constructor(private route: ActivatedRoute, private jamaahSvc: JamaahService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private jamaahSvc: JamaahService,
+    private dialog: MatDialog,
+  ) { }
 
   ngOnInit(): void {
     this.initModel();
@@ -93,4 +105,14 @@ export class JamaahProfileComponent implements OnInit {
   get jamaahDetailEvens() {
     return this.jamaahDetails.filter((e, i) => ++i % 2 === 0);
   }
+
+  uploadFile() {
+    this.dialog.open(JamaahUploadComponent, {
+      data: {
+        model: this.model,
+      },
+      width: '450px',
+    });
+  }
+
 }

@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { ApiConfig } from 'src/app/core/common/api.config';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Jamaah } from '../interfaces/jamaah.model';
 import * as _ from 'lodash';
 import { GenericRs } from 'src/app/shared/types/generic-rs.model';
 import { AdditionalField } from 'src/app/shared/types/additional-field.interface';
 import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
 import { Pembina } from 'src/app/shared/types/pembina.interface';
+import { FilePreviewModel, UploadStatus } from 'ngx-awesome-uploader';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -59,4 +61,33 @@ export class JamaahService {
   public getPembina(id: number | string) {
     return this.httpClient.get<GenericRs<Pembina>>([this.URL, id, 'pembina'].join('/'));
   }
+
+  public uploadFile(id: string | number, fileItem: FilePreviewModel) {
+    const form = new FormData();
+    form.append('file', fileItem.file);
+    const api = [this.URL, id, 'photo'].join('/');
+    const req = new HttpRequest('POST', api, form, { reportProgress: true });
+    return this.httpClient.request(req).pipe(
+      map((res: HttpEvent<any>) => {
+        if (res.type === HttpEventType.Response) {
+          const responseFromBackend = res.body;
+          return {
+            body: responseFromBackend,
+            status: UploadStatus.UPLOADED
+          };
+        } else if (res.type === HttpEventType.UploadProgress) {
+          /** Compute and show the % done: */
+          const uploadProgress = +Math.round((100 * res.loaded) / res.total);
+          return {
+            status: UploadStatus.IN_PROGRESS,
+            progress: uploadProgress
+          };
+        }
+      }),
+      catchError(er => {
+        return of({ status: UploadStatus.ERROR, body: er });
+      })
+    );
+  }
+
 }

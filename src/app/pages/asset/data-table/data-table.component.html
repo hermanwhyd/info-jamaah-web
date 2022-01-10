@@ -24,7 +24,8 @@
         <ng-container *ngIf="column.type === 'image'" [matColumnDef]="column.property">
           <th *matHeaderCellDef mat-header-cell></th>
           <td *matCellDef="let row" class="w-8 min-w-8 pr-0" mat-cell>
-            <img [src]="jmespath.search(row, column.property)" class="avatar h-8 w-8 align-middle">
+            <img [src]="jmespath.search(row, column.property) || '/assets/img/default/default-img.png'"
+              class="avatar h-8 w-8 align-middle">
           </td>
         </ng-container>
 

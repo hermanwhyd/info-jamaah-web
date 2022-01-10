@@ -55,7 +55,7 @@ export class JamaahComponent implements OnInit {
   jamaahs: Jamaah[] = [];
 
   tableColumns: TableColumn<Jamaah>[] = [
-    { label: 'IMAGE', property: 'photos.thumb', type: 'image' },
+    { label: 'IMAGE', property: 'avatar', type: 'image' },
     { label: 'NAMA', property: 'fullName', type: 'text', cssClasses: ['text-secondary'] },
     { label: 'NAMA PANGGILAN', property: 'nickname', type: 'text', cssClasses: ['text-secondary'] },
     { label: 'JK', property: 'gender', type: 'text', cssClasses: ['text-secondary'] },

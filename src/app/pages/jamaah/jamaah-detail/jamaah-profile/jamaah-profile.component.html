@@ -5,8 +5,14 @@
         <h2 class="title m-0">Informasi Pribadi</h2>
       </div>
       <div @stagger class="px-6 py-4 flex justify-center">
-        <img @scaleIn class="avatar h-48 w-48 flex-none align-start border-3 border-white"
-          [src]="this.model?.avatar || '/assets/img/user/default.png'">
+        <div [matMenuTriggerFor]="avatarMenu" [matMenuTriggerData]="{ hasAvatar: this.model?.avatar }"
+          class="relative cursor-pointer">
+          <img @scaleIn class="avatar h-48 w-48 flex-none align-start border-3 border-white hover:shadow"
+            [src]="this.model?.avatar || '/assets/img/user/default.png'">
+          <ic-icon [icon]="icCamera" (click)="$event.stopPropagation();uploadFile()"
+            class="bg-card absolute bottom-3 right-3 rounded-full p-1 text-gray hover:text-black" size="35px">
+          </ic-icon>
+        </div>
       </div>
       <div class="px-gutter py-3">
         <vex-card-box [icon]="icNumber" [loading]="isLoading" [value]="model?.fullName" label="Nama Lengkap">
@@ -162,3 +168,16 @@
     </div>
   </div>
 </div>
+
+<mat-menu #avatarMenu="matMenu" xPosition="after" yPosition="below">
+  <ng-template let-hasAvatar="hasAvatar" matMenuContent>
+    <!-- <button [disabled]="!hasAvatar" mat-menu-item>
+      <ic-icon [icon]="icViewPhoto" inline="true" class="text-gray" size="18px"></ic-icon>
+      <span>Lihat Foto Profil</span>
+    </button> -->
+    <button mat-menu-item (click)="uploadFile()">
+      <ic-icon [icon]="icUploadPhoto" inline="true" class="text-gray" size="18px"></ic-icon>
+      <span>Upload Foto Profil </span>
+    </button>
+  </ng-template>
+</mat-menu>
