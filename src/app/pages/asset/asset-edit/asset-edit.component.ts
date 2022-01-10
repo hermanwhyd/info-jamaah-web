@@ -8,7 +8,7 @@ import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
 import { stagger60ms } from 'src/@vex/animations/stagger.animation';
 import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
 import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
-import { Asset, Location } from '../interfaces/asset.model';
+import { Asset } from '../interfaces/asset.model';
 import { AssetService } from '../service/asset.service';
 import icBack from '@iconify/icons-ic/chevron-left';
 import { MatAccordion } from '@angular/material/expansion';
