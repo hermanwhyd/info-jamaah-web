@@ -115,4 +115,7 @@ export class JamaahProfileComponent implements OnInit {
     });
   }
 
+  get genderLabel() {
+    return (this.model?.gender === 'M' ? 'Laki-laki' : 'Perempuan') || '';
+  }
 }

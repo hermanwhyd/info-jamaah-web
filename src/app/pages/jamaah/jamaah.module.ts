@@ -22,7 +22,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SnackBarNotifModule } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.module';
 import { DataTableComponent } from './data-table/data-table.component';
 import { TableMenuComponent } from './table-menu/table-menu.component';
-import { JamaahEditModule } from './jamaah-edit/jamaah-edit.module';
 import { JamaahComponent } from './jamaah.component';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -30,6 +29,10 @@ const routes: Routes = [
   {
     path: '',
     component: JamaahComponent,
+  },
+  {
+    path: 'form',
+    loadChildren: () => import('./jamaah-edit/jamaah-edit.module').then(m => m.JamaahEditModule)
   },
   {
     path: ':id',
@@ -42,7 +45,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-    JamaahEditModule,
     FlexLayoutModule,
     IconModule,
     MatButtonModule,

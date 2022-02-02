@@ -22,29 +22,29 @@ export class JamaahService {
 
   public getJamaahList(): Observable<GenericRs<Jamaah[]>> {
     const params = new HttpParams().append('include', 'lvPembinaan');
-    return this.httpClient.get(this.URL, { params }) as Observable<GenericRs<Jamaah[]>>;
+    return this.httpClient.get<GenericRs<Jamaah[]>>(this.URL, { params });
   }
 
   public getById(id: number | string, include?: string) {
     let params = new HttpParams();
     if (include !== undefined) { params = params.append('include', include); }
-    return this.httpClient.get([this.URL, id].join('/'), { params }) as Observable<GenericRs<Jamaah>>;
+    return this.httpClient.get<GenericRs<Jamaah>>([this.URL, id].join('/'), { params });
   }
 
   public delete(id: number | string): Observable<GenericRs<Jamaah>> {
-    return this.httpClient.delete(`${this.URL}/${id}`) as Observable<GenericRs<Jamaah>>;
+    return this.httpClient.delete<GenericRs<Jamaah>>(`${this.URL}/${id}`);
   }
 
   public saveOrUpdate(jamaah: Jamaah): Observable<GenericRs<Jamaah>> {
     if (jamaah.id) {
-      return this.httpClient.put([this.URL, jamaah.id].join('/'), jamaah) as Observable<GenericRs<Jamaah>>;
+      return this.httpClient.put<GenericRs<Jamaah>>([this.URL, jamaah.id].join('/'), jamaah);
     } else {
-      return this.httpClient.post(this.URL, jamaah) as Observable<GenericRs<Jamaah>>;
+      return this.httpClient.post<GenericRs<Jamaah>>(this.URL, jamaah);
     }
   }
 
   public createDetail(id: number, value: AdditionalField) {
-    return this.httpClient.post([this.URL, id, 'detail'].join('/'), value) as Observable<GenericRs<AdditionalField>>;
+    return this.httpClient.post<GenericRs<AdditionalField>>([this.URL, id, 'detail'].join('/'), value);
   }
 
   public getDetail(id: number | string, options?: {
@@ -55,7 +55,7 @@ export class JamaahService {
       [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
     };
   }) {
-    return this.httpClient.get([this.URL, id, 'detail'].join('/'), options) as Observable<GenericRs<SharedProperty[]>>;
+    return this.httpClient.get<GenericRs<SharedProperty[]>>([this.URL, id, 'detail'].join('/'), options);
   }
 
   public getPembina(id: number | string) {

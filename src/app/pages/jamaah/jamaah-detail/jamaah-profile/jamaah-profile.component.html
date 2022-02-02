@@ -19,7 +19,8 @@
         </vex-card-box>
         <vex-card-box [icon]="icNumber" [loading]="isLoading" [value]="model?.nickname" label="Nama Panggilan">
         </vex-card-box>
-        <vex-card-box [icon]="faGender" [loading]="isLoading" [value]="model?.gender" label="Gender"></vex-card-box>
+        <vex-card-box [icon]="faGender" [loading]="isLoading" [value]="genderLabel" label="Gender">
+        </vex-card-box>
         <vex-card-box [icon]="icAccessTime" [loading]="isLoading" [value]="model?.birthDate | date:'dd MMM yyyy'"
           label="Tanggal Lahir">
         </vex-card-box>

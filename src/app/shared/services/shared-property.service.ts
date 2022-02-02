@@ -97,6 +97,13 @@ export class SharedPropertyService {
     return this.httpClient.delete([this.URL, id].join('/')) as Observable<GenericRs<void>>;
   }
 
+  /**
+   * Get select options
+   *
+   * @param selector a group name. e.g. location
+   * @param params a http param. e.g {include: 'abc,xyz'}
+   * @returns list
+   */
   public getSelectOptions(selector: string, params?: any) {
     let httpParams = new HttpParams();
     if (params !== undefined) {

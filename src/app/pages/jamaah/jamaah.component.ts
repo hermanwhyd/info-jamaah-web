@@ -22,8 +22,7 @@ import { ConfirmationDialogComponent } from 'src/app/shared/utilities/confirmati
 
 import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
-import { GenericRs } from 'src/app/shared/types/generic-rs.model';
-import { JamaahEditComponent } from './jamaah-edit/jamaah-edit.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'vex-jamaah',
@@ -69,6 +68,8 @@ export class JamaahComponent implements OnInit {
   ];
 
   constructor(
+    private router: Router,
+    private route: ActivatedRoute,
     private jamaahService: JamaahService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
@@ -97,33 +98,12 @@ export class JamaahComponent implements OnInit {
   }
 
   createOrUpdateJamaah(jamaah?: Jamaah) {
-    this.dialog.open(JamaahEditComponent, {
-      data: jamaah || {} as Jamaah,
-      width: '500px',
-      disableClose: true
-    })
-      .afterClosed().subscribe((newJamaah: Jamaah) => {
-        if (!newJamaah) { return; }
+    const nav: any = ['form'];
+    if (jamaah) {
+      nav.push(jamaah.id);
+    }
 
-        // creation or update existing
-        this.jamaahService.saveOrUpdate(newJamaah)
-          .subscribe(rs => {
-            const jamaahs = this.jamaahsSubject$.getValue();
-            // Update or create
-            if (jamaah) {
-              const index = _.findIndex(jamaahs, jamaah);
-              jamaahs[index] = rs.data;
-            } else {
-              jamaahs.unshift(rs.data);
-            }
-
-            this.refreshData();
-            this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: 'Jamaah berhasil disimpan', type: 'success' } });
-          }, (err: GenericRs<any>) => {
-            this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: err.message, type: 'danger' } });
-            this.createOrUpdateJamaah(newJamaah);
-          });
-      });
+    this.router.navigate(nav, { relativeTo: this.route });
   }
 
   deleteJamaah(model: Jamaah) {
