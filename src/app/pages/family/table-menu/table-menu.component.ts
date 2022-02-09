@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { fadeInRight400ms } from '../../../../@vex/animations/fade-in-right.animation';
 import icPersonAdd from '@iconify/icons-ic/twotone-person-add';
 import { stagger40ms } from '../../../../@vex/animations/stagger.animation';
-import { TableMenu } from '../../../shared/types/table-menu.inteface';
 import * as _ from 'lodash';
+import { TableMenu } from 'src/app/shared/types/table-menu.inteface';
 
 @Component({
   selector: 'vex-table-menu',

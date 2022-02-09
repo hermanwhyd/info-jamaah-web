@@ -1,8 +1,8 @@
 import { Kepengurusan } from 'src/app/pages/pembina/shared/kepengurusan.interface';
 import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
-import { AssetMedia } from '../../../asset/interfaces/asset.model';
-import { Contact } from './contact.interface';
-import { Family } from './Family.intereface';
+import { Family } from 'src/app/pages/family/shared/interfaces/family.intereface';
+import { AssetMedia } from 'src/app/pages/asset/interfaces/asset.model';
+import { Contact } from 'src/app/shared/types/contact.interface';
 
 export class Jamaah {
   constructor(

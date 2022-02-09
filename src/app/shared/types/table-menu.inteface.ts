@@ -1,7 +1,7 @@
 import { Icon } from '@visurel/iconify-angular';
 
 export interface TableMenu {
-  id?: 'all' | 'admin' | 'pegawai' ;
+  id?: 'all' | 'admin' | 'pegawai';
   icon?: Icon;
   label: string;
   classes?: {

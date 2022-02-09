@@ -38,6 +38,11 @@ const routes: VexRoutes = [
         data: ['ADMIN']
       },
       {
+        path: 'family',
+        loadChildren: () => import('./pages/family/family.module').then(m => m.FamilyModule),
+        data: ['ADMIN']
+      },
+      {
         path: 'benda-sabil',
         loadChildren: () => import('./pages/asset/asset.module').then(m => m.AssetModule),
         data: ['ADMIN']

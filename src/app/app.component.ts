@@ -101,6 +101,13 @@ export class AppComponent {
           },
           {
             type: 'link',
+            label: 'Keluarga',
+            icon: icTraining,
+            hide: !authSvc.hasAccess(['ADMIN']),
+            route: '/family'
+          },
+          {
+            type: 'link',
             label: 'Benda Sabil',
             icon: icAccountBalance,
             hide: !authSvc.hasAccess(['ADMIN']),

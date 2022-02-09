@@ -13,8 +13,6 @@ import { MatDialog } from '@angular/material/dialog';
 import icMenu from '@iconify/icons-ic/twotone-menu';
 import icViewHeadline from '@iconify/icons-ic/twotone-view-headline';
 
-import { Jamaah } from './shared/interfaces/jamaah.model';
-import { JamaahService } from './shared/services/jamaah.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarNotifComponent } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.component';
 import { TableMenu } from '../../shared/types/table-menu.inteface';
@@ -23,18 +21,20 @@ import { ConfirmationDialogComponent } from 'src/app/shared/utilities/confirmati
 import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Family } from './shared/interfaces/family.intereface';
+import { FamilyService } from './shared/services/family.service';
 
 @Component({
-  selector: 'vex-jamaah',
-  templateUrl: './jamaah.component.html',
-  styleUrls: ['./jamaah.component.scss'],
+  selector: 'vex-family',
+  templateUrl: './family.component.html',
+  styleUrls: ['./family.component.scss'],
   animations: [
     stagger40ms,
     scaleIn400ms,
     fadeInRight400ms
   ]
 })
-export class JamaahComponent implements OnInit {
+export class FamilyComponent implements OnInit {
   icSearch = icSearch;
   icContacts = icContacts;
   icMenu = icMenu;
@@ -49,28 +49,25 @@ export class JamaahComponent implements OnInit {
   activeCategory: TableMenu['id'] = 'all';
   menuOpen = false;
 
-  jamaahsSubject$: BehaviorSubject<Jamaah[]> = new BehaviorSubject([]);
+  familiesSubject$: BehaviorSubject<Family[]> = new BehaviorSubject([]);
   activeActegory$: BehaviorSubject<string> = new BehaviorSubject('all');
-  jamaahs: Jamaah[] = [];
+  families: Family[] = [];
 
-  tableColumns: TableColumn<Jamaah>[] = [
-    { label: 'IMAGE', property: 'avatar', type: 'image' },
-    { label: 'NAMA', property: 'fullName', type: 'text', cssClasses: ['text-secondary'] },
-    { label: 'NAMA PANGGILAN', property: 'nickname', type: 'text', cssClasses: ['text-secondary'] },
-    { label: 'JK', property: 'gender', type: 'text', cssClasses: ['text-secondary'] },
-    { label: 'KLP', property: 'pembinaEnum', type: 'text', cssClasses: ['text-secondary'] },
-    { label: 'TINGKAT PEMBINAAN', property: 'lvPembinaan.label', type: 'text', cssClasses: ['text-secondary'] },
+  tableColumns: TableColumn<Family>[] = [
+    { label: 'KELUARGA', property: 'label', type: 'text', cssClasses: ['font-medium'] },
+    { label: 'PEMBINAAN', property: 'pembinaEnum', type: 'text', cssClasses: ['text-secondary'] },
+    { label: 'ANGGOTA', property: 'pembinaEnum', type: 'text', cssClasses: ['text-secondary'] },
     { label: '', property: 'menu', type: 'button', cssClasses: ['text-secondary', 'w-10'] },
   ];
 
   tableMenu: TableMenu[] = [
-    { id: 'all', icon: icViewHeadline, label: 'Semua Jamaah' }
+    { id: 'all', icon: icViewHeadline, label: 'Semua Keluarga' }
   ];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private jamaahService: JamaahService,
+    private familyService: FamilyService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) { }
@@ -79,37 +76,37 @@ export class JamaahComponent implements OnInit {
     this.fetchData();
 
     this.activeActegory$.subscribe(cat => {
-      const jamaahs = this.jamaahsSubject$.getValue();
-      this.jamaahs = jamaahs?.filter(u => {
-        // return (cat === 'all') ? jamaahs : _.includes(u.roles, cat.toUpperCase());
-        return jamaahs;
+      const families = this.familiesSubject$.getValue();
+      this.families = families?.filter(u => {
+        // return (cat === 'all') ? families : _.includes(u.roles, cat.toUpperCase());
+        return families;
       });
     });
   }
 
   fetchData() {
     this.isLoading = true;
-    this.jamaahService.getJamaahList()
+    this.familyService.getList()
       .pipe(finalize(() => this.isLoading = false))
       .subscribe((rs) => {
-        this.jamaahsSubject$.next(rs.data);
+        this.familiesSubject$.next(rs.data);
         this.refreshData();
       });
   }
 
-  createOrUpdateJamaah(jamaah?: Jamaah) {
+  createOrUpdateFamily(family?: Family) {
     const nav: any = ['form'];
-    if (jamaah) {
-      nav.push(jamaah.id);
+    if (family) {
+      nav.push(family.id);
     }
 
     this.router.navigate(nav, { relativeTo: this.route });
   }
 
-  deleteJamaah(model: Jamaah) {
+  deleteFamily(model: Family) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        message: `Apakah Anda ingin menghapus jamaah <strong>${model.fullName}</strong>?`,
+        message: `Apakah Anda ingin menghapus family <strong>${model.label}</strong>?`,
         buttonText: {
           ok: 'Ya',
           cancel: 'Cancel'
@@ -119,11 +116,11 @@ export class JamaahComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.jamaahService.delete(model.id)
+        this.familyService.delete(model.id)
           .subscribe((rs) => {
             if (rs.status === 'ok') {
-              const jamaahs = this.jamaahsSubject$.getValue();
-              _.remove(jamaahs, { id: model.id });
+              const families = this.familiesSubject$.getValue();
+              _.remove(families, { id: model.id });
               this.refreshData();
             } else {
               this.snackBar.openFromComponent(SnackbarNotifComponent, { data: { message: rs.message, type: 'danger' } });

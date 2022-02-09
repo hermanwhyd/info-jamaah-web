@@ -1,12 +1,15 @@
+import { Pembina } from 'src/app/shared/types/pembina.interface';
+import { Residance } from 'src/app/shared/types/residance.model';
 import { SharedProperty } from 'src/app/shared/types/shared-property.interface';
-import { Jamaah } from './jamaah.model';
-import { Residance } from './residance.model';
+import { Jamaah } from '../../../jamaah/shared/interfaces/jamaah.model';
 
 export interface Family {
   id: number;
   kepalaKeluargaId: number;
   label: string;
+  pembinaEnum: string;
   residanceId: number;
+  pembina?: Pembina;
   residance?: Residance;
   members?: Member[];
 }
