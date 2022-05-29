@@ -206,7 +206,7 @@ export class AssetAuditComponent implements OnInit, AfterViewInit {
         message: `Apakah Anda ingin menghapus audit pada tanggal <strong>${model.auditedAt}</strong>?`,
         buttonText: {
           ok: 'Ya',
-          cancel: 'Batal'
+          cancel: 'Cancel'
         }
       }
     });

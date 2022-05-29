@@ -227,7 +227,7 @@ export class AssetFileComponent implements OnInit, AfterViewInit {
         message: `Apakah Anda ingin menghapus file <strong>${model.name}</strong>?`,
         buttonText: {
           ok: 'Ya',
-          cancel: 'Batal'
+          cancel: 'Cancel'
         }
       }
     });

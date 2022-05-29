@@ -208,7 +208,7 @@ export class AssetMaintenanceComponent implements OnInit, AfterViewInit {
         message: `Apakah Anda ingin menghapus <strong>${model.title}</strong>?`,
         buttonText: {
           ok: 'Ya',
-          cancel: 'Batal'
+          cancel: 'Cancel'
         }
       }
     });

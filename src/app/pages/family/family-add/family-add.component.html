@@ -1,0 +1,52 @@
+<form (ngSubmit)="submit()" [formGroup]="form">
+  <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+    <h2 class="headline m-0" fxFlex="auto">Keluarga Baru</h2>
+
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon [icIcon]="icClose"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+
+  <mat-dialog-content fxLayout="column">
+    <mat-form-field class="mt-3">
+      <mat-label>Nama Keluarga</mat-label>
+      <input cdkFocusInitial formControlName="label" matInput autocomplete="off" maxlength="18">
+      <mat-error *ngIf="formControl.label.touched && formControl.label.errors?.required">
+        Nama Keluarga Harus diisi
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="mt-3">
+      <mat-label>Pembina</mat-label>
+      <mat-select formControlName="pembinaEnum">
+        <mat-option *ngFor="let item of pembinaList" [value]="item.code">{{ item.code }}<span
+            class="text-xs text-secondary"> - {{ item.label }}</span></mat-option>
+      </mat-select>
+      <mat-error *ngIf="(formControl.pembinaEnum.touched) && formControl.pembinaEnum.errors?.required">
+        Pembina harus diisi
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="mt-3">
+      <mat-label>Kelala Keluarga</mat-label>
+      <mat-select formControlName="kepalaKeluargaId">
+        <mat-option *ngFor="let item of jamaahList" [value]="item.id">
+          <h4 class="body-2 m-0 leading-snug">{{ item.fullName }} </h4>
+          <h5 class="text-secondary text-xs m-0 caption leading-none">{{ item.pembinaEnum + ' - ' + item.lvPembinaanEnum
+            }}</h5>
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="(formControl.kepalaKeluargaId.touched) && formControl.kepalaKeluargaId.errors?.required">
+        Pembina harus diisi
+      </mat-error>
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">BATAL</button>
+    <button color="primary" mat-button type="submit" [disabled]="!submitable">SIMPAN</button>
+  </mat-dialog-actions>
+</form>

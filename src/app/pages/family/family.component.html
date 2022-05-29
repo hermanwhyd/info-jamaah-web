@@ -23,16 +23,16 @@
 
     <mat-drawer-container class="bg-transparent flex-auto flex">
       <mat-drawer [(opened)]="menuOpen" mode="over">
-        <vex-table-menu (filterChange)="applyFilter($event)" (openAddNew)="createOrUpdateFamily()" [items]="tableMenu"
+        <vex-table-menu (filterChange)="applyFilter($event)" (openAddNew)="createFamily()" [items]="tableMenu"
           class="sm:hidden"></vex-table-menu>
       </mat-drawer>
       <mat-drawer-content class="p-gutter pt-0 flex-auto flex items-start">
-        <vex-table-menu (filterChange)="applyFilter($event)" (openAddNew)="createOrUpdateFamily()" [items]="tableMenu"
+        <vex-table-menu (filterChange)="applyFilter($event)" (openAddNew)="createFamily()" [items]="tableMenu"
           class="hidden sm:block mr-6"></vex-table-menu>
 
         <div class="card overflow-hidden flex-auto">
-          <vex-data-table (openDetail)="createOrUpdateFamily($event)" (deleteFamily)="deleteFamily($event)"
-            [columns]="tableColumns" [data]="families" [isLoading]="isLoading" [searchStr]="searchStr$ | async">
+          <vex-data-table (deleteFamily)="deleteFamily($event)" [columns]="tableColumns" [data]="families"
+            [isLoading]="isLoading" [searchStr]="searchStr$ | async">
           </vex-data-table>
         </div>
       </mat-drawer-content>

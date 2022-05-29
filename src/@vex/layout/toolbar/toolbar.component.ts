@@ -38,7 +38,7 @@ export class ToolbarComponent implements OnInit {
     private configService: ConfigService,
     private navigationService: NavigationService,
     private popoverService: PopoverService,
-    private router: Router,) { }
+    private router: Router) { }
 
   ngOnInit() {
   }

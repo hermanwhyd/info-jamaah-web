@@ -23,6 +23,10 @@ import { ContainerModule } from 'src/@vex/directives/container/container.module'
 import { SnackBarNotifModule } from 'src/app/shared/utilities/snackbar-notif/snackbar-notif.module';
 import { TableMenuComponent } from './table-menu/table-menu.component';
 import { DataTableComponent } from './data-table/data-table.component';
+import { FamilyAddComponent } from './family-add/family-add.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 
 const routes: Routes = [
   {
@@ -32,7 +36,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [FamilyComponent, TableMenuComponent, DataTableComponent],
+  declarations: [FamilyComponent, TableMenuComponent, DataTableComponent, FamilyAddComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -54,7 +58,10 @@ const routes: Routes = [
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatDividerModule,
-    SnackBarNotifModule
+    SnackBarNotifModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
   ]
 })
 export class FamilyModule { }

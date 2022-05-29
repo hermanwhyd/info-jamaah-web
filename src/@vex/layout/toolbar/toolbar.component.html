@@ -19,8 +19,8 @@
   <div class="-mx-1 flex items-center">
     <div class="px-1">
       <button (click)="reloadPage()" color="primary" mat-button type="button" matTooltip="Refresh Page">
-        <mat-icon [icIcon]="icRefresh" class="-ml-1 mr-2" size="24px"></mat-icon>
-        <span>REFRESH</span>
+        <mat-icon [icIcon]="icRefresh" class="-ml-1" size="24px"></mat-icon>
+        <span class="ml-2" [fxHide]="mobileQuery">RELOAD</span>
       </button>
     </div>
 

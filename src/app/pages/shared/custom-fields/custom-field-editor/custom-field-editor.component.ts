@@ -82,7 +82,7 @@ export class CustomFieldEditorComponent implements OnInit {
         message: `Apakah Anda ingin menghapus value dari <strong>${this.model?.fieldName}</strong>?`,
         buttonText: {
           ok: 'Ya',
-          cancel: 'Batal'
+          cancel: 'Cancel'
         }
       }
     });

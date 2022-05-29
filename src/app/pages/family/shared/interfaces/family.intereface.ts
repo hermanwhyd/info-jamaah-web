@@ -10,6 +10,7 @@ export interface Family {
   pembinaEnum: string;
   residanceId: number;
   pembina?: Pembina;
+  kepalaKeluarga?: Jamaah;
   residance?: Residance;
   members?: Member[];
 }

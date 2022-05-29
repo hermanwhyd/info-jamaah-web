@@ -20,6 +20,14 @@
           </td>
         </ng-container>
 
+        <!-- MembersCount Columns -->
+        <ng-container *ngIf="column.property === 'membersCount'" [matColumnDef]="column.property">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.label }}</th>
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+            {{ jmespath.search(row, column.property) }} Jiwa
+          </td>
+        </ng-container>
+
         <!-- Image Column -->
         <ng-container *ngIf="column.type === 'image'" [matColumnDef]="column.property">
           <th *matHeaderCellDef mat-header-cell></th>

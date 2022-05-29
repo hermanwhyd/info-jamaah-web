@@ -43,7 +43,7 @@ export class JamaahUploadComponent implements OnInit {
     },
     cropper: {
       crop: 'Crop',
-      cancel: 'Batal'
+      cancel: 'Cancel'
     },
     previewCard: {
       remove: 'Hapus Foto',

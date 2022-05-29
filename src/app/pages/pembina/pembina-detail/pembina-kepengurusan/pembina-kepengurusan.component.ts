@@ -186,7 +186,7 @@ export class PembinaKepengurusanComponent implements OnInit, AfterViewInit {
         message: `Apakah Anda ingin menghapus <strong>${model.jamaah.fullName}</strong> dari dapukan <strong>${model.dapukan.label}</strong>?`,
         buttonText: {
           ok: 'Ya',
-          cancel: 'Batal'
+          cancel: 'Cancel'
         }
       }
     });

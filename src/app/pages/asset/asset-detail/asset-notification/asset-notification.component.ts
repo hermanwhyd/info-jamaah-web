@@ -210,7 +210,7 @@ export class AssetNotificationComponent implements OnInit, AfterViewInit {
         message: `Apakah Anda ingin menghapus <strong>${model.name}</strong>?`,
         buttonText: {
           ok: 'Ya',
-          cancel: 'Batal'
+          cancel: 'Cancel'
         }
       }
     });

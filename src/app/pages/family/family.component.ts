@@ -20,9 +20,9 @@ import { ConfirmationDialogComponent } from 'src/app/shared/utilities/confirmati
 
 import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Family } from './shared/interfaces/family.intereface';
 import { FamilyService } from './shared/services/family.service';
+import { FamilyAddComponent } from './family-add/family-add.component';
 
 @Component({
   selector: 'vex-family',
@@ -55,8 +55,10 @@ export class FamilyComponent implements OnInit {
 
   tableColumns: TableColumn<Family>[] = [
     { label: 'KELUARGA', property: 'label', type: 'text', cssClasses: ['font-medium'] },
-    { label: 'PEMBINAAN', property: 'pembinaEnum', type: 'text', cssClasses: ['text-secondary'] },
-    { label: 'ANGGOTA', property: 'pembinaEnum', type: 'text', cssClasses: ['text-secondary'] },
+    { label: 'FOTO KK', property: 'kepalaKeluarga.avatar', type: 'image', cssClasses: ['font-medium'] },
+    { label: 'KEPALA KELUARGA', property: 'kepalaKeluarga.fullName', type: 'text', cssClasses: ['text-secondary'] },
+    { label: 'PEMBINA', property: 'pembinaEnum', type: 'text', cssClasses: ['text-secondary'] },
+    { label: 'ANGGOTA', property: 'membersCount', type: 'number', cssClasses: ['font-medium'] },
     { label: '', property: 'menu', type: 'button', cssClasses: ['text-secondary', 'w-10'] },
   ];
 
@@ -65,8 +67,6 @@ export class FamilyComponent implements OnInit {
   ];
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private familyService: FamilyService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
@@ -94,13 +94,17 @@ export class FamilyComponent implements OnInit {
       });
   }
 
-  createOrUpdateFamily(family?: Family) {
-    const nav: any = ['form'];
-    if (family) {
-      nav.push(family.id);
-    }
+  createFamily() {
+    const dialog = this.dialog.open(FamilyAddComponent, {
+      width: '500px',
+      disableClose: true
+    });
 
-    this.router.navigate(nav, { relativeTo: this.route });
+    dialog.afterClosed().subscribe((newFamily: Family) => {
+      if (!newFamily) { return; }
+
+      console.log('new family', newFamily);
+    });
   }
 
   deleteFamily(model: Family) {

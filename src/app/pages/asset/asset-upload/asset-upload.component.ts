@@ -45,7 +45,7 @@ export class AssetUploadComponent implements OnInit {
     },
     cropper: {
       crop: 'Crop',
-      cancel: 'Batal'
+      cancel: 'Cancel'
     },
     previewCard: {
       remove: 'Hapus File',

@@ -118,7 +118,7 @@ export class AssetDetailComponent implements OnInit {
         message: `Apakah Anda ingin menghapus aset <strong>${this.model.title}</strong>?`,
         buttonText: {
           ok: 'Ya',
-          cancel: 'Batal'
+          cancel: 'Cancel'
         }
       }
     });

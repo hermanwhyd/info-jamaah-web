@@ -14,7 +14,7 @@ export class FamilyService {
   constructor(private httpClient: HttpClient) { }
 
   public getList() {
-    const params = new HttpParams().append('include', '');
+    const params = new HttpParams().append('include', 'kepalaKeluarga,membersCount');
     return this.httpClient.get<GenericRs<Family[]>>(this.URL, { params });
   }
 

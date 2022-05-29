@@ -34,7 +34,7 @@
       <div class="px-gutter py-3">
         <div class="py-3" fxLayout="row" fxLayoutAlign="start center" *ngFor="let item of family?.members">
           <div @scaleIn
-            class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+            class="w-10 h-10 rounded-full bg-primary-light text-primary mr-3 flex items-center justify-center">
             <ic-icon [icon]="icNumber" size="20px"></ic-icon>
           </div>
           <div @fadeInRight fxFlex="auto">
@@ -129,7 +129,7 @@
         <div *ngFor="let item of model?.families">
           <div class="py-3" fxLayout="row" fxLayoutAlign="start none" *ngIf="item.residance">
             <div @scaleIn
-              class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+              class="w-10 h-10 rounded-full bg-primary-light text-primary mr-3 flex items-center justify-center">
               <ic-icon [icon]="icHome" size="20px"></ic-icon>
             </div>
             <div @fadeInRight fxFlex="auto">

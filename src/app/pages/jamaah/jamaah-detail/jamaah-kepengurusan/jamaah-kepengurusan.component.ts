@@ -188,7 +188,7 @@ export class JamaahKepengurusanComponent implements OnInit, AfterViewInit {
         message: `Apakah Anda ingin menghapus dapukan <strong>${model.dapukan.label}</strong>?`,
         buttonText: {
           ok: 'Ya',
-          cancel: 'Batal'
+          cancel: 'Cancel'
         }
       }
     });

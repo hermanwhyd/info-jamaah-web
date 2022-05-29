@@ -12,7 +12,7 @@
   <mat-dialog-content fxLayout="column">
     <mat-form-field class="mt-3">
       <mat-label>Nama Kategori</mat-label>
-      <input  formControlName="tag" matInput cdkFocusInitial>
+      <input formControlName="tag" matInput cdkFocusInitial>
       <mat-error *ngIf="(formControl.tag.touched || submitted) && formControl.tag.errors?.required">
         Kategori harus diisi
       </mat-error>
@@ -21,7 +21,7 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close type="button">CANCEL</button>
+    <button mat-button mat-dialog-close type="button">BATAL</button>
     <button color="primary" mat-button type="submit" [disabled]="!submitable">SIMPAN</button>
   </mat-dialog-actions>
 </form>

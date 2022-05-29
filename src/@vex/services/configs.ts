@@ -9,7 +9,7 @@ const defaultConfig: Config = {
   layout: 'horizontal',
   boxed: false,
   sidenav: {
-    title: 'YYS MU AM',
+    title: 'YYS MU-AM',
     imageUrl: 'assets/img/japos/logo-mu-trans.png',
     showCollapsePin: true,
     state: 'expanded'

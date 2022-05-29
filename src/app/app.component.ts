@@ -89,7 +89,7 @@ export class AppComponent {
       },
       {
         type: 'subheading',
-        label: 'Workspace',
+        label: 'Jamaah',
         hide: !authSvc.hasAccess(['ADMIN']),
         children: [
           {
@@ -105,7 +105,14 @@ export class AppComponent {
             icon: icTraining,
             hide: !authSvc.hasAccess(['ADMIN']),
             route: '/family'
-          },
+          }
+        ]
+      },
+      {
+        type: 'subheading',
+        label: 'Workspace',
+        hide: !authSvc.hasAccess(['ADMIN']),
+        children: [
           {
             type: 'link',
             label: 'Benda Sabil',
